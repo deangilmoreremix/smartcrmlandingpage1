@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, ArrowRight, Contact, Database, Zap, CheckCircle, ExternalLink, Maximize2 } from 'lucide-react';
+import { Users, ArrowRight, Contact, Database, Zap, CheckCircle, ExternalLink, Play, Search, Filter, Grid, User, Mail, Building, Phone, Tag } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
+import { SignupContext } from '../App';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
 
 const EnhancedContacts: React.FC = () => {
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
-  };
+  const { openSignupModal } = useContext(SignupContext);
 
   const openInNewTab = () => {
     window.open('https://taupe-sprinkles-83c9ee.netlify.app', '_blank');
@@ -162,68 +159,219 @@ const EnhancedContacts: React.FC = () => {
                   <div>
                     <h3 className="text-xl font-bold text-white mb-2">Live Contacts Demo</h3>
                     <p className="text-white/70">
-                      This is a fully functional demonstration of Smart CRM's Enhanced Contacts module. 
-                      Interact with the interface to see how it works in real-time.
+                      Experience Smart CRM's Enhanced Contacts module with AI-powered contact intelligence, 
+                      automated enrichment, and real-time collaboration features.
                     </p>
                   </div>
                   
                   <div className="flex gap-3">
                     <motion.button
-                      className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg flex items-center text-sm"
-                      onClick={toggleFullscreen}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Maximize2 size={16} className="mr-2" />
-                      {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
-                    </motion.button>
-                    
-                    <motion.button
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center text-sm"
+                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center font-medium shadow-lg"
                       onClick={openInNewTab}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <ExternalLink size={16} className="mr-2" />
-                      Open in New Tab
+                      <Play size={18} className="mr-2" />
+                      Launch Live Demo
                     </motion.button>
                   </div>
                 </div>
               </div>
 
-              {/* Iframe Container */}
-              <div className={`relative ${isFullscreen ? 'h-screen' : 'h-[600px] md:h-[700px]'} transition-all duration-300`}>
-                <iframe
-                  src="https://taupe-sprinkles-83c9ee.netlify.app"
-                  title="Smart CRM Enhanced Contacts Module"
-                  width="100%"
-                  height="100%"
-                  frameBorder="0"
-                  allowFullScreen
-                  className="w-full h-full"
-                  style={{
-                    background: 'linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%)'
-                  }}
-                />
+              {/* Interactive Demo Preview */}
+              <div className="relative h-[600px] md:h-[700px] bg-gradient-to-br from-blue-900/80 to-purple-900/80 overflow-hidden">
+                {/* Mock CRM Interface */}
+                <div className="absolute inset-0 p-6">
+                  {/* Header Bar */}
+                  <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 mb-6">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <Contact className="text-blue-400 mr-3" size={24} />
+                        <h4 className="text-white font-bold text-lg">Enhanced Contacts</h4>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center bg-white/10 rounded-lg px-3 py-1.5">
+                          <Search size={16} className="text-white/60 mr-2" />
+                          <span className="text-white/60 text-sm">Search contacts...</span>
+                        </div>
+                        <Filter className="text-white/60" size={18} />
+                        <Grid className="text-blue-400" size={18} />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Contact Cards Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {[
+                      {
+                        name: "Sarah Johnson",
+                        role: "VP of Sales",
+                        company: "TechGrowth Inc.", 
+                        email: "sarah@techgrowth.com",
+                        phone: "+1 (555) 234-5678",
+                        score: 95,
+                        tags: ["Hot Lead", "Enterprise"],
+                        lastContact: "2 days ago"
+                      },
+                      {
+                        name: "Marcus Chen",
+                        role: "Sales Director", 
+                        company: "Innovate Solutions",
+                        email: "marcus@innovatesol.com",
+                        phone: "+1 (555) 345-6789",
+                        score: 87,
+                        tags: ["Qualified", "Follow-up"],
+                        lastContact: "1 week ago"
+                      },
+                      {
+                        name: "Priya Patel",
+                        role: "Customer Success",
+                        company: "GlobalServe",
+                        email: "priya@globalserve.com", 
+                        phone: "+1 (555) 456-7890",
+                        score: 78,
+                        tags: ["Customer", "Renewal"],
+                        lastContact: "Today"
+                      },
+                      {
+                        name: "James Williams",
+                        role: "CRO",
+                        company: "FastGrow Enterprises",
+                        email: "james@fastgrow.com",
+                        phone: "+1 (555) 567-8901", 
+                        score: 92,
+                        tags: ["Decision Maker", "Priority"],
+                        lastContact: "3 days ago"
+                      },
+                      {
+                        name: "Emma Rodriguez",
+                        role: "Sales Operations",
+                        company: "NexGen Services",
+                        email: "emma@nexgen.com",
+                        phone: "+1 (555) 678-9012",
+                        score: 84,
+                        tags: ["Prospect", "Demo Scheduled"],
+                        lastContact: "5 days ago"
+                      },
+                      {
+                        name: "Michael Weber",
+                        role: "Business Development",
+                        company: "MediCare Solutions",
+                        email: "michael@medicare.com",
+                        phone: "+1 (555) 789-0123",
+                        score: 89,
+                        tags: ["Healthcare", "Compliance"],
+                        lastContact: "1 day ago"
+                      }
+                    ].map((contact, idx) => (
+                      <motion.div
+                        key={idx}
+                        className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20 cursor-pointer"
+                        whileHover={{ 
+                          y: -5, 
+                          backgroundColor: "rgba(255, 255, 255, 0.15)",
+                          borderColor: "rgba(59, 130, 246, 0.4)"
+                        }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.1 + 0.5 }}
+                      >
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex items-center">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-sm mr-3">
+                              {contact.name.split(' ').map(n => n[0]).join('')}
+                            </div>
+                            <div>
+                              <h5 className="text-white font-medium text-sm">{contact.name}</h5>
+                              <p className="text-white/60 text-xs">{contact.role}</p>
+                            </div>
+                          </div>
+                          <div className={`px-2 py-1 rounded-full text-xs ${
+                            contact.score >= 90 ? 'bg-green-500/20 text-green-400' :
+                            contact.score >= 80 ? 'bg-yellow-500/20 text-yellow-400' :
+                            'bg-blue-500/20 text-blue-400'
+                          }`}>
+                            {contact.score}%
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-1.5 mb-3">
+                          <div className="flex items-center text-white/60 text-xs">
+                            <Building size={12} className="mr-2" />
+                            <span>{contact.company}</span>
+                          </div>
+                          <div className="flex items-center text-white/60 text-xs">
+                            <Mail size={12} className="mr-2" />
+                            <span>{contact.email}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-1 mb-3">
+                          {contact.tags.map((tag, tagIdx) => (
+                            <span key={tagIdx} className="bg-white/20 text-white/80 text-[10px] px-1.5 py-0.5 rounded-full">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        
+                        <div className="text-white/50 text-xs">
+                          Last contact: {contact.lastContact}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
                 
-                {/* Loading Overlay (will disappear once iframe loads) */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-blue-900/80 to-purple-900/80 flex items-center justify-center pointer-events-none"
-                  initial={{ opacity: 1 }}
-                  animate={{ opacity: 0 }}
-                  transition={{ delay: 2, duration: 1 }}
+                {/* Overlay with CTA */}
+                <motion.div 
+                  className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 2 }}
                 >
                   <div className="text-center">
                     <motion.div
-                      className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    />
-                    <p className="text-white font-medium">Loading Contacts Module...</p>
-                    <p className="text-white/60 text-sm">Preparing your interactive demo</p>
+                      className="w-20 h-20 rounded-full bg-blue-600/80 flex items-center justify-center mx-auto mb-6"
+                      whileHover={{ scale: 1.1 }}
+                      animate={{ 
+                        scale: [1, 1.05, 1],
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      <Play size={36} className="text-white ml-1" />
+                    </motion.div>
+                    
+                    <h4 className="text-2xl font-bold text-white mb-3">
+                      Experience the Full Contacts Module
+                    </h4>
+                    <p className="text-white/80 mb-6 max-w-md">
+                      Click below to explore the complete Enhanced Contacts module with all interactive features, 
+                      AI-powered search, and real-time collaboration tools.
+                    </p>
+                    
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      <motion.button
+                        className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center font-medium shadow-lg"
+                        onClick={openInNewTab}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <ExternalLink size={18} className="mr-2" />
+                        Launch Interactive Demo
+                      </motion.button>
+                      
+                      <motion.button
+                        className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg flex items-center font-medium"
+                        onClick={() => openSignupModal('early-access')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <ArrowRight size={18} className="mr-2" />
+                        Get Smart CRM
+                      </motion.button>
+                    </div>
                   </div>
                 </motion.div>
-              </div>
 
               {/* Demo Footer */}
               <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-4 border-t border-white/10">
@@ -239,8 +387,8 @@ const EnhancedContacts: React.FC = () => {
                       <CheckCircle className="text-green-400" size={16} />
                     </motion.div>
                     <div>
-                      <p className="text-white font-medium text-sm">Fully Interactive Demo</p>
-                      <p className="text-white/60 text-xs">All features are functional and responsive</p>
+                      <p className="text-white font-medium text-sm">Live Demo Available</p>
+                      <p className="text-white/60 text-xs">Click "Launch Live Demo" to interact with all features</p>
                     </div>
                   </div>
                   
@@ -316,52 +464,6 @@ const EnhancedContacts: React.FC = () => {
         </div>
       </section>
 
-      {/* Fullscreen Modal */}
-      {isFullscreen && (
-        <motion.div
-          className="fixed inset-0 bg-black z-50"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <div className="h-full flex flex-col">
-            <div className="bg-gray-900 p-4 flex justify-between items-center border-b border-gray-700">
-              <h3 className="text-white font-medium">Smart CRM Enhanced Contacts - Fullscreen Demo</h3>
-              <div className="flex gap-3">
-                <motion.button
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center text-sm"
-                  onClick={openInNewTab}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <ExternalLink size={16} className="mr-2" />
-                  Open in New Tab
-                </motion.button>
-                <motion.button
-                  className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg"
-                  onClick={toggleFullscreen}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Exit Fullscreen
-                </motion.button>
-              </div>
-            </div>
-            
-            <div className="flex-1">
-              <iframe
-                src="https://taupe-sprinkles-83c9ee.netlify.app"
-                title="Smart CRM Enhanced Contacts Module - Fullscreen"
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                allowFullScreen
-                className="w-full h-full"
-              />
-            </div>
-          </div>
-        </motion.div>
-      )}
     </>
   );
 };
