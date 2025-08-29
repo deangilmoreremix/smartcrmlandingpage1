@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { Users, ArrowRight, Contact, Database, Zap, CheckCircle, ExternalLink, Play, Search, Filter, Grid, User, Mail, Building, Phone, Tag } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
@@ -372,6 +372,7 @@ const EnhancedContacts: React.FC = () => {
                     </div>
                   </div>
                 </motion.div>
+              </div>
 
               {/* Demo Footer */}
               <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-4 border-t border-white/10">
