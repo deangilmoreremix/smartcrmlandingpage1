@@ -33,6 +33,7 @@ import CelebrationBanner from './components/CelebrationBanner';
 import AnimationToggle from './components/AnimationToggle';
 import { FeedbackContainer } from './components/Feedback';
 import PerformanceMonitor from './components/PerformanceMonitor';
+import EnhancedContacts from './components/EnhancedContacts';
 
 // Create a context to manage signup modal state across components
 export const SignupContext = React.createContext<{
@@ -120,6 +121,9 @@ function App() {
                 
                 {/* How It Works */}
                 <HowItWorks />
+                
+                {/* Enhanced Contacts Module */}
+                <EnhancedContacts />
                 
                 {/* AI Features Catalog - NEW */}
                 <AiFeaturesCatalog />
