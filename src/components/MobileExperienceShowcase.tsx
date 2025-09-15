@@ -275,6 +275,7 @@ const MobileExperienceShowcase: React.FC = () => {
                               src={currentFeature.screenshot} 
                               alt={currentFeature.title} 
                               className="w-full h-full object-cover"
+                              loading="lazy"
                             />
                           ) : (
                             <div className="w-full h-full bg-gradient-to-b from-blue-800 to-blue-900 flex items-center justify-center">

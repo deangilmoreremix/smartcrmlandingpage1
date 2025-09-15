@@ -506,6 +506,7 @@ const WorkflowShowcase: React.FC = () => {
                               src={currentStep.imageSrc} 
                               alt={currentStep.title} 
                               className="w-full h-64 object-cover"
+                              loading="lazy"
                             />
                           )}
                         </motion.div>
