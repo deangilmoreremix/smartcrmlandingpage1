@@ -670,9 +670,6 @@ const SecurityComplianceHub: React.FC = () => {
                             } flex items-center justify-center z-10`}
                             whileHover={{ scale: 1.2 }}
                             transition={{ duration: 0.3 }}
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: index * 0.1, duration: 0.3 }}
                           >
                             {item.icon}
                           </motion.div>

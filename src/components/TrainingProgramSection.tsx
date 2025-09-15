@@ -182,13 +182,6 @@ const TrainingProgramSection: React.FC = () => {
                 >
                   {/* Day Content */}
                   <div className={`bg-gradient-to-br from-black to-${day.color}-900/20 backdrop-blur-md rounded-xl p-8 border border-${day.color}-500/30 relative`}>
-                      className="w-full aspect-[4/3] object-cover"
-                      loading="lazy"
-                      text="Explore Day" 
-                      position="top-right"
-                      color={day.color === "blue" ? "blue" : day.color === "purple" ? "purple" : "green"}
-                      delay={1}
-                    />
                     
                     {/* Day Header */}
                     <div className="flex items-center mb-6">
