@@ -58,6 +58,7 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({
                     src={instructorImage || "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1600"}
                     alt="Dean Gilmore"
                     className="w-full h-full object-cover rounded-lg"
+                    loading="lazy"
                     onError={(e) => {
                       console.error("Error loading instructor image:", instructorImage);
                       e.currentTarget.src = "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1600";

@@ -603,6 +603,7 @@ const FeatureDemo: React.FC = () => {
                                                 src={testimonial.imageUrl} 
                                                 alt={testimonial.author}
                                                 className="w-8 h-8 rounded-full object-cover mr-2"
+                                                loading="lazy"
                                               />
                                               <div>
                                                 <p className="text-white text-sm font-medium">{testimonial.author}</p>

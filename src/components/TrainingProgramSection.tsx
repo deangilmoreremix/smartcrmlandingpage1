@@ -182,7 +182,8 @@ const TrainingProgramSection: React.FC = () => {
                 >
                   {/* Day Content */}
                   <div className={`bg-gradient-to-br from-black to-${day.color}-900/20 backdrop-blur-md rounded-xl p-8 border border-${day.color}-500/30 relative`}>
-                    <InteractiveFloatingButton 
+                      className="w-full aspect-[4/3] object-cover"
+                      loading="lazy"
                       text="Explore Day" 
                       position="top-right"
                       color={day.color === "blue" ? "blue" : day.color === "purple" ? "purple" : "green"}
@@ -362,7 +363,6 @@ const TrainingProgramSection: React.FC = () => {
                         }
                         alt={`Day ${day.day} Training`}
                         className="w-full h-full object-cover"
-                        loading="lazy"
                       />
                       
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/0 flex flex-col justify-end p-6">
