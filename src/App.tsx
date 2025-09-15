@@ -95,11 +95,12 @@ function App() {
         {isDevMode && <PerformanceMonitor />}
         <AnimationToggle />
         
-        <Routes>
-          <Route path="/webinar-recap" element={<WebinarRecapPage />} />
-          <Route path="/instructor-profile" element={<InstructorProfilePage />} />
-          <Route path="/webhook-test" element={<WebhookTestPage />} />
-          <Route path="/" element={
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes>
+            <Route path="/webinar-recap" element={<WebinarRecapPage />} />
+            <Route path="/instructor-profile" element={<InstructorProfilePage />} />
+            <Route path="/webhook-test" element={<WebhookTestPage />} />
+            <Route path="/" element={
             <div className="min-h-screen bg-gradient-to-b from-black via-blue-950 to-black text-white">
               <ScrollProgress />
               <ScrollingBanner />
@@ -221,8 +222,9 @@ function App() {
                 />
               )}
             </div>
-          } />
-        </Routes>
+            } />
+          </Routes>
+        </Suspense>
       </Router>
     </SignupContext.Provider>
   );

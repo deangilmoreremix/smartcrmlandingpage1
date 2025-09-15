@@ -826,7 +826,8 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
               alt={testimonial.author} 
               className="w-12 h-12 rounded-full object-cover border-2 border-white/20"
               whileHover={{ scale: 1.1, borderColor: "rgba(59, 130, 246, 0.5)" }}
-            />
+                            className="w-8 h-8 rounded-full object-cover mr-2"
+                            loading="lazy"
           </div>
           <div className="flex-grow">
             <div className="flex justify-between items-start mb-2">
@@ -867,7 +868,8 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
                     </div>
                   )}
                   {testimonial.companySize && (
-                    <div className="flex items-center text-white/50">
+                                className="w-8 h-8 rounded-full object-cover mr-2"
+                                loading="lazy"
                       <User size={12} className="mr-1" />
                       <span>{testimonial.companySize}</span>
                     </div>
