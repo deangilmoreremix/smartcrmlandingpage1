@@ -5,6 +5,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const initScrollAnimations = () => {
+  // Check if animations should be reduced
+  const shouldReduce = document.documentElement.classList.contains('reduce-animations');
+  if (shouldReduce) {
+    console.log('Animations are disabled, skipping scroll animations');
+    return;
+  }
+  
   // Animate sections when they come into view
   const sections = document.querySelectorAll('section');
   
