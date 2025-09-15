@@ -825,7 +825,6 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
               src={testimonial.imageUrl} 
               alt={testimonial.author} 
               className="w-12 h-12 rounded-full object-cover border-2 border-white/20"
-              loading="lazy"
               whileHover={{ scale: 1.1, borderColor: "rgba(59, 130, 246, 0.5)" }}
             />
           </div>
@@ -1043,6 +1042,7 @@ const EnhancedFeaturedTestimonial: React.FC<EnhancedFeaturedTestimonialProps> = 
               src={testimonial.imageUrl} 
               alt={testimonial.author} 
               className="w-16 h-16 rounded-full object-cover border-2 border-white/30 relative z-10"
+              loading="lazy"
             />
           </motion.div>
           <div className="ml-4">
