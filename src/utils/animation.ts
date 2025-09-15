@@ -5,13 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const initScrollAnimations = () => {
-  // Check if animations should be reduced
-  const shouldReduce = document.documentElement.classList.contains('reduce-animations');
-  if (shouldReduce) {
-    console.log('Animations are disabled, skipping scroll animations');
-    return;
-  }
-  
   // Animate sections when they come into view
   const sections = document.querySelectorAll('section');
   
@@ -85,6 +78,13 @@ export const animateCounter = (element: HTMLElement, target: number, duration: n
 };
 
 export const initHoverEffects = () => {
+  // Check if animations should be reduced
+  const shouldReduce = document.documentElement.classList.contains('reduce-animations');
+  if (shouldReduce) {
+    console.log('Hover effects are disabled, skipping hover animations');
+    return;
+  }
+  
   const cards = document.querySelectorAll('.hover-card');
   
   cards.forEach(card => {
