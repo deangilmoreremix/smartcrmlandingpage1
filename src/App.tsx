@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, Suspense } from 'react';
+import React, { useState, useEffect, useContext, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Hero from './components/Hero';
 import ProblemStatement from './components/ProblemStatement';
@@ -26,14 +26,16 @@ import SignupFormSection from './components/SignupFormSection';
 import ExitIntentModal from './components/ExitIntentModal';
 import SignupModal from './components/SignupModal';
 import ScrollingBanner from './components/ScrollingBanner';
-import WebinarRecapPage from './components/WebinarRecapPage';
-import InstructorProfilePage from './pages/InstructorProfilePage';
-import WebhookTestPage from './pages/WebhookTestPage';
 import CelebrationBanner from './components/CelebrationBanner';
 import AnimationToggle from './components/AnimationToggle';
 import { FeedbackContainer } from './components/Feedback';
 import PerformanceMonitor from './components/PerformanceMonitor';
 import EnhancedContacts from './components/EnhancedContacts';
+
+// Lazy load pages for code splitting
+const WebinarRecapPage = lazy(() => import('./components/WebinarRecapPage'));
+const InstructorProfilePage = lazy(() => import('./pages/InstructorProfilePage'));
+const WebhookTestPage = lazy(() => import('./pages/WebhookTestPage'));
 
 // Create a context to manage signup modal state across components
 export const SignupContext = React.createContext<{
@@ -46,10 +48,13 @@ export const SignupContext = React.createContext<{
   hasSignedUp: false
 });
 
-// Loading fallback component
-const LoadingFallback = () => (
+// Loading fallback component for lazy-loaded pages
+const PageLoadingFallback = () => (
   <div className="min-h-screen bg-gradient-to-b from-black via-blue-950 to-black flex items-center justify-center">
-    <div className="text-white text-xl">Loading...</div>
+    <div className="text-center">
+      <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+      <div className="text-white text-xl">Loading page...</div>
+    </div>
   </div>
 );
 
@@ -102,12 +107,23 @@ function App() {
         {isDevMode && <PerformanceMonitor />}
         <AnimationToggle />
         
-        <Suspense fallback={<LoadingFallback />}>
-          <Routes>
-            <Route path="/webinar-recap" element={<WebinarRecapPage />} />
-            <Route path="/instructor-profile" element={<InstructorProfilePage />} />
-            <Route path="/webhook-test" element={<WebhookTestPage />} />
-            <Route path="/" element={
+        <Routes>
+          <Route path="/webinar-recap" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <WebinarRecapPage />
+            </Suspense>
+          } />
+          <Route path="/instructor-profile" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <InstructorProfilePage />
+            </Suspense>
+          } />
+          <Route path="/webhook-test" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <WebhookTestPage />
+            </Suspense>
+          } />
+          <Route path="/" element={
             <div className="min-h-screen bg-gradient-to-b from-black via-blue-950 to-black text-white">
               <ScrollProgress />
               <ScrollingBanner />
@@ -229,9 +245,8 @@ function App() {
                 />
               )}
             </div>
-            } />
-          </Routes>
-        </Suspense>
+          } />
+        </Routes>
       </Router>
     </SignupContext.Provider>
   );
