@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Hero from './components/Hero';
 import ProblemStatement from './components/ProblemStatement';
@@ -45,6 +45,13 @@ export const SignupContext = React.createContext<{
   setHasSignedUp: () => {},
   hasSignedUp: false
 });
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="min-h-screen bg-gradient-to-b from-black via-blue-950 to-black flex items-center justify-center">
+    <div className="text-white text-xl">Loading...</div>
+  </div>
+);
 
 function App() {
   // Set launch date to end of 5-day Smart CRM sale - August 30, 2025 at 11:59 PM EDT
