@@ -82,10 +82,10 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                Smart CRM: 5-Day Special Sale
+                Smart CRM: 7-Day Special Sale
               </motion.h2>
               <p className="text-xl text-white/80 max-w-2xl mx-auto">
-                Get Smart CRM at special pricing during our limited 5-day sale. Transform your business with AI-powered customer relationship management.
+                Get Smart CRM at special pricing during our limited 7-day sale (September 21-27, 2025). Transform your business with AI-powered customer relationship management.
               </p>
             </div>
             
@@ -176,7 +176,7 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                       }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
                     >
-                      Sale ends in just a few days - August 30th at midnight!
+                      Sale ends in just a few days - September 27th at midnight!
                     </motion.p>
                   </div>
                   <p className="text-white/60 text-sm ml-7">Return to regular pricing after the sale ends.</p>
@@ -229,7 +229,7 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                 }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
               >
-                Special sale pricing ends August 30, 2025 - includes free masterclass (Sep 10-11)
+                Special sale pricing ends September 27, 2025 - includes free masterclass (Sep 10-11)
               </motion.p>
             </div>
           </motion.div>

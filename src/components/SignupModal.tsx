@@ -33,8 +33,8 @@ const SignupModal: React.FC<SignupModalProps> = ({
     switch(variant) {
       case 'masterclass':
         return {
-          title: "Get Smart CRM + Free Masterclass",
-          subtitle: "Get Smart CRM during our special 5-day sale and receive free access to our exclusive 2-day training on September 10-11, 2025",
+          title: "Get Smart CRM + Free Masterclass", 
+          subtitle: "Get Smart CRM during our special 7-day sale and receive free access to our exclusive 2-day training on September 10-11, 2025",
           cta: "Get Smart CRM Now",
           benefits: [
             {
@@ -54,7 +54,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
       case 'early-access':
         return {
           title: "Get Smart CRM - Special Sale",
-          subtitle: "Transform your business with AI-powered CRM during our limited 5-day sale (August 25-30, 2025)",
+          subtitle: "Transform your business with AI-powered CRM during our limited 7-day sale (September 21-27, 2025)",
           cta: "Get Smart CRM Now",
           benefits: [
             {

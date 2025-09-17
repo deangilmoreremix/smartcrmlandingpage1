@@ -6,7 +6,7 @@ import { handleFormSubmission } from '../utils/formHelpers';
 import CanvasConfetti from './CanvasConfetti';
 
 interface ExitIntentModalProps {
-  title?: string;
+  title?: string; 
   subtitle?: string;
   cta?: string;
   delay?: number; // Minimum time on page before showing (in seconds)
@@ -16,7 +16,7 @@ interface ExitIntentModalProps {
 
 const ExitIntentModal: React.FC<ExitIntentModalProps> = ({
   title = "Wait! Don't Miss This Opportunity",
-  subtitle = "Join our exclusive Smart CRM masterclass starting tomorrow at 3PM EDT and transform your customer relationships",
+  subtitle = "Get Smart CRM during our 7-day sale (September 21-27, 2025) and transform your customer relationships with AI-powered automation",
   cta = "Sign Up for Masterclass",
   delay = 5,
   sessionTimeout = 30,
@@ -183,6 +183,7 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({
                 >
                   <Star className="text-yellow-400 mr-2" size={16} />
                   <span>Get Smart CRM with AI automation during special 5-day sale</span>
+                  <span>Get Smart CRM with AI automation during special 7-day sale</span>
                 </motion.div>
                 
                 <motion.div 

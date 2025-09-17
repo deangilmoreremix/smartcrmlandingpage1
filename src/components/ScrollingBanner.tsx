@@ -33,8 +33,8 @@ const ScrollingBanner: React.FC = () => {
             <div key={index} className="flex items-center gap-6">
               <div className="flex items-center text-white">
                 <Tag className="text-blue-300 mr-1.5" size={16} />
-                <span className="font-medium text-sm">5-Day Smart CRM Sale:</span>
-                <span className="text-sm ml-1.5">August 25-30, 2025</span>
+                <span className="font-medium text-sm">7-Day Smart CRM Sale:</span>
+                <span className="text-sm ml-1.5">September 21-27, 2025</span>
               </div>
               
               <div className="flex items-center text-white">
