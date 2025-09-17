@@ -263,7 +263,7 @@ const TrainingProgramSection: React.FC = () => {
                       transition={{ delay: 0.8 }}
                     >
                       <Calendar className="text-white/60 mr-2" size={16} />
-                      <span className="text-white/60 text-sm">Live Training: 3:00 PM EDT</span>
+                      <span className="text-white/60 text-sm">Live Training: {day.day === 2 ? "8:00 PM EST" : "3:00 PM EST"}</span>
                       <div className="ml-auto">
                         <span className={`px-3 py-1 rounded-full text-xs bg-${day.color}-500/20 text-${day.color}-400`}>
                           {day.date}

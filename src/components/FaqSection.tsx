@@ -14,7 +14,7 @@ interface FaqItem {
 const faqs: FaqItem[] = [
   {
     question: "When is the Smart CRM masterclass?",
-    answer: "Our 2-day Smart CRM masterclass is scheduled for May 20-21, 2025, from 3:00 PM to 4:30 PM EDT each day. This interactive online training will teach you how to transform your customer relationships using AI-powered CRM strategies.",
+    answer: "Our 3-day Smart CRM masterclass is scheduled for September 21-23, 2025. Day 1 starts at 8:00 PM EST on September 21st, and Days 2-3 are at 3:00 PM EST on September 22nd and 23rd. This interactive online training will teach you how to transform your customer relationships using AI-powered CRM strategies.",
     category: "Masterclass"
   },
   {
