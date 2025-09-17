@@ -1,1180 +1,578 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, Calendar, Users, BookOpen, Play, FileText, Download, Loader2, AlertTriangle, Sparkles, Star } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Upload, Film, Calendar, CheckCircle, AlertTriangle, X, Download, Copy, MessageSquare, PlayCircle, Star, BookOpen, CheckCircle as ClockCircle, List, BookMarked, ChevronRight } from 'lucide-react';
-import jsPDF from 'jspdf';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import { getInstructorImageUrl } from '../utils/supabaseClient';
+import WebinarPlayer from './WebinarPlayer';
+import WebinarResources from './WebinarResources';
+import InstructorProfile from './InstructorProfile';
+import SocialShare from './SocialShare';
+import SEOMetaTags from './SEOMetaTags';
+import { getSupabaseClient } from '../utils/supabaseClient';
 
-interface WebinarDay {
+interface WebinarData {
+  transcript: {
+    id: string;
+    webinar_day_number: number;
+    transcript_text: string;
+    segments: any[];
+    video_url: string;
+    key_moments: any[];
+    qa_content: any[];
+    sentiment_analysis: any;
+    chapters: any[];
+  } | null;
+  summary: {
+    id: string;
+    webinar_day_number: number;
+    webinar_title: string;
+    summary_text: string;
+    key_points: string[];
+    video_url: string;
+    duration: number;
+  } | null;
+  chapters: {
+    id: string;
+    webinar_day_number: number;
+    chapter_title: string;
+    start_time: string;
+    end_time: string;
+    description: string;
+    chapter_order: number;
+  }[];
+}
+
+interface WebinarDayInfo {
   day: number;
   title: string;
   description: string;
   date: string;
-  videoUrl?: string;
-  videoThumbnail?: string;
-  transcriptUrl?: string;
-  summaryText?: string;
-  keyPoints?: string[];
-  chapters?: Chapter[];
+  videoThumbnail: string;
+  keyPoints: string[];
 }
 
-interface Chapter {
-  id: string;
-  title: string;
-  startTime: string;
-  endTime: string;
-  description?: string;
-}
+const webinarDaysInfo: WebinarDayInfo[] = [
+  {
+    day: 1,
+    title: "The Broken Sales Process & Why It's Costing You",
+    description: "In this first session, we explore the fundamental flaws in traditional sales approaches and introduce Smart CRM's revolutionary solution.",
+    date: "September 21, 2025 at 8:00 PM EST",
+    videoThumbnail: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    keyPoints: [
+      "Traditional CRM systems create more problems than they solve",
+      "Most sales teams waste 65% of their time on non-selling activities",
+      "The Smart CRM approach automates routine tasks",
+      "Properly implemented CRM can increase closed deals by 40-50%",
+      "AI-powered contact management eliminates manual data entry"
+    ]
+  },
+  {
+    day: 2,
+    title: "Automate, Personalize, and Scale Your Sales",
+    description: "Day two focuses on leveraging cutting-edge AI technology to transform your sales process through automation and personalization.",
+    date: "September 22, 2025 at 3:00 PM EST",
+    videoThumbnail: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    keyPoints: [
+      "AI-powered automation can cut administrative work by 68%",
+      "Personalization at scale is possible with Smart CRM's templates",
+      "Intelligent lead scoring ensures focus on high-value opportunities",
+      "Automated follow-up sequences improve response rates by 41%",
+      "AI meeting summaries capture every important detail"
+    ]
+  },
+  {
+    day: 3,
+    title: "Your Future Sales System + Smart CRM Offer Reveal",
+    description: "Our final session introduces The Client Engine System – a comprehensive framework for building predictable revenue through systematic processes.",
+    date: "September 23, 2025 at 3:00 PM EST",
+    videoThumbnail: "https://images.pexels.com/photos/3182746/pexels-photo-3182746.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    keyPoints: [
+      "The Client Engine System creates predictable, recurring revenue",
+      "Systematic processes outperform talent-dependent approaches",
+      "Smart CRM provides the technical foundation for sales transformation",
+      "Implementation can be completed in under 7 days with proper guidance",
+      "Exclusive offers and bonuses for attendees"
+    ]
+  }
+];
 
 const WebinarRecapPage: React.FC = () => {
-  const [activeDay, setActiveDay] = useState<number>(1);
-  const [supabase, setSupabase] = useState<any | null>(null);
-  const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedDay, setSelectedDay] = useState<number>(parseInt(searchParams.get('day') || '1'));
+  const [webinarData, setWebinarData] = useState<WebinarData | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
-  const [instructorImage, setInstructorImage] = useState<string>("https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1600");
-  const [activeChapter, setActiveChapter] = useState<string | null>(null);
-  const [isGeneratingChapters, setIsGeneratingChapters] = useState<boolean>(false);
-  const [isGeneratingSummary, setIsGeneratingSummary] = useState<boolean>(false);
-  const videoRef = useRef<HTMLIFrameElement>(null);
-  const [webinarDays, setWebinarDays] = useState<WebinarDay[]>([
-    {
-      day: 1,
-      title: "The Broken Sales Process & Why It's Costing You",
-      description: "In this first session, we explore the fundamental flaws in traditional sales approaches. Our experts break down the hidden barriers that prevent most businesses from achieving consistent sales growth, introducing the revolutionary Smart CRM Sales Multiplier System designed to overcome these challenges. You'll discover why contact management, AI-powered emails, and streamlined pipelines are critical components for modern sales success. We also showcase a detailed case study of Sarah's business transformation, demonstrating how proper CRM implementation replaced chaos with clarity in just 7 days, resulting in a 46% increase in closed deals.",
-      date: "Tomorrow",
-      videoUrl: "",
-      videoThumbnail: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      keyPoints: [
-        "Traditional CRM systems create more problems than they solve",
-        "Most sales teams waste 65% of their time on non-selling activities",
-        "The Smart CRM Sales Multiplier System automates routine tasks",
-        "Properly implemented CRM can increase closed deals by 40-50%",
-        "AI-powered contact management eliminates manual data entry"
-      ],
-      chapters: [
-        {
-          id: "intro",
-          title: "Introduction",
-          startTime: "00:00:00",
-          endTime: "00:05:30",
-          description: "Welcome and overview of the webinar series"
-        },
-        {
-          id: "problem",
-          title: "The CRM Problem",
-          startTime: "00:05:30",
-          endTime: "00:15:45",
-          description: "Why traditional CRM systems are failing sales teams"
-        }
-      ]
-    },
-    {
-      day: 2,
-      title: "Automate, Personalize, and Scale Your Sales",
-      description: "Day two focuses on leveraging cutting-edge AI technology to transform your sales process. We demonstrate how Smart CRM's automation capabilities handle lead scoring, follow-ups, and meeting preparation without increasing your workload. This session breaks the common myth that quality sales require more time, showing instead how our intelligent system allows you to scale personalized communications efficiently. We examine Jennifer's sales team case study, where implementing these automation strategies resulted in a 32% sales increase while reducing administrative tasks by 68%. You'll see exactly how AI can augment your sales team's capabilities to achieve more with less effort.",
-      date: "Tuesday, May 20, 2025",
-      videoUrl: "",
-      videoThumbnail: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      keyPoints: [
-        "AI-powered automation can cut administrative work by 68%",
-        "Personalization at scale is possible with Smart CRM's templates",
-        "Intelligent lead scoring ensures focus on high-value opportunities",
-        "Automated follow-up sequences improve response rates by 41%",
-        "AI meeting summaries capture every important detail without note-taking"
-      ]
-    },
-    {
-      day: 3,
-      title: "Your Future Sales System + Smart CRM Offer Reveal",
-      description: "Our final session introduces The Client Engine System – a comprehensive framework for building predictable revenue through systematic sales processes. We demonstrate how Smart CRM integrates with this methodology to create a self-sustaining business development machine that generates consistent results without constant manual effort. Through real customer success stories, we illustrate how businesses across various industries have transformed their sales outcomes using these techniques. The session concludes with an exclusive offer for attendees to try Smart CRM's complete suite of tools with special benefits including extended free trial access, implementation assistance, and priority support – all with no credit card required to get started.",
-      date: "Wednesday, May 21, 2025",
-      videoUrl: "",
-      videoThumbnail: "https://images.pexels.com/photos/3182746/pexels-photo-3182746.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      keyPoints: [
-        "The Client Engine System creates predictable, recurring revenue",
-        "Systematic processes outperform talent-dependent approaches",
-        "Smart CRM provides the technical foundation for sales transformation",
-        "Implementation can be completed in under 7 days with proper guidance",
-        "Early adopters receive lifetime discounts and premium support packages"
-      ]
-    }
-  ]);
-
-  // Initialize Supabase client with proper error handling
-  useEffect(() => {
-    try {
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-      if (!supabaseUrl || !supabaseAnonKey) {
-        console.warn("Supabase credentials are not available. Some features will be disabled.");
-        return;
-      }
-
-      const client = createClient(supabaseUrl, supabaseAnonKey);
-      setSupabase(client);
-
-      // Fetch webinar days data from the API
-      fetchWebinarDays();
-      
-      // Fetch instructor image
-      fetchInstructorImage();
-    } catch (err) {
-      console.error("Error initializing Supabase client:", err);
-      setError("Failed to initialize database connection. Some features may be unavailable.");
-    }
-  }, []);
+  const [currentPlaybackTime, setCurrentPlaybackTime] = useState(0);
+  const [activeChapter, setActiveChapter] = useState<any>(null);
   
-  // Fetch instructor image from Supabase
-  const fetchInstructorImage = async () => {
+  // Get current webinar day info
+  const currentDayInfo = webinarDaysInfo.find(day => day.day === selectedDay) || webinarDaysInfo[0];
+  
+  // Fetch webinar data from Supabase
+  const fetchWebinarData = async (day: number) => {
     try {
-      const imageUrl = await getInstructorImageUrl();
-      if (imageUrl) {
-        setInstructorImage(imageUrl);
-        console.log("WebinarRecapPage: Retrieved instructor image URL:", imageUrl);
-      }
-    } catch (err) {
-      console.error("Error fetching instructor image:", err);
-      // Keep using the default image
-    }
-  };
-
-  // Fetch webinar days from API
-  const fetchWebinarDays = async () => {
-    try {
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      
-      if (!supabaseUrl) {
-        console.warn("Supabase URL is not available. Cannot fetch webinar days.");
-        return;
-      }
-
-      // In a real application, you would make an API call here
-      // For now, we'll keep using the default data
-    } catch (err) {
-      console.error("Error fetching webinar days:", err);
-      // Keep the default days if the API call fails
-    }
-  };
-
-  // Handle file upload
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>, day: number) => {
-    const file = event.target.files?.[0];
-    if (!file) {
-      return;
-    }
-
-    try {
-      setIsUploading(true);
-      setUploadProgress(0);
+      setLoading(true);
       setError(null);
-      setMessage(null);
-
-      // Get Supabase client
+      
+      const supabase = getSupabaseClient();
       if (!supabase) {
-        throw new Error("Supabase client not initialized");
+        throw new Error('Database connection not available');
       }
-
-      // Simulate upload progress
-      const progressInterval = setInterval(() => {
-        setUploadProgress(prev => {
-          if (prev >= 95) {
-            clearInterval(progressInterval);
-            return prev;
-          }
-          return prev + 5;
-        });
-      }, 200);
-
-      // Create a unique filename
-      const timestamp = Date.now();
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${timestamp}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
-      const filePath = `webinar-day-${day}/${fileName}`;
-
-      console.log("Uploading file to path:", filePath);
-      console.log("File size:", file.size);
-
-      // Upload the file to Supabase storage
-      const { data, error } = await supabase
-        .storage
-        .from('webinar-videos')
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: false
-        });
-
-      if (error) {
-        console.error("Upload error details:", error);
-        throw error;
+      
+      // Fetch transcript
+      const { data: transcript, error: transcriptError } = await supabase
+        .from('webinar_transcripts')
+        .select('*')
+        .eq('webinar_day_number', day)
+        .single();
+      
+      // Fetch summary
+      const { data: summary, error: summaryError } = await supabase
+        .from('ai_summaries')
+        .select('*')
+        .eq('webinar_day_number', day)
+        .single();
+      
+      // Fetch chapters
+      const { data: chapters, error: chaptersError } = await supabase
+        .from('webinar_chapters')
+        .select('*')
+        .eq('webinar_day_number', day)
+        .order('chapter_order');
+      
+      // Check if we have any data
+      if (transcriptError && summaryError && chaptersError) {
+        throw new Error('No webinar data found for this day');
       }
-
-      // Get the public URL for the uploaded file
-      const { data: urlData } = supabase
-        .storage
-        .from('webinar-videos')
-        .getPublicUrl(filePath);
-
-      const publicUrl = urlData?.publicUrl;
-      console.log("File uploaded successfully, public URL:", publicUrl);
       
-      // Update webinar days with the video URL
-      setWebinarDays(prev => 
-        prev.map(webinarDay => 
-          webinarDay.day === day 
-            ? { ...webinarDay, videoUrl: publicUrl || "" } 
-            : webinarDay
-        )
-      );
-      
-      clearInterval(progressInterval);
-      setUploadProgress(100);
-      setMessage(`Video for Day ${day} uploaded successfully!`);
-      
-    } catch (err) {
-      console.error("Upload error:", err);
-      if (err.message?.includes("row-level security policy")) {
-        setError("Permission denied: Security policies are preventing uploads. Please check your Supabase configuration.");
-      } else if (err.message?.includes("file size limit")) {
-        setError("The file exceeds the maximum allowed size. Please try a smaller file or contact your administrator.");
-      } else {
-        setError(`Failed to upload video: ${err.message}`);
-      }
-      setUploadProgress(0);
+      setWebinarData({
+        transcript: transcriptError ? null : transcript,
+        summary: summaryError ? null : summary,
+        chapters: chaptersError ? [] : chapters || []
+      });
+    } catch (err: any) {
+      console.error('Error fetching webinar data:', err);
+      setError(err.message || 'Failed to load webinar data');
     } finally {
-      setIsUploading(false);
+      setLoading(false);
     }
   };
-
-  // Generate PDF summary
-  const generatePDF = (day: number) => {
-    const webinarDay = webinarDays.find(d => d.day === day);
-    if (!webinarDay) return;
-
-    try {
-      const doc = new jsPDF();
+  
+  // Update URL when day changes
+  const handleDayChange = (day: number) => {
+    setSelectedDay(day);
+    setSearchParams({ day: day.toString() });
+  };
+  
+  // Fetch data when component mounts or day changes
+  useEffect(() => {
+    fetchWebinarData(selectedDay);
+  }, [selectedDay]);
+  
+  // Update active chapter based on current playback time
+  useEffect(() => {
+    if (webinarData?.chapters && currentPlaybackTime > 0) {
+      const timeToSeconds = (timeStr: string): number => {
+        const parts = timeStr.split(':').map(Number);
+        return parts[0] * 3600 + parts[1] * 60 + parts[2];
+      };
       
-      // Title
-      doc.setFontSize(22);
-      doc.setTextColor(44, 62, 80);
-      doc.text(`Day ${day}: ${webinarDay.title}`, 20, 20);
+      const current = webinarData.chapters.find(chapter => {
+        const start = timeToSeconds(chapter.start_time);
+        const end = timeToSeconds(chapter.end_time);
+        return currentPlaybackTime >= start && currentPlaybackTime < end;
+      });
       
-      // Date
-      doc.setFontSize(12);
-      doc.setTextColor(100, 100, 100);
-      doc.text(`Date: ${webinarDay.date}`, 20, 30);
-      
-      // Description
-      doc.setFontSize(10);
-      doc.setTextColor(60, 60, 60);
-      
-      // Wrap text for description
-      const splitDescription = doc.splitTextToSize(webinarDay.description, 170);
-      doc.text(splitDescription, 20, 40);
-      
-      let yPos = 40 + splitDescription.length * 7;
-      
-      // Key Points
-      if (webinarDay.keyPoints?.length) {
-        doc.setFontSize(14);
-        doc.setTextColor(44, 62, 80);
-        doc.text("Key Points:", 20, yPos);
-        yPos += 10;
-        
-        doc.setFontSize(10);
-        doc.setTextColor(60, 60, 60);
-        
-        webinarDay.keyPoints.forEach((point, index) => {
-          doc.text(`• ${point}`, 20, yPos);
-          yPos += 7;
-        });
-      }
-      
-      // Chapters section if available
-      if (webinarDay.chapters && webinarDay.chapters.length > 0) {
-        yPos += 10;
-        doc.setFontSize(14);
-        doc.setTextColor(44, 62, 80);
-        doc.text("Chapters:", 20, yPos);
-        yPos += 10;
-        
-        doc.setFontSize(10);
-        doc.setTextColor(60, 60, 60);
-        
-        webinarDay.chapters.forEach((chapter, index) => {
-          doc.text(`• ${chapter.title} (${chapter.startTime} - ${chapter.endTime})`, 20, yPos);
-          yPos += 5;
-          if (chapter.description) {
-            doc.text(`  ${chapter.description}`, 20, yPos);
-            yPos += 7;
-          } else {
-            yPos += 2;
-          }
-        });
-      }
-      
-      // Add a footer
-      doc.setFontSize(8);
-      doc.setTextColor(150, 150, 150);
-      doc.text("Smart CRM Webinar Recap - Generated on " + new Date().toLocaleDateString(), 20, 285);
-      
-      // Save the PDF
-      doc.save(`Smart_CRM_Webinar_Day${day}_Recap.pdf`);
-      
-      setMessage(`Summary for Day ${day} downloaded as PDF!`);
-    } catch (err) {
-      console.error("PDF generation error:", err);
-      setError("Failed to generate PDF. Please try again.");
+      setActiveChapter(current || null);
     }
-  };
-
-  // Copy summary to clipboard
-  const copySummaryToClipboard = (day: number) => {
-    const webinarDay = webinarDays.find(d => d.day === day);
-    if (!webinarDay) return;
-
-    try {
-      const summaryText = `
-Day ${day}: ${webinarDay.title}
-Date: ${webinarDay.date}
-
-${webinarDay.description}
-
-Key Points:
-${webinarDay.keyPoints?.map(point => `• ${point}`).join('\n')}
-
-${webinarDay.chapters && webinarDay.chapters.length > 0 ? `
-Chapters:
-${webinarDay.chapters.map(chapter => `• ${chapter.title} (${chapter.startTime} - ${chapter.endTime})
-  ${chapter.description || ''}`).join('\n')}
-` : ''}
-      `.trim();
-
-      navigator.clipboard.writeText(summaryText);
-      setMessage("Summary copied to clipboard!");
-    } catch (err) {
-      console.error("Clipboard error:", err);
-      setError("Failed to copy to clipboard. Please try again.");
-    }
-  };
-
-  // Generate AI summary
-  const generateAISummary = async (day: number) => {
-    try {
-      setIsGeneratingSummary(true);
-      setMessage("Generating AI summary... This may take a moment.");
-      setError(null);
-
-      const webinarDay = webinarDays.find(d => d.day === day);
-      if (!webinarDay || !webinarDay.videoUrl) {
-        throw new Error("Video URL is required to generate a summary");
-      }
-
-      if (!supabase) {
-        throw new Error("Supabase client not initialized");
-      }
-
-      // Call the Supabase Edge Function to generate a summary
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const apiEndpoint = `${supabaseUrl}/functions/v1/webinar-api/generate-summary`;
-
-      try {
-        const response = await fetch(apiEndpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify({
-            day,
-            videoUrl: webinarDay.videoUrl
-          })
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(`API error: ${errorData.error || response.statusText}`);
-        }
-
-        const data = await response.json();
-        
-        // Update the webinar day with the generated summary
-        setWebinarDays(prev => 
-          prev.map(webinarDay => 
-            webinarDay.day === day 
-              ? { 
-                  ...webinarDay, 
-                  summaryText: data.summaryText,
-                  keyPoints: [
-                    ...(webinarDay.keyPoints || []),
-                    ...(data.keyPoints || [])
-                  ]
-                } 
-              : webinarDay
-          )
-        );
-
-        setMessage("AI summary generated successfully!");
-      } catch (apiError) {
-        console.error("API call failed:", apiError);
-        // Fallback to client-side generation if the API fails
-        simulateAISummary(day, webinarDay);
-      }
-    } catch (err) {
-      console.error("AI summary error:", err);
-      setError(`Failed to generate AI summary: ${err.message}`);
-    } finally {
-      setIsGeneratingSummary(false);
-    }
-  };
-
-  // Fallback client-side generation
-  const simulateAISummary = (day: number, webinarDay: WebinarDay) => {
-    // Generate a mock AI summary
-    const summaryText = `This webinar provided a comprehensive overview of ${webinarDay.title.toLowerCase()}. The presenter explained how traditional approaches are often inefficient and introduced several innovative solutions using Smart CRM technology. The session included practical demonstrations and real-world case studies showing significant improvements in sales productivity and customer engagement.`;
-    
-    // Generate some additional key points
-    const additionalKeyPoints = [
-      "Smart CRM's AI component can reduce data entry time by up to 70%",
-      "The platform integrates seamlessly with major email and calendar systems",
-      "Users typically see ROI within the first 30 days of implementation",
-      "The cloud-based system requires minimal IT support for deployment"
-    ];
-    
-    // Update webinar day with summary and additional key points
-    setWebinarDays(prev => 
-      prev.map(webinarDay => 
-        webinarDay.day === day 
-          ? { 
-              ...webinarDay, 
-              summaryText,
-              keyPoints: [
-                ...(webinarDay.keyPoints || []),
-                ...additionalKeyPoints
-              ]
-            } 
-          : webinarDay
-      )
-    );
-    
-    setMessage("AI summary generated successfully!");
-  };
-
-  // Generate AI chapters
-  const generateAIChapters = async (day: number) => {
-    try {
-      setIsGeneratingChapters(true);
-      setError(null);
-      setMessage("Generating AI chapters... This may take a moment.");
-
-      const webinarDay = webinarDays.find(d => d.day === day);
-      if (!webinarDay || !webinarDay.videoUrl) {
-        throw new Error("Video URL is required to generate chapters");
-      }
-
-      if (!supabase) {
-        throw new Error("Supabase client not initialized");
-      }
-
-      // Call the Supabase Edge Function to generate chapters
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const apiEndpoint = `${supabaseUrl}/functions/v1/generate-chapters`;
-
-      try {
-        const response = await fetch(apiEndpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify({
-            webinarDay: day,
-            videoUrl: webinarDay.videoUrl,
-            transcript: webinarDay.summaryText // Using summary as context if available
-          })
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(`API error: ${errorData.error || response.statusText}`);
-        }
-
-        const data = await response.json();
-        
-        if (data.chapters && data.chapters.length > 0) {
-          // Update the webinar day with the generated chapters
-          setWebinarDays(prev => 
-            prev.map(webinarDay => 
-              webinarDay.day === day 
-                ? { ...webinarDay, chapters: data.chapters } 
-                : webinarDay
-            )
-          );
-          
-          // Set the first chapter as active
-          setActiveChapter(data.chapters[0].id);
-          setMessage("AI chapters generated successfully! The video is now divided into navigable sections.");
-        } else {
-          throw new Error("No chapters were generated");
-        }
-      } catch (apiError) {
-        console.error("API call failed:", apiError);
-        // Fallback to client-side generation if the API fails
-        simulateAIChapters(day, webinarDay);
-      }
-    } catch (err) {
-      console.error("AI chapters error:", err);
-      setError(`Failed to generate AI chapters: ${err.message}`);
-    } finally {
-      setIsGeneratingChapters(false);
-    }
-  };
-
-  // Fallback client-side chapter generation
-  const simulateAIChapters = (day: number, webinarDay: WebinarDay) => {
-    // Mock chapters based on the webinar day
-    const mockChapters: Chapter[] = day === 1 ? [
-      {
-        id: "intro",
-        title: "Introduction and Overview",
-        startTime: "00:00:00",
-        endTime: "00:08:25",
-        description: "Welcome to the masterclass and overview of the series"
-      },
-      {
-        id: "problem-identification",
-        title: "The Broken CRM Paradigm",
-        startTime: "00:08:25",
-        endTime: "00:17:10",
-        description: "Identifying the key problems with traditional CRM systems"
-      },
-      {
-        id: "data-entry",
-        title: "The Data Entry Trap",
-        startTime: "00:17:10",
-        endTime: "00:26:30",
-        description: "How manual data entry is destroying sales productivity"
-      },
-      {
-        id: "sales-multiplier",
-        title: "The Sales Multiplier System",
-        startTime: "00:26:30",
-        endTime: "00:42:15",
-        description: "Introduction to Smart CRM's revolutionary approach"
-      },
-      {
-        id: "case-study",
-        title: "Sarah's Success Story",
-        startTime: "00:42:15",
-        endTime: "00:55:40",
-        description: "Real-world implementation and results"
-      },
-      {
-        id: "qa-section",
-        title: "Q&A Session",
-        startTime: "00:55:40",
-        endTime: "01:05:00",
-        description: "Answering participant questions"
-      },
-      {
-        id: "day1-conclusion",
-        title: "Conclusion and Day 2 Preview",
-        startTime: "01:05:00",
-        endTime: "01:10:00",
-        description: "Wrap up and what to expect tomorrow"
-      }
-    ] : day === 2 ? [
-      {
-        id: "day2-intro",
-        title: "Day 2 Introduction",
-        startTime: "00:00:00",
-        endTime: "00:06:15",
-        description: "Recap of Day 1 and overview of today's content"
-      },
-      {
-        id: "ai-automation",
-        title: "AI Automation Fundamentals",
-        startTime: "00:06:15",
-        endTime: "00:18:45",
-        description: "Core principles of AI-driven sales automation"
-      },
-      {
-        id: "lead-scoring",
-        title: "Intelligent Lead Scoring",
-        startTime: "00:18:45",
-        endTime: "00:29:30",
-        description: "How Smart CRM prioritizes your most promising opportunities"
-      },
-      {
-        id: "personalization",
-        title: "Personalization at Scale",
-        startTime: "00:29:30",
-        endTime: "00:42:10",
-        description: "Creating custom experiences for each prospect automatically"
-      },
-      {
-        id: "jennifer-case",
-        title: "Jennifer's Team Transformation",
-        startTime: "00:42:10",
-        endTime: "00:53:25",
-        description: "Case study of 32% sales increase with automation"
-      },
-      {
-        id: "day2-qa",
-        title: "Live Automation Demo & Q&A",
-        startTime: "00:53:25",
-        endTime: "01:08:30",
-        description: "Interactive demonstration and participant questions"
-      }
-    ] : [
-      {
-        id: "day3-intro",
-        title: "Final Day Introduction",
-        startTime: "00:00:00",
-        endTime: "00:05:45",
-        description: "Welcome and recap of the series so far"
-      },
-      {
-        id: "client-engine",
-        title: "The Client Engine System",
-        startTime: "00:05:45",
-        endTime: "00:19:20",
-        description: "Framework for building predictable revenue"
-      },
-      {
-        id: "implementation",
-        title: "7-Day Implementation Plan",
-        startTime: "00:19:20",
-        endTime: "00:32:50",
-        description: "Step-by-step guide to getting started with Smart CRM"
-      },
-      {
-        id: "success-stories",
-        title: "Customer Success Stories",
-        startTime: "00:32:50",
-        endTime: "00:48:15",
-        description: "Real results from different industries and company sizes"
-      },
-      {
-        id: "special-offer",
-        title: "Smart CRM Special Offer",
-        startTime: "00:48:15",
-        endTime: "00:59:30",
-        description: "Exclusive benefits for webinar participants"
-      },
-      {
-        id: "final-qa",
-        title: "Final Q&A Session",
-        startTime: "00:59:30",
-        endTime: "01:12:45",
-        description: "Answering participant questions"
-      },
-      {
-        id: "conclusion",
-        title: "Series Conclusion",
-        startTime: "01:12:45",
-        endTime: "01:15:00",
-        description: "Thank you and next steps"
-      }
-    ];
-
-    // Update the webinar day with the AI-generated chapters
-    setWebinarDays(prev => 
-      prev.map(webinarDay => 
-        webinarDay.day === day 
-          ? { ...webinarDay, chapters: mockChapters } 
-          : webinarDay
-      )
-    );
-
-    // Set the first chapter as active
-    if (mockChapters.length > 0) {
-      setActiveChapter(mockChapters[0].id);
-    }
-    
-    setMessage("AI chapters generated successfully! The video is now divided into navigable sections.");
-  };
-
-  // Navigate to specific timestamp in video
-  const navigateToTimestamp = (timestamp: string) => {
-    if (!videoRef.current || !videoRef.current.src) return;
-    
-    // Convert timestamp (HH:MM:SS) to seconds
-    const [hours, minutes, seconds] = timestamp.split(':').map(Number);
-    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-    
-    // Create new URL with start time parameter
-    const currentSrc = videoRef.current.src.split('?')[0];
-    videoRef.current.src = `${currentSrc}?autoplay=1&start=${totalSeconds}`;
-  };
-
+  }, [currentPlaybackTime, webinarData?.chapters]);
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-blue-950 to-black text-white">
+      <SEOMetaTags 
+        title={`${currentDayInfo.title} - Smart CRM Masterclass Recap`}
+        description={`${currentDayInfo.description} Learn from our Smart CRM masterclass recording.`}
+        ogType="article"
+        schemaType="Event"
+        schemaData={{
+          name: `Smart CRM Masterclass Day ${selectedDay}`,
+          description: currentDayInfo.description,
+          startDate: selectedDay === 1 ? '2025-09-21T20:00:00-05:00' : 
+                      selectedDay === 2 ? '2025-09-22T15:00:00-05:00' : 
+                      '2025-09-23T15:00:00-05:00'
+        }}
+      />
+      
       <Navbar />
       
       <main className="pt-32 pb-20 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Smart CRM Webinar Recap</h1>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Access replays, summaries, and resources from our 3-day masterclass
-            </p>
+          {/* Back Navigation */}
+          <div className="mb-8">
+            <Link 
+              to="/" 
+              className="text-white/70 hover:text-white flex items-center transition-colors"
+            >
+              <ArrowLeft size={18} className="mr-2" />
+              Back to Home
+            </Link>
           </div>
           
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
+          >
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">Smart CRM Masterclass Recap</h1>
+            <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+              Access recordings, transcripts, and resources from our comprehensive 3-day Smart CRM training series.
+            </p>
+          </motion.div>
+          
           {/* Day Selection */}
-          <div className="flex justify-center mb-10">
-            <div className="inline-flex p-1.5 bg-white/5 backdrop-blur-md rounded-xl border border-white/10">
-              {webinarDays.map((day) => (
-                <motion.button
-                  key={day.day}
-                  className={`px-5 py-3 rounded-lg text-sm md:text-base font-medium flex items-center ${
-                    activeDay === day.day 
-                      ? `bg-blue-600 text-white shadow-lg` 
-                      : 'text-white/70 hover:text-white'
-                  }`}
-                  onClick={() => setActiveDay(day.day)}
-                  whileHover={{ scale: activeDay !== day.day ? 1.05 : 1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
-                    activeDay === day.day ? 'bg-white/20' : 'bg-white/10'
-                  } mr-2 text-xs`}>
-                    {day.day}
-                  </span>
-                  <span className="hidden sm:inline">Day {day.day}</span>
-                </motion.button>
-              ))}
+          <div className="mb-12">
+            <div className="flex justify-center">
+              <div className="inline-flex bg-white/10 backdrop-blur-md rounded-xl p-1.5 border border-white/20">
+                {webinarDaysInfo.map((dayInfo) => (
+                  <motion.button
+                    key={dayInfo.day}
+                    className={`px-6 py-3 rounded-lg text-sm font-medium flex items-center ${
+                      selectedDay === dayInfo.day 
+                        ? 'bg-blue-600 text-white shadow-lg' 
+                        : 'text-white/70 hover:text-white hover:bg-white/10'
+                    }`}
+                    onClick={() => handleDayChange(dayInfo.day)}
+                    whileHover={{ scale: selectedDay !== dayInfo.day ? 1.05 : 1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Calendar size={16} className="mr-2" />
+                    <span>Day {dayInfo.day}</span>
+                  </motion.button>
+                ))}
+              </div>
             </div>
           </div>
           
-          {/* Status Messages */}
-          <AnimatePresence>
-            {(error || message) && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className={`mb-6 p-4 rounded-lg ${error ? 'bg-red-500/20 border border-red-500/30' : 'bg-green-500/20 border border-green-500/30'}`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    {error ? 
-                      <AlertTriangle size={18} className="text-red-400 mr-2" /> : 
-                      <CheckCircle size={18} className="text-green-400 mr-2" />
-                    }
-                    <p className="text-white/90">{error || message}</p>
-                  </div>
-                  <button 
-                    onClick={() => {
-                      setError(null);
-                      setMessage(null);
-                    }}
-                    className="text-white/60 hover:text-white"
-                  >
-                    <X size={18} />
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* Loading State */}
+          {loading && (
+            <div className="flex items-center justify-center py-20">
+              <div className="text-center">
+                <Loader2 className="animate-spin text-blue-400 mx-auto mb-4" size={48} />
+                <p className="text-white/70 text-lg">Loading webinar content...</p>
+              </div>
+            </div>
+          )}
           
-          {/* Active Day Content */}
-          {webinarDays.map((webinarDay) => (
-            webinarDay.day === activeDay && (
-              <div key={webinarDay.day} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Left Column: Video/Upload */}
-                <div className="lg:col-span-2">
-                  <div className="bg-white/5 backdrop-blur-md rounded-xl overflow-hidden border border-white/10 mb-6">
-                    <div className="p-6 border-b border-white/10">
-                      <div className="flex items-center mb-1">
-                        <div className="bg-blue-500/20 text-blue-400 rounded-full px-2 py-0.5 text-xs">
-                          Day {webinarDay.day}
-                        </div>
-                        <div className="ml-2 text-white/60 text-sm flex items-center">
-                          <Calendar size={14} className="mr-1" />
-                          {webinarDay.date}
-                        </div>
+          {/* Error State */}
+          {error && !loading && (
+            <motion.div 
+              className="bg-red-500/20 border border-red-500/30 rounded-xl p-6 text-center mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <AlertTriangle className="text-red-400 mx-auto mb-4" size={48} />
+              <h3 className="text-white font-bold mb-2">Unable to Load Webinar Data</h3>
+              <p className="text-white/80 mb-4">{error}</p>
+              <motion.button
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+                onClick={() => fetchWebinarData(selectedDay)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Try Again
+              </motion.button>
+            </motion.div>
+          )}
+          
+          {/* Main Content */}
+          {!loading && !error && (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedDay}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Current Day Header */}
+                <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 mb-8">
+                  <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
+                    <div>
+                      <div className="flex items-center mb-2">
+                        <span className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-medium mr-3">
+                          Day {currentDayInfo.day}
+                        </span>
+                        <span className="text-white/60 text-sm">{currentDayInfo.date}</span>
                       </div>
-                      <h2 className="text-2xl font-bold text-white">{webinarDay.title}</h2>
+                      <h2 className="text-2xl font-bold text-white mb-2">{currentDayInfo.title}</h2>
+                      <p className="text-white/80">{currentDayInfo.description}</p>
                     </div>
                     
-                    {webinarDay.videoUrl ? (
-                      <div className="aspect-video bg-black relative">
-                        <iframe
-                          ref={videoRef}
-                          src={webinarDay.videoUrl}
-                          className="absolute inset-0 w-full h-full"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          title={`Day ${webinarDay.day} Webinar`}
-                        ></iframe>
-                      </div>
-                    ) : (
-                      <div className="aspect-video bg-gray-900 relative flex flex-col items-center justify-center p-6">
-                        {webinarDay.videoThumbnail && (
-                          <img 
-                            src={webinarDay.videoThumbnail} 
-                            alt={`Day ${webinarDay.day} thumbnail`}
-                            className="absolute inset-0 w-full h-full object-cover opacity-30"
-                          />
-                        )}
-                        
-                        <div className="z-10 text-center relative">
-                          <Film size={48} className="text-white/30 mb-4 mx-auto" />
-                          <h3 className="text-xl font-semibold text-white mb-2">Upload Webinar Video</h3>
-                          <p className="text-white/60 mb-4 max-w-md">
-                            Upload your webinar recording for Day {webinarDay.day} to make it available to attendees
-                          </p>
-                          
-                          <div className="relative">
-                            <input
-                              type="file"
-                              id={`video-upload-${webinarDay.day}`}
-                              className="absolute inset-0 opacity-0 cursor-pointer"
-                              accept="video/mp4,video/webm,video/ogg"
-                              onChange={(e) => handleFileUpload(e, webinarDay.day)}
-                              disabled={isUploading}
-                            />
-                            <label
-                              htmlFor={`video-upload-${webinarDay.day}`}
-                              className={`px-6 py-3 ${
-                                isUploading ? 'bg-white/20 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
-                              } text-white rounded-lg inline-flex items-center transition-colors`}
-                            >
-                              {isUploading ? (
-                                <>
-                                  <div className="mr-2 w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                  Uploading... {uploadProgress}%
-                                </>
-                              ) : (
-                                <>
-                                  <Upload size={18} className="mr-2" />
-                                  Upload Video
-                                </>
-                              )}
-                            </label>
-                          </div>
-                          
-                          {!supabase && (
-                            <p className="mt-4 text-amber-400 text-sm">
-                              Note: Upload functionality requires database connection, which can be established by clicking the "Connect to Supabase" button in the top right.
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                    
-                    <div className="p-6">
-                      <div className="flex flex-wrap gap-3">
-                        <button 
-                          className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg flex items-center transition-colors"
-                          onClick={() => generatePDF(webinarDay.day)}
-                        >
-                          <Download size={18} className="mr-2" />
-                          Download Summary
-                        </button>
-                        
-                        <button 
-                          className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg flex items-center transition-colors"
-                          onClick={() => copySummaryToClipboard(webinarDay.day)}
-                        >
-                          <Copy size={18} className="mr-2" />
-                          Copy to Clipboard
-                        </button>
-                        
-                        <button 
-                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center transition-colors"
-                          onClick={() => generateAISummary(webinarDay.day)}
-                          disabled={isGeneratingSummary || !webinarDay.videoUrl}
-                        >
-                          {isGeneratingSummary ? (
-                            <>
-                              <div className="mr-2 w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                              Generating...
-                            </>
-                          ) : (
-                            <>
-                              <MessageSquare size={18} className="mr-2" />
-                              Generate AI Summary
-                            </>
-                          )}
-                        </button>
+                    <div className="mt-4 md:mt-0">
+                      <div className="flex items-center text-white/60 text-sm">
+                        <Users size={16} className="mr-2" />
+                        <span>Free for Smart CRM customers</span>
                       </div>
                     </div>
-                  </div>
-                  
-                  {/* Chapters Section */}
-                  <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 mb-6">
-                    <div className="flex justify-between items-center mb-4">
-                      <h3 className="text-xl font-bold text-white flex items-center">
-                        <BookMarked size={18} className="text-blue-400 mr-2" />
-                        AI Video Chapters
-                      </h3>
-                      
-                      <button 
-                        className={`px-4 py-2 ${webinarDay.videoUrl && !webinarDay.chapters ? 'bg-blue-600 hover:bg-blue-700' : 'bg-white/10'} text-white rounded-lg flex items-center transition-colors`}
-                        onClick={() => generateAIChapters(webinarDay.day)}
-                        disabled={isGeneratingChapters || !webinarDay.videoUrl || !!webinarDay.chapters}
-                      >
-                        {isGeneratingChapters ? (
-                          <>
-                            <div className="mr-2 w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                            Generating...
-                          </>
-                        ) : webinarDay.chapters ? (
-                          <>
-                            <CheckCircle size={18} className="mr-2" />
-                            Chapters Generated
-                          </>
-                        ) : (
-                          <>
-                            <List size={18} className="mr-2" />
-                            Generate AI Chapters
-                          </>
-                        )}
-                      </button>
-                    </div>
-                    
-                    {!webinarDay.chapters ? (
-                      <div className="bg-white/5 rounded-lg p-8 text-center">
-                        <BookOpen size={48} className="mx-auto text-white/20 mb-3" />
-                        <h4 className="text-white font-medium mb-2">No Chapters Available Yet</h4>
-                        <p className="text-white/60 max-w-md mx-auto mb-4">
-                          Generate AI-powered video chapters to make navigation easier. The AI will analyze the video content and create logical sections based on topic changes.
-                        </p>
-                        {!webinarDay.videoUrl && (
-                          <p className="text-amber-400 text-sm">
-                            Upload a video first to enable chapter generation.
-                          </p>
-                        )}
-                      </div>
-                    ) : (
-                      <>
-                        <p className="text-white/70 mb-4">
-                          Navigate through key sections of the webinar with these AI-detected chapters. Click any chapter to jump to that section of the video.
-                        </p>
-                        <div className="space-y-2">
-                          {webinarDay.chapters.map((chapter) => (
-                            <motion.button
-                              key={chapter.id}
-                              className={`w-full flex items-start p-3 rounded-lg text-left ${
-                                activeChapter === chapter.id
-                                  ? 'bg-blue-600/20 border border-blue-500/30'
-                                  : 'bg-white/5 hover:bg-white/10 border border-transparent'
-                              }`}
-                              onClick={() => {
-                                setActiveChapter(chapter.id);
-                                navigateToTimestamp(chapter.startTime);
-                              }}
-                              whileHover={{ x: 5 }}
-                              whileTap={{ scale: 0.98 }}
-                            >
-                              <div className="mr-3 min-w-14 text-center">
-                                <div className="text-sm text-white/70">{chapter.startTime}</div>
-                              </div>
-                              
-                              <div className="flex-grow">
-                                <h4 className="text-white font-medium">{chapter.title}</h4>
-                                {chapter.description && (
-                                  <p className="text-white/60 text-sm mt-0.5">{chapter.description}</p>
-                                )}
-                              </div>
-                              
-                              <ChevronRight 
-                                size={18} 
-                                className={`mt-1 transition-transform ${
-                                  activeChapter === chapter.id ? 'text-blue-400' : 'text-white/40'
-                                }`}
-                              />
-                            </motion.button>
-                          ))}
-                        </div>
-                        
-                        <div className="pt-4 mt-4 border-t border-white/10">
-                          <p className="text-white/60 text-sm flex items-center">
-                            <ClockCircle size={14} className="mr-1" />
-                            Click on any chapter to jump to that timestamp in the video
-                          </p>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                  
-                  {/* Description and Key Points */}
-                  <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6">
-                    <h3 className="text-xl font-bold text-white mb-4">Description</h3>
-                    <p className="text-white/80 mb-6">{webinarDay.description}</p>
-                    
-                    {webinarDay.keyPoints && webinarDay.keyPoints.length > 0 && (
-                      <>
-                        <h3 className="text-xl font-bold text-white mb-4">Key Points</h3>
-                        <ul className="space-y-3">
-                          {webinarDay.keyPoints.map((point, idx) => (
-                            <li key={idx} className="flex items-start">
-                              <CheckCircle size={18} className="text-green-400 mr-2 mt-1 flex-shrink-0" />
-                              <span className="text-white/80">{point}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </>
-                    )}
-                    
-                    {webinarDay.summaryText && (
-                      <>
-                        <h3 className="text-xl font-bold text-white mt-6 mb-4">AI Summary</h3>
-                        <div className="bg-blue-950/30 border border-blue-500/20 rounded-lg p-4">
-                          <p className="text-white/80 italic">{webinarDay.summaryText}</p>
-                        </div>
-                      </>
-                    )}
                   </div>
                 </div>
                 
-                {/* Right Column: Navigation and Resources */}
-                <div>
-                  {/* Webinar Navigation */}
-                  <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 mb-6">
-                    <h3 className="text-lg font-bold text-white mb-4">Webinar Navigation</h3>
-                    
-                    <div className="space-y-3">
-                      {webinarDays.map((day) => (
-                        <button 
-                          key={day.day}
-                          className={`w-full flex items-center p-3 rounded-lg transition-colors ${
-                            activeDay === day.day 
-                              ? 'bg-blue-600/20 border border-blue-500/30' 
-                              : 'bg-white/10 hover:bg-white/15 border border-transparent'
-                          }`}
-                          onClick={() => setActiveDay(day.day)}
-                        >
-                          <div className={`w-8 h-8 rounded-full ${
-                            activeDay === day.day ? 'bg-blue-600' : 'bg-white/20'
-                          } flex items-center justify-center mr-3 flex-shrink-0`}>
-                            <span className="font-bold text-sm">{day.day}</span>
-                          </div>
-                          
-                          <div className="text-left">
-                            <h4 className="text-white font-medium text-sm">Day {day.day}</h4>
-                            <p className="text-white/60 text-xs truncate">{day.title}</p>
-                          </div>
-                          
-                          {day.videoUrl && (
-                            <PlayCircle size={16} className="text-green-400 ml-auto flex-shrink-0" />
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Instructor Profile */}
-                  <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 mb-6">
-                    <h3 className="text-lg font-bold text-white mb-4">Instructor</h3>
-                    
-                    <div className="flex items-center mb-4">
-                      <div className="relative">
-                        <img 
-                          src={instructorImage} 
-                          alt="Dean Gilmore" 
-                          className="w-16 h-16 rounded-full object-cover border-2 border-white/20"
-                          onError={(e) => {
-                            console.error("Error loading instructor image:", instructorImage);
-                            e.currentTarget.src = "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1600";
-                          }}
-                        />
-                      </div>
-                      <div className="ml-4">
-                        <h4 className="text-white font-medium">Dean Gilmore</h4>
-                        <p className="text-white/60 text-sm">Serial AI Automation Entrepreneur & Video Personalization Innovator</p>
-                      </div>
-                    </div>
-                    
-                    <p className="text-white/70 text-sm">
-                      Leveraging 22+ years of pioneering CRM and sales‑automation strategies, Dean has built and scaled platforms like Smart CRM, TrustScout.ai, and VideoRemix—helping businesses of all sizes unlock over $75 million in new revenue through streamlined pipelines, AI‑powered personalization, and turnkey automated workflows.
-                    </p>
-                    
-                    <div className="mt-4 pt-4 border-t border-white/10">
-                      <div className="flex items-center">
-                        <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                        <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                        <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                        <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                        <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                        <span className="ml-2 text-white/60 text-xs">500+ reviews</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Additional Resources */}
-                  <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6">
-                    <h3 className="text-lg font-bold text-white mb-4">Additional Resources</h3>
-                    
-                    <div className="space-y-4">
-                      {[
-                        {
-                          title: "Presentation Slides",
-                          description: "Download the slides from the webinar presentations",
-                          icon: <Download size={18} className="text-blue-400" />,
-                          action: "Download"
-                        },
-                        {
-                          title: "Implementation Guide",
-                          description: "Step-by-step guide for implementing Smart CRM",
-                          icon: <BookOpen size={18} className="text-purple-400" />,
-                          action: "Access"
-                        },
-                        {
-                          title: "Full Webinar Transcript",
-                          description: "Complete text transcript of all sessions",
-                          icon: <FileText size={18} className="text-green-400" />,
-                          action: "Download"
-                        },
-                        {
-                          title: "Q&A Responses",
-                          description: "Answers to questions asked during the webinars",
-                          icon: <MessageSquare size={18} className="text-amber-400" />,
-                          action: "View"
-                        }
-                      ].map((resource, idx) => (
-                        <div key={idx} className="bg-white/10 rounded-lg p-4">
-                          <div className="flex items-start">
-                            <div className="p-2 bg-white/10 rounded-lg mr-3 flex-shrink-0">
-                              {resource.icon}
-                            </div>
-                            <div className="flex-grow">
-                              <h4 className="text-white font-medium text-sm">{resource.title}</h4>
-                              <p className="text-white/60 text-xs mb-2">{resource.description}</p>
-                              <button className="text-blue-400 text-xs flex items-center hover:underline">
-                                {resource.action}
-                                <ArrowRight size={12} className="ml-1" />
-                              </button>
-                            </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  {/* Main Video Player */}
+                  <div className="lg:col-span-2">
+                    {webinarData?.transcript?.video_url || webinarData?.summary?.video_url ? (
+                      <WebinarPlayer
+                        videoUrl={webinarData.transcript?.video_url || webinarData.summary?.video_url || ''}
+                        title={webinarData.summary?.webinar_title || currentDayInfo.title}
+                        chapters={webinarData.chapters.map(chapter => ({
+                          id: chapter.id,
+                          title: chapter.chapter_title,
+                          startTime: chapter.start_time,
+                          endTime: chapter.end_time,
+                          description: chapter.description
+                        }))}
+                        thumbnailUrl={currentDayInfo.videoThumbnail}
+                        onTimeUpdate={setCurrentPlaybackTime}
+                        className="mb-8"
+                      />
+                    ) : (
+                      <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-8 text-center mb-8">
+                        <div className="aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl border border-white/10 flex items-center justify-center mb-4">
+                          <div className="text-center">
+                            <Play size={48} className="text-white/40 mx-auto mb-2" />
+                            <p className="text-white/60">Video not yet available</p>
                           </div>
                         </div>
-                      ))}
+                        <p className="text-white/80">
+                          This webinar recording will be available after the live session on {currentDayInfo.date}.
+                        </p>
+                      </div>
+                    )}
+                    
+                    {/* AI Summary Section */}
+                    {webinarData?.summary && (
+                      <motion.div 
+                        className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 mb-8"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        <div className="flex items-center mb-4">
+                          <Sparkles className="text-blue-400 mr-2" size={20} />
+                          <h3 className="text-xl font-bold text-white">AI-Generated Summary</h3>
+                        </div>
+                        
+                        <p className="text-white/80 mb-6">{webinarData.summary.summary_text}</p>
+                        
+                        {webinarData.summary.key_points && webinarData.summary.key_points.length > 0 && (
+                          <div>
+                            <h4 className="text-white font-medium mb-3">Key Takeaways:</h4>
+                            <div className="space-y-2">
+                              {webinarData.summary.key_points.map((point, idx) => (
+                                <motion.div 
+                                  key={idx}
+                                  className="flex items-start"
+                                  initial={{ opacity: 0, x: -10 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ delay: 0.1 * idx + 0.3 }}
+                                >
+                                  <Star className="text-yellow-400 mr-2 mt-1 flex-shrink-0" size={14} />
+                                  <span className="text-white/80 text-sm">{point}</span>
+                                </motion.div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </motion.div>
+                    )}
+                    
+                    {/* Interactive Transcript */}
+                    {webinarData?.transcript && (
+                      <motion.div 
+                        className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center">
+                            <FileText className="text-purple-400 mr-2" size={20} />
+                            <h3 className="text-xl font-bold text-white">Interactive Transcript</h3>
+                          </div>
+                          <Download 
+                            className="text-white/60 hover:text-white cursor-pointer" 
+                            size={18} 
+                            onClick={() => {
+                              const blob = new Blob([webinarData.transcript?.transcript_text || ''], { type: 'text/plain' });
+                              const url = URL.createObjectURL(blob);
+                              const a = document.createElement('a');
+                              a.href = url;
+                              a.download = `Smart_CRM_Day${selectedDay}_Transcript.txt`;
+                              a.click();
+                              URL.revokeObjectURL(url);
+                            }}
+                          />
+                        </div>
+                        
+                        <div className="bg-white/5 rounded-lg p-4 max-h-96 overflow-y-auto">
+                          <div className="whitespace-pre-wrap text-white/80 text-sm leading-relaxed">
+                            {webinarData.transcript.transcript_text}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
+                  
+                  {/* Sidebar */}
+                  <div className="lg:col-span-1 space-y-6">
+                    {/* Active Chapter */}
+                    {activeChapter && (
+                      <motion.div 
+                        className="bg-gradient-to-br from-blue-900/30 to-purple-900/30 backdrop-blur-md rounded-xl border border-blue-500/30 p-4"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="flex items-center mb-2">
+                          <motion.div
+                            animate={{ 
+                              rotate: [0, 10, -10, 0],
+                              scale: [1, 1.1, 1]
+                            }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          >
+                            <Play className="text-blue-400 mr-2" size={16} />
+                          </motion.div>
+                          <span className="text-blue-400 text-sm font-medium">Now Playing</span>
+                        </div>
+                        <h4 className="text-white font-medium text-sm mb-1">{activeChapter.chapter_title}</h4>
+                        <p className="text-white/70 text-xs">{activeChapter.description}</p>
+                      </motion.div>
+                    )}
+                    
+                    {/* Instructor Profile */}
+                    <InstructorProfile showFullProfile={false} />
+                    
+                    {/* Webinar Resources */}
+                    <WebinarResources 
+                      webinarDay={selectedDay}
+                      transcript={webinarData?.transcript?.transcript_text}
+                      qaContent={webinarData?.transcript?.qa_content}
+                      summary={webinarData?.summary}
+                    />
+                    
+                    {/* Day Overview */}
+                    <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6">
+                      <h3 className="text-white font-bold mb-4 flex items-center">
+                        <BookOpen className="mr-2 text-green-400" size={20} />
+                        Day {selectedDay} Overview
+                      </h3>
+                      
+                      <div className="space-y-3">
+                        {currentDayInfo.keyPoints.map((point, idx) => (
+                          <motion.div 
+                            key={idx}
+                            className="flex items-start"
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: idx * 0.1 }}
+                          >
+                            <Star className="text-yellow-400 mr-2 mt-1 flex-shrink-0" size={14} />
+                            <span className="text-white/80 text-sm">{point}</span>
+                          </motion.div>
+                        ))}
+                      </div>
                     </div>
                     
-                    {/* Support Contact */}
-                    <div className="mt-6 pt-6 border-t border-white/10">
-                      <h4 className="text-white font-medium text-sm mb-2">Need Assistance?</h4>
-                      <p className="text-white/60 text-xs mb-3">
-                        If you have any questions or need help with the webinar content, our support team is here to help.
-                      </p>
-                      <a 
-                        href="mailto:support@smartcrm.com" 
-                        className="inline-block px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm transition-colors"
-                      >
-                        Contact Support
-                      </a>
+                    {/* Social Share */}
+                    <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6">
+                      <h3 className="text-white font-medium mb-4">Share This Webinar</h3>
+                      <SocialShare 
+                        url={window.location.href}
+                        title={`${currentDayInfo.title} - Smart CRM Masterclass`}
+                      />
                     </div>
                   </div>
                 </div>
-              </div>
-            )
-          ))}
+                
+                {/* Additional Content Sections */}
+                {!loading && webinarData && (
+                  <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Chapters Overview */}
+                    {webinarData.chapters.length > 0 && (
+                      <motion.div 
+                        className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 }}
+                      >
+                        <h3 className="text-xl font-bold text-white mb-4">Webinar Chapters</h3>
+                        <div className="space-y-3">
+                          {webinarData.chapters.map((chapter, idx) => (
+                            <motion.div 
+                              key={chapter.id}
+                              className={`p-3 rounded-lg border cursor-pointer transition-all ${
+                                activeChapter?.id === chapter.id 
+                                  ? 'bg-blue-500/20 border-blue-500/40' 
+                                  : 'bg-white/5 border-white/10 hover:bg-white/10'
+                              }`}
+                              whileHover={{ x: 3 }}
+                              onClick={() => {
+                                // This would integrate with video player to seek to chapter start time
+                                console.log(`Jumping to chapter: ${chapter.chapter_title} at ${chapter.start_time}`);
+                              }}
+                            >
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <h4 className="text-white font-medium text-sm">{chapter.chapter_title}</h4>
+                                  {chapter.description && (
+                                    <p className="text-white/60 text-xs mt-1">{chapter.description}</p>
+                                  )}
+                                </div>
+                                <span className="text-white/50 text-xs">{chapter.start_time}</span>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                    
+                    {/* Key Moments */}
+                    {webinarData.transcript?.key_moments && webinarData.transcript.key_moments.length > 0 && (
+                      <motion.div 
+                        className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 }}
+                      >
+                        <h3 className="text-xl font-bold text-white mb-4">Key Moments</h3>
+                        <div className="space-y-3">
+                          {webinarData.transcript.key_moments.map((moment: any, idx: number) => (
+                            <motion.div 
+                              key={idx}
+                              className="p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 cursor-pointer"
+                              whileHover={{ x: 3 }}
+                            >
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <h4 className="text-white font-medium text-sm">{moment.title}</h4>
+                                  <p className="text-white/60 text-xs mt-1">{moment.description}</p>
+                                </div>
+                                <span className="text-white/50 text-xs">{moment.timestamp}</span>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          )}
         </div>
       </main>
       
@@ -1182,16 +580,5 @@ ${webinarDay.chapters.map(chapter => `• ${chapter.title} (${chapter.startTime}
     </div>
   );
 };
-
-// Icon components to avoid issues
-const FileText = ({ size, className }: { size: number, className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-    <polyline points="14 2 14 8 20 8"></polyline>
-    <line x1="16" y1="13" x2="8" y2="13"></line>
-    <line x1="16" y1="17" x2="8" y2="17"></line>
-    <polyline points="10 9 9 9 8 9"></polyline>
-  </svg>
-);
 
 export default WebinarRecapPage;

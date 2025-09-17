@@ -17,9 +17,11 @@ interface WebinarResource {
 interface WebinarResourcesProps {
   webinarDay: number;
   transcript?: string;
+  qaContent?: any[];
+  summary?: any;
 }
 
-const WebinarResources: React.FC<WebinarResourcesProps> = ({ webinarDay, transcript }) => {
+const WebinarResources: React.FC<WebinarResourcesProps> = ({ webinarDay, transcript, qaContent, summary }) => {
   const [supabase, setSupabase] = useState<any | null>(null);
   const [resources, setResources] = useState<WebinarResource[]>([]);
   const [modalContent, setModalContent] = useState<{
@@ -219,29 +221,13 @@ const WebinarResources: React.FC<WebinarResourcesProps> = ({ webinarDay, transcr
     updateResourceStatus(resourceIndex, 'loading');
 
     try {
-      let transcriptText = transcript;
-
-      // If no transcript provided, try to fetch from Supabase
-      if (!transcriptText && supabase) {
-        const { data, error } = await supabase
-          .from('webinar_transcripts')
-          .select('transcript_text')
-          .eq('webinar_day_number', webinarDay)
-          .single();
-          
-        if (error) {
-          console.error("Error fetching transcript:", error);
-          transcriptText = generateMockTranscriptForDay(webinarDay);
-        } else {
-          transcriptText = data.transcript_text;
-        }
-      } else if (!transcriptText) {
-        // If no Supabase connection, use mock transcript
-        transcriptText = generateMockTranscriptForDay(webinarDay);
+      // Use transcript passed as prop, or show error if not available
+      if (!transcript) {
+        throw new Error("Transcript not available for this webinar day");
       }
       
       // Create a Blob with the transcript
-      const blob = new Blob([transcriptText], { type: 'text/plain' });
+      const blob = new Blob([transcript], { type: 'text/plain' });
       
       // Create a download link and trigger it
       const url = URL.createObjectURL(blob);
@@ -269,25 +255,10 @@ const WebinarResources: React.FC<WebinarResourcesProps> = ({ webinarDay, transcr
     updateResourceStatus(resourceIndex, 'loading');
     
     try {
-      let qaContent = [];
-      
-      // Try to fetch Q&A content from Supabase
-      if (supabase) {
-        const { data, error } = await supabase
-          .from('webinar_transcripts')
-          .select('qa_content')
-          .eq('webinar_day_number', webinarDay)
-          .single();
-          
-        if (!error && data && data.qa_content) {
-          qaContent = data.qa_content;
-        } else {
-          // If no data or error, use mock Q&A
-          qaContent = getMockQAForDay(webinarDay);
-        }
-      } else {
-        // If no Supabase, use mock Q&A
-        qaContent = getMockQAForDay(webinarDay);
+      // Use Q&A content passed as prop, or use mock data as fallback
+      let qaData = qaContent;
+      if (!qaData || qaData.length === 0) {
+        qaData = getMockQAForDay(webinarDay);
       }
       
       // Set modal content to display Q&A
@@ -301,7 +272,7 @@ const WebinarResources: React.FC<WebinarResourcesProps> = ({ webinarDay, transcr
                 along with responses from our experts.
               </p>
               
-              {qaContent.map((qa: { question: string, answer: string }, idx: number) => (
+              {qaData.map((qa: { question: string, answer: string }, idx: number) => (
                 <div key={idx} className="bg-white/5 rounded-lg p-4 space-y-3">
                   <div className="flex items-start">
                     <div className="flex-shrink-0 p-1.5 bg-blue-500/20 rounded-full mr-3 mt-0.5">
@@ -617,113 +588,78 @@ function getImplementationGuideForDay(day: number) {
   }
 }
 
-// Helper function to generate mock transcript for a webinar day
-function generateMockTranscriptForDay(day: number) {
-  if (day === 1) {
-    return `[00:00:00] Host: Welcome everyone to the Smart CRM Masterclass! I'm Dean Gilmore, and I'm thrilled to have you all here today for what I promise will be a transformative series on revolutionizing your customer relationships using our Smart CRM technology.
+      // Create a Blob with the transcript
+      const blob = new Blob([transcript], { type: 'text/plain' });
+      
+      // Create a download link and trigger it
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Smart_CRM_Day${webinarDay}_Transcript.txt`;
+      document.body.appendChild(a);
+      a.click();
+      
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 0);
+      
+      updateResourceStatus(resourceIndex, 'success');
+    } catch (error) {
+      console.error('Error downloading transcript:', error);
+      updateResourceStatus(resourceIndex, 'error', 'Transcript not available for download');
+    }
+  };
 
-[00:01:15] Host: Before we dive in, let me ask you a question: How much time do you think your sales team spends on actual selling activities versus administrative work? If you're like most businesses, the answer might shock you.
-
-[00:02:30] Host: Studies show that sales reps spend up to 65% of their time on non-selling activities, with manual data entry being the biggest culprit. That's two-thirds of your sales capacity essentially wasted!
-
-[00:04:45] Host: This is the fundamental problem with traditional CRM systems. They were built for managers to track activity, not for sales teams to build relationships. They've become data repositories that create work rather than eliminate it.
-
-[00:07:20] Host: Let me introduce you to Sarah, who runs a consulting business with a team of 5 sales reps. Before implementing Smart CRM, her team was drowning in administrative tasks, spending hours updating their traditional CRM.
-
-[00:10:45] Host: Within just 30 days of implementing Smart CRM, Sarah's team saw a 46% increase in closed deals. How? Because her reps went from spending 3 hours per day on data entry to less than 30 minutes.
-
-[00:14:50] Host: The key difference is our AI-powered approach. Smart CRM automatically captures emails, calls, and meetings. It extracts the important information and updates your CRM without anyone having to type a single character.
-
-[00:18:30] Host: Let me show you how this works in practice. When Sarah's team receives an email from a customer, Smart CRM automatically logs it, analyzes the sentiment, extracts action items, and even suggests the next best step.
-
-[00:23:15] Host: Another game-changing feature is our AI contact enrichment. Smart CRM automatically fills in the gaps in your contact records by pulling in relevant data from various sources, creating rich profiles that help you personalize your approach.
-
-[00:29:40] Host: Now let's talk about the sales pipeline. Traditional CRMs show you what's happening, but Smart CRM tells you WHY it's happening and WHAT you should do about it. Our predictive analytics identify which deals are at risk and which are most likely to close.
-
-[00:35:20] Host: Let's take a few questions before we wrap up day one.
-
-[00:35:30] Attendee: How long does it typically take to implement Smart CRM?
-
-[00:35:40] Host: Great question. Most businesses are up and running within a week. The email and calendar integrations can be set up in minutes, and because there's no manual data entry required, adoption happens naturally. There's no lengthy training period.
-
-[00:37:10] Attendee: Does Smart CRM integrate with our existing tools?
-
-[00:37:20] Host: Absolutely! We have native integrations with all major email providers, calendar systems, video conferencing tools, and document management systems. We also have an open API for custom integrations.
-
-[00:39:45] Host: Tomorrow, we'll dive deeper into how Smart CRM's automation capabilities handle lead scoring, follow-ups, and meeting preparation. You'll see exactly how AI can augment your sales team's capabilities to achieve more with less effort.
-
-[00:42:30] Host: Thank you all for joining Day 1 of our masterclass. I look forward to seeing you tomorrow where we'll explore "Automate, Personalize, and Scale Your Sales." Have a great evening!`;
-  } else if (day === 2) {
-    return `[00:00:00] Host: Welcome back everyone to Day 2 of our Smart CRM Masterclass! Yesterday we explored the problems with traditional CRM systems and introduced Smart CRM's revolutionary approach. Today, we're focusing on "Automate, Personalize, and Scale Your Sales."
-
-[00:01:30] Host: There's a persistent myth in sales that quality requires time - that to deliver personalized service, you need to spend hours crafting individual messages and doing manual research. Today I'm going to show you why that's no longer true.
-
-[00:03:45] Host: With Smart CRM's automation capabilities, you can deliver highly personalized experiences to each prospect while spending a fraction of the time. This isn't about replacing the human touch - it's about eliminating the busywork so you can focus on meaningful conversations.
-
-[00:07:20] Host: Let's look at Jennifer's sales team as an example. Before Smart CRM, her 8-person team was handling about 200 leads per month. After implementing our AI automation, they're managing over 500 leads with the same headcount - and their conversion rates actually improved.
-
-[00:11:45] Host: The first game-changing feature is our AI-powered lead scoring. Smart CRM analyzes dozens of factors about each lead - their engagement with your emails, their company profile, their behavior on your website - and assigns an accurate probability of conversion.
-
-[00:16:30] Host: Let me demonstrate how this works. When a new lead comes in, Smart CRM immediately begins building a profile. It scans their email signature, LinkedIn profile, and company website to enrich their record. Then it analyzes their interactions to determine their level of interest.
-
-[00:21:15] Host: The second key automation is our follow-up sequences. Instead of manually remembering to check in, Smart CRM automatically schedules perfectly timed follow-ups based on prospect behavior. These aren't generic - they're contextual to the specific situation.
-
-[00:26:40] Host: For example, if a prospect views your pricing page three times but doesn't reach out, Smart CRM can trigger an automated email offering to walk them through options. If they mention a competitor in an email, it can suggest competitive differentiators to include in your response.
-
-[00:32:10] Host: The third automation that Jennifer's team loves is our meeting preparation assistant. Before every call, Smart CRM automatically prepares a briefing with the customer's history, previous pain points, and suggested talking points - all without you lifting a finger.
-
-[00:37:30] Host: Let's take some questions.
-
-[00:37:45] Attendee: How does the system handle email personalization? I'm worried about emails sounding robotic.
-
-[00:38:00] Host: That's an excellent concern. Smart CRM uses advanced natural language models that adapt to your writing style. The system learns from your previous communications and maintains your voice. We also have tone controls so you can adjust how formal or casual the suggestions are.
-
-[00:40:15] Attendee: Can I customize the automation rules for my specific sales process?
-
-[00:40:30] Host: Absolutely! While we provide templates to get you started, everything is fully customizable. You can create automation rules based on any data point in the system, and you can have different rules for different products, territories, or customer segments.
-
-[00:43:45] Host: Tomorrow in our final session, we'll introduce The Client Engine System – a comprehensive framework for building predictable revenue through systematic sales processes, and how Smart CRM integrates with this methodology.
-
-[00:46:30] Host: Thank you all for joining Day 2 of our masterclass. I look forward to seeing you tomorrow for our final session on "Your Future Sales System + Smart CRM Offer Reveal." Have a great evening!`;
-  } else {
-    return `[00:00:00] Host: Welcome to our final day of the Smart CRM Masterclass! Over the past two days, we've explored the problems with traditional CRMs and how Smart CRM's AI-powered automation revolutionizes sales processes. Today, we're bringing it all together with "Your Future Sales System + Smart CRM Offer Reveal."
-
-[00:02:15] Host: The key to sustainable business growth isn't just having good salespeople - it's having a systematic approach to revenue generation that doesn't depend on individual talent or heroic efforts.
-
-[00:04:30] Host: That's why we created The Client Engine System - a comprehensive framework for building predictable revenue through systematic sales processes. It's the methodology that underlies Smart CRM.
-
-[00:08:45] Host: The Client Engine System has five components: Lead Attraction, Qualification, Conversion, Delivery, and Expansion. Each component has specific processes that can be systematized and largely automated.
-
-[00:14:20] Host: What makes this approach different is that it creates a self-sustaining business development machine that generates consistent results without constant manual effort. Smart CRM provides the technological foundation for this system.
-
-[00:19:45] Host: Let me show you what happens when businesses implement this approach. Mark runs an IT services company that was struggling with feast-or-famine revenue. His sales team would close a big deal, then focus on delivering, causing their pipeline to empty out.
-
-[00:24:30] Host: After implementing The Client Engine System with Smart CRM as the foundation, Mark's company now has predictable monthly revenue growth. Their sales process runs like clockwork, with clear visibility into every stage.
-
-[00:29:15] Host: The implementation process is straightforward and can be completed in under 7 days with our guided approach. Today I'll walk you through exactly what that looks like.
-
-[00:35:40] Host: Day 1-2 is account setup and data import. Day 3-4 focuses on workflow configuration. Day 5 is team training, and Days 6-7 involve initial optimization based on your specific business needs.
-
-[00:42:15] Host: Now let's talk about how you can get started. We're offering a special package exclusively for masterclass attendees.
-
-[00:43:30] Host: You'll get a 14-day free trial with no credit card required, implementation assistance from our customer success team, a dedicated account manager, and a 30% discount on annual plans if you decide to continue.
-
-[00:47:15] Host: Let's take some final questions before we wrap up.
-
-[00:47:30] Attendee: How does Smart CRM compare to other AI-powered CRMs on the market?
-
-[00:47:45] Host: Great question. While there are other CRMs beginning to add AI features, Smart CRM was built from the ground up with AI at its core. Most competitors are adding AI as an afterthought to legacy systems. The difference is like adding electric motors to a gas car versus building a Tesla - one is an adaptation, the other is a complete reimagining of what's possible.
-
-[00:50:15] Attendee: What kind of ROI should we expect and how quickly?
-
-[00:50:30] Host: Most customers see positive ROI within the first month simply from the time savings on administrative tasks. In terms of revenue impact, our customers typically see a 20-40% increase in sales productivity within the first quarter. The exact numbers depend on your starting point and how thoroughly you implement the system.
-
-[00:54:45] Host: As we conclude this masterclass, remember that the future of sales isn't about working harder - it's about working smarter with AI as your co-pilot. Smart CRM gives you that competitive advantage.
-
-[00:57:30] Host: Thank you all for joining this masterclass. I hope you've found it valuable, and I look forward to potentially working with you as you transform your sales process with Smart CRM. Have a great day!`;
-  }
-}
-
+  const handleViewQA = async () => {
+    const resourceIndex = 3;
+    updateResourceStatus(resourceIndex, 'loading');
+    
+    try {
+      // Use Q&A content passed as prop, or use mock data as fallback
+      let qaData = qaContent;
+      if (!qaData || qaData.length === 0) {
+        qaData = getMockQAForDay(webinarDay);
+      }
+      
+      // Set modal content to display Q&A
+      setModalContent({
+        title: `Q&A from Day ${webinarDay} Webinar`,
+        content: (
+          <div className="max-h-[70vh] overflow-y-auto pr-2">
+            <div className="space-y-6">
+              <p className="text-white/80">
+                Below are questions asked by attendees during the Day {webinarDay} session, 
+                along with responses from our experts.
+              </p>
+              
+              {qaData.map((qa: { question: string, answer: string }, idx: number) => (
+                <div key={idx} className="bg-white/5 rounded-lg p-4 space-y-3">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 p-1.5 bg-blue-500/20 rounded-full mr-3 mt-0.5">
+                      <MessageSquare size={16} className="text-blue-400" />
+                    </div>
+                    <p className="text-white font-medium">{qa.question}</p>
+                  </div>
+                  
+                  <div className="pl-9 text-white/80">
+                    <p>{qa.answer}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ),
+        isOpen: true
+      });
+      
+      updateResourceStatus(resourceIndex, 'success');
+    } catch (error) {
+      console.error('Error viewing Q&A:', error);
+      updateResourceStatus(resourceIndex, 'error', 'Failed to load Q&A content');
+    }
+  };
 // Helper function to get mock Q&A content for a webinar day
 function getMockQAForDay(day: number): { question: string, answer: string }[] {
   if (day === 1) {

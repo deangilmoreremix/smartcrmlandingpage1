@@ -37,6 +37,7 @@ const WebinarPlayer: React.FC<WebinarPlayerProps> = ({
   const [showControls, setShowControls] = useState(true);
   const [activeChapter, setActiveChapter] = useState<Chapter | null>(null);
   const [playbackRate, setPlaybackRate] = useState(1);
+  const [videoError, setVideoError] = useState<string | null>(null);
   
   // Convert time string (HH:MM:SS) to seconds
   const timeToSeconds = (timeStr: string): number => {
@@ -93,7 +94,12 @@ const WebinarPlayer: React.FC<WebinarPlayerProps> = ({
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
       setDuration(videoRef.current.duration);
+      setVideoError(null);
     }
+  };
+  
+  const handleVideoError = () => {
+    setVideoError('Unable to load video. Please check the video URL or try again later.');
   };
   
   const handleVolumeChange = (newVolume: number) => {
@@ -149,9 +155,37 @@ const WebinarPlayer: React.FC<WebinarPlayerProps> = ({
     }
   };
   
+  // Don't render if no video URL
+  if (!videoUrl) {
+    return (
+      <div className={`bg-white/5 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden ${className}`}>
+        <div className="aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+          <div className="text-center">
+            <Play size={48} className="text-white/40 mx-auto mb-2" />
+            <p className="text-white/60">Video not available</p>
+          </div>
+        </div>
+        <div className="p-6">
+          <h3 className="text-xl font-bold text-white">{title}</h3>
+          <p className="text-white/70 mt-2">This webinar recording will be available after the live session.</p>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div className={`bg-white/5 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden ${className}`}>
       <div className="relative aspect-video bg-black">
+        {videoError && (
+          <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-30">
+            <div className="text-center">
+              <AlertTriangle size={48} className="text-red-400 mx-auto mb-4" />
+              <p className="text-white text-lg font-medium mb-2">Video Error</p>
+              <p className="text-white/70">{videoError}</p>
+            </div>
+          </div>
+        )}
+        
         <video
           ref={videoRef}
           className="w-full h-full"
@@ -160,10 +194,12 @@ const WebinarPlayer: React.FC<WebinarPlayerProps> = ({
           onLoadedMetadata={handleLoadedMetadata}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
+          onError={handleVideoError}
           onMouseEnter={() => setShowControls(true)}
           onMouseLeave={() => setShowControls(true)} // Keep controls visible for now
         >
           <source src={videoUrl} type="video/mp4" />
+          <source src={videoUrl} type="video/webm" />
           Your browser does not support the video tag.
         </video>
         
