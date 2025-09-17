@@ -244,7 +244,7 @@ const DynamicSignupForm: React.FC<DynamicSignupFormProps> = ({
           </h3>
           
           <p className="text-white/70">
-            We'll keep you updated on our masterclass starting tomorrow at 3PM EDT.
+            We'll keep you updated on our masterclass starting September 21, 2025 at 8:00 PM EST.
           </p>
         </motion.div>
       )}
