@@ -229,7 +229,7 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                 }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
               >
-                Special sale pricing ends September 27, 2025 - includes free masterclass (Sep 10-11)
+                Special sale pricing ends September 27, 2025 - includes free masterclass (Sep 21-23)
               </motion.p>
             </div>
           </motion.div>

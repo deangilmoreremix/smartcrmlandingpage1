@@ -194,7 +194,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
               >
-                Special sale ends September 27, 2025 - free masterclass included (Sep 10-11)
+                Special sale ends September 27, 2025 - free masterclass included (Sep 21-23)
               </motion.p>
             </div>
           </motion.div>

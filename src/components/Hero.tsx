@@ -253,7 +253,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
               </span>
             </button>
             <p className="text-white/60 text-sm mt-3">
-              Special pricing ends <span className="text-red-400 font-bold">September 27th</span>! Get Smart CRM now with exclusive bonuses and free masterclass access.
+              Join our 3-day training on September 21-23, 2025 (Day 1: 8:00 PM EST, Days 2-3: 3:00 PM EST)
             </p>
           </div>
         </AnimatedElement>
