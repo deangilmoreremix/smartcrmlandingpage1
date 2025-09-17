@@ -751,6 +751,9 @@ const TrainingProgramSection: React.FC = () => {
                     <div>
                       <h4 className="text-white font-medium">Satisfaction Guarantee</h4>
                       <p className="text-white/70 text-sm">If you don't get value from the masterclass, we'll refund your Smart CRM subscription in full.</p>
+                      <p className="text-white/70 text-sm">
+                        <span className="font-semibold">September 21-23, 2025</span> - Day 1: 8:00 PM EST, Days 2-3: 3:00 PM EST
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -796,7 +799,7 @@ const TrainingProgramSection: React.FC = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
-            <span className="text-blue-400">Limited time:</span> Register now for the September 21-23 masterclass and get the Smart CRM Implementation Guide ($197 value) for free
+            <span className="text-blue-400 font-medium">Limited time:</span> Register now for the May 20-21 masterclass and get the Smart CRM Implementation Guide ($197 value) for free
           </motion.p>
         </motion.div>
       </div>
