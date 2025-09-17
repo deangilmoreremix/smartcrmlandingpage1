@@ -79,7 +79,7 @@ const SEOMetaTags: React.FC<SEOMetaTagsProps> = ({
             price: '0',
             priceCurrency: 'USD',
             availability: 'https://schema.org/LimitedAvailability',
-            validFrom: '2025-08-25T00:00:00-04:00'
+            validFrom: '2025-09-21T00:00:00-05:00'
           },
           performer: {
             '@type': 'Person',

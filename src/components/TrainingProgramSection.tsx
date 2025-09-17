@@ -137,7 +137,7 @@ const TrainingProgramSection: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Get Smart CRM during our special 5-day sale and receive exclusive access to CRM expert Dean Gilmore's transformative 2-day training on September 10-11, 2025
+              <span className="text-blue-400 font-medium">Limited time:</span> Register now for the September 21-23 masterclass and get the Smart CRM Implementation Guide ($197 value) for free
             </motion.p>
           </div>
         </AnimatedElement>

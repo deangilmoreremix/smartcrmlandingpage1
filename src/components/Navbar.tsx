@@ -97,7 +97,7 @@ const Navbar: React.FC = () => {
               <MobileNavLink href="/" onClick={() => setIsOpen(false)}>Home</MobileNavLink>
               <MobileNavLink href="#features" onClick={() => setIsOpen(false)}>Features</MobileNavLink>
               <MobileNavLink href="#demo" onClick={() => setIsOpen(false)}>Demo</MobileNavLink>
-              <MobileNavLink href="#training" onClick={() => setIsOpen(false)}>Masterclass</MobileNavLink>
+              <MobileNavLink href="#training" onClick={() => setIsOpen(false)}>Masterclass (Sep 21-23)</MobileNavLink>
               <MobileNavLink href="/webinar-recap" onClick={() => setIsOpen(false)}>Webinar Recap</MobileNavLink>
               <MobileNavLink href="#faq" onClick={() => setIsOpen(false)}>FAQ</MobileNavLink>
               <div className="pt-2">
