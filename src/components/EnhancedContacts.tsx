@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, ArrowRight, Contact, Database, Zap, CheckCircle, ExternalLink, Play, Search, Filter, Grid, User, Mail, Building, Phone, Tag, AlertTriangle, Clock, TrendingDown, UserMinus, X, Info, Activity, BarChart2, DollarSign, FileText, Shield } from 'lucide-react';
+import { Users, ArrowRight, Contact, Database, Zap, CheckCircle, ExternalLink, Play, Search, Filter, Grid, User, Mail, Building, Phone, Tag, AlertTriangle, Clock, TrendingDown, UserMinus, X, Info, Activity, BarChart2, DollarSign, FileText, Shield, BrainCircuit, MessageSquare, BarChart3, Image } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
 import { SignupContext } from '../App';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
@@ -509,27 +509,27 @@ const EnhancedContacts: React.FC = () => {
         {/* Enhanced Contacts Features Grid */}
         <AnimatedElement animation="fadeIn" delay={1.2}>
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-white mb-8 text-center">Smart CRM Enhanced Contacts Features</h3>
+            <h3 className="text-2xl font-bold text-white mb-8 text-center">Smart CRM Contacts Module: Key Features</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                {
-                  icon: <Database className="text-blue-400" size={32} />,
+                { // Card 1: AI-Powered Contact Intelligence
+                  icon: <BrainCircuit className="text-blue-400" size={32} />,
                   title: "AI-Powered Contact Intelligence",
-                  description: "Automatic contact enrichment and relationship mapping that builds comprehensive customer profiles with 200+ data points.",
-                  features: ["LinkedIn profile integration", "Company data enrichment", "Social media tracking", "Communication history analysis"]
+                  description: "Transform raw contact data into actionable insights with multi-model AI analysis and real-time web research.",
+                  features: ["Advanced Contact Scoring", "Intelligent Contact Enrichment", "Smart Categorization", "Relationship Mapping", "Bulk Analysis"]
                 },
-                {
-                  icon: <Zap className="text-purple-400" size={32} />,
-                  title: "Smart Contact Management",
-                  description: "Intelligent contact organization with automated categorization, duplicate detection, and data validation.",
-                  features: ["Duplicate contact merging", "Data validation rules", "Smart categorization", "Bulk contact operations"]
+                { // Card 2: AI Communication & Content Tools
+                  icon: <MessageSquare className="text-purple-400" size={32} />,
+                  title: "AI Communication & Content Tools",
+                  description: "Streamline and optimize all forms of communication and content creation with AI-driven assistance.",
+                  features: ["AI Email Composer", "Smart Social Messaging", "Objection Handler", "Subject Line Generator", "Meeting Summary Generator", "Communication Optimizer"]
                 },
-                {
-                  icon: <Users className="text-green-400" size={32} />,
-                  title: "360° Relationship View",
-                  description: "Complete interaction history, communication patterns, and relationship strength scoring for every contact.",
-                  features: ["Relationship strength scoring", "Interaction timeline", "Communication preferences", "Engagement analytics"]
+                { // Card 3: AI Sales & Deal Intelligence
+                  icon: <BarChart3 className="text-green-400" size={32} />,
+                  title: "AI Sales & Deal Intelligence",
+                  description: "Accelerate sales cycles and improve forecasting accuracy with AI-powered strategies and real-time deal analysis.",
+                  features: ["Live Deal Analysis", "Adaptive Playbook Generator", "Discovery Questions Generator", "Sales Forecasting"]
                 }
               ].map((feature, index) => (
                 <motion.div
@@ -543,7 +543,7 @@ const EnhancedContacts: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 + 0.3, duration: 0.5 }}
-                >
+                > 
                   <motion.div
                     className="w-16 h-16 rounded-xl bg-white/10 flex items-center justify-center mb-4 mx-auto"
                     whileHover={{ scale: 1.1, rotate: 10 }}
@@ -576,6 +576,47 @@ const EnhancedContacts: React.FC = () => {
                 </motion.div>
               ))}
             </div>
+
+            {/* Gemini AI Image Generation Section */}
+            <motion.div
+              className="mt-12 bg-gradient-to-br from-blue-900/30 to-purple-900/30 backdrop-blur-md rounded-xl p-6 border border-blue-500/30"
+              whileHover={{ 
+                y: -5, 
+                backgroundColor: "rgba(255, 255, 255, 0.08)",
+                borderColor: "rgba(59, 130, 246, 0.3)"
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
+              <div className="flex items-start">
+                <motion.div
+                  className="w-16 h-16 rounded-xl bg-white/10 flex items-center justify-center mb-4 mr-4 flex-shrink-0"
+                  whileHover={{ scale: 1.1, rotate: 10 }}
+                >
+                  <Image className="text-amber-400" size={32} />
+                </motion.div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-3">Gemini AI Image Generation with Smart Branding</h3>
+                  <p className="text-white/70 mb-4">Generate personalized visuals for contact outreach, profile pictures, or marketing materials directly within SmartCRM, powered by Gemini 2.5 Flash.</p>
+                  <div className="space-y-2">
+                    {[
+                      "SmartCRM Prompt Templates",
+                      "Advanced Image Generation",
+                      "Supabase Storage Integration (with thumbnails)",
+                      "Saved Images Gallery",
+                      "History Management",
+                      "Smart Branding"
+                    ].map((feature, idx) => (
+                      <div key={idx} className="flex items-center text-white/80 text-sm">
+                        <CheckCircle size={14} className="text-green-400 mr-2 flex-shrink-0" />
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </AnimatedElement>
 
@@ -588,6 +629,20 @@ const EnhancedContacts: React.FC = () => {
               color="blue"
               delay={1}
             />
+
+            {/* Contact Card Enhancements */}
+            <p className="text-white/80 text-lg mb-6 max-w-3xl mx-auto text-center">
+              Experience enhanced contact cards with: <span className="font-medium text-blue-400">AI Score Display</span> (color-coded), <span className="font-medium text-purple-400">Interest Level Tracking</span> (Hot/Medium/Low/Cold), <span className="font-medium text-green-400">Source Tracking</span> (visual badges), <span className="font-medium text-amber-400">Customizable AI Toolbar</span>, and <span className="font-medium text-red-400">Quick Actions</span> (Email, Call, View).
+            </p>
+
+            {/* Contact Detail View Features */}
+            <p className="text-white/80 text-lg mb-6 max-w-3xl mx-auto text-center">
+              The Contact Detail View now features <span className="font-medium text-blue-400">8 specialized tabs</span> for a 360-degree understanding of your contacts: <span className="font-medium text-white">Overview, Journey, Analytics, Communication, Automation, Sales Intelligence, AI Insights, and Email.</span>
+            </p>
+
+
+
+
             
             {/* Demo Header */}
             <div className="bg-gradient-to-r from-blue-900/50 to-purple-900/50 p-6 border-b border-white/10">
