@@ -740,7 +740,7 @@ const TrainingProgramSection: React.FC = () => {
                   <div className="flex items-center">
                     <motion.div
                       className="p-2 bg-blue-500/20 rounded-full mr-3"
-                      animate={{ 
+                      <span className="font-semibold">September 21-23, 2025</span> - Day 1: 8:00 PM EST, Days 2-3: 3:00 PM EST
                         rotate: [0, 10, -10, 0],
                         scale: [1, 1.1, 1]
                       }}
