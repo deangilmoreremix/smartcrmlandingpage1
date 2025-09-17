@@ -172,14 +172,14 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
-            Smart CRM Special Sale:<br />
+            Smart CRM 7-Day Sale:<br />
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">AI-Powered CRM Revolution</span>
           </motion.h1>
         </AnimatedElement>
         
         <AnimatedElement animation="slideUp" delay={0.4} duration={0.8}>
           <p className="text-xl md:text-2xl text-white/80 mb-6 max-w-2xl mx-auto">
-            Get Smart CRM at special pricing during our 5-day sale (August 25-30, 2025). Transform your business with AI-powered customer relationship management plus receive exclusive access to our live masterclass on September 10-11, 2025.
+            Get Smart CRM at special pricing during our 7-day sale (September 21-27, 2025). Transform your business with AI-powered customer relationship management plus receive exclusive access to our live masterclass on September 10-11, 2025.
           </p>
         </AnimatedElement>
 
@@ -187,7 +187,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
           <div className="flex justify-center items-center space-x-4 mb-8">
             <div className="flex items-center bg-white/10 backdrop-blur-md rounded-lg px-4 py-2">
               <Tag className="text-red-400 mr-2" size={18} />
-              <span className="text-white/90">Sale: Aug 25-30, 2025</span>
+              <span className="text-white/90">Sale: Sep 21-27, 2025</span>
             </div>
             <div className="flex items-center bg-white/10 backdrop-blur-md rounded-lg px-4 py-2">
               <Gift className="text-green-400 mr-2" size={18} />
@@ -253,7 +253,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
               </span>
             </button>
             <p className="text-white/60 text-sm mt-3">
-              Special pricing ends <span className="text-red-400 font-bold">August 30th</span>! Get Smart CRM now with exclusive bonuses and free masterclass access.
+              Special pricing ends <span className="text-red-400 font-bold">September 27th</span>! Get Smart CRM now with exclusive bonuses and free masterclass access.
             </p>
           </div>
         </AnimatedElement>

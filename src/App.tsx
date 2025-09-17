@@ -59,8 +59,8 @@ const PageLoadingFallback = () => (
 );
 
 function App() {
-  // Set launch date to end of 5-day Smart CRM sale - August 30, 2025 at 11:59 PM EDT
-  const launchDate = new Date('2025-08-30T23:59:59-04:00');
+  // Set launch date to end of 7-day Smart CRM sale - September 27, 2025 at 11:59 PM EST
+  const launchDate = new Date('2025-09-27T23:59:59-05:00');
   
   // Modal state management
   const [signupModalOpen, setSignupModalOpen] = useState(false);
