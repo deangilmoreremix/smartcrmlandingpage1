@@ -101,7 +101,7 @@ async function getWebinarDays() {
         day: 3,
         title: "Your Future Sales System + Smart CRM Offer Reveal",
         description: "Our final session introduces The Client Engine System – a comprehensive framework for building predictable revenue.",
-        date: "Sunday, May 19, 2025",
+        date: "Tuesday, September 23, 2025",
         videoThumbnail: "https://images.pexels.com/photos/3182746/pexels-photo-3182746.jpeg?auto=compress&cs=tinysrgb&w=1600",
         keyPoints: [
           "The Client Engine System creates predictable, recurring revenue",

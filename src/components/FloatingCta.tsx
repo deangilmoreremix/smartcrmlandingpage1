@@ -60,7 +60,7 @@ const FloatingCta: React.FC = () => {
             
             <h3 className="text-lg font-bold mb-2">Smart CRM Special Sale - 5 Days Only</h3>
             <p className="text-white/80 text-sm mb-4">
-              Get Smart CRM at special pricing through September 27th. Includes free masterclass on September 10-11, 2025 plus AI-powered automation features.
+              Get Smart CRM at special pricing through September 27th. Includes free masterclass on September 21-23, 2025 plus AI-powered automation features.
             </p>
             <motion.button
               className="w-full py-2 px-4 bg-white text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"

@@ -191,7 +191,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
             </div>
             <div className="flex items-center bg-white/10 backdrop-blur-md rounded-lg px-4 py-2">
               <Gift className="text-green-400 mr-2" size={18} />
-              <span className="text-white/90">Free Masterclass: Sep 10-11</span>
+              <span className="text-white/90">Free Masterclass: Sep 21-23</span>
             </div>
           </div>
         </AnimatedElement>

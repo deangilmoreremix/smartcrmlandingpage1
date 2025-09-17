@@ -74,7 +74,7 @@ const faqs: FaqItem[] = [
   },
   {
     question: "Is the masterclass really free with Smart CRM purchase?",
-    answer: "Yes! The 2-day masterclass is completely included with your Smart CRM purchase during our special sale. This training normally costs $497, but it's free for all Smart CRM customers who purchase during August 25-30, 2025.",
+    answer: "Yes! The 3-day masterclass is completely included with your Smart CRM purchase during our special sale. This training normally costs $697, but it's free for all Smart CRM customers who purchase during September 21-27, 2025.",
     category: "Masterclass"
   }
 ];

@@ -220,7 +220,7 @@ const DynamicSignupForm: React.FC<DynamicSignupFormProps> = ({
             </p>
             
             <p className="text-white/80 text-xs text-center">
-              Join our 2-day training on May 20-21, 2025 at 3PM EDT
+              Join our 3-day training on September 21-23, 2025 (Day 1: 8PM EST, Days 2-3: 3PM EST)
             </p>
           </form>
         </>

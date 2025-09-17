@@ -292,6 +292,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
                   >
                     <Calendar className="text-blue-400" size={16} />
                     <span className="ml-2">Masterclass: September 10-11, 2025 at 3:00 PM EDT</span>
+                    <span className="ml-2">Masterclass: September 21-23, 2025 (Day 1: 8:00 PM EST, Days 2-3: 3:00 PM EST)</span>
                   </motion.div>
                 </div>
               </div>
