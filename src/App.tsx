@@ -19,6 +19,8 @@ import ParallaxSection from './components/ParallaxSection';
 import AiFeaturesCatalog from './components/AiFeaturesCatalog';
 import FeatureMatrix from './components/FeatureMatrix';
 import IntegrationEcosystem from './components/IntegrationEcosystem';
+import UniversalComparison from './components/UniversalComparison';
+import { competitorComparisonData } from './data/competitorData';
 import SecurityComplianceHub from './components/SecurityComplianceHub';
 import WorkflowShowcase from './components/WorkflowShowcase';
 import TrainingProgramSection from './components/TrainingProgramSection';
@@ -226,7 +228,13 @@ function App() {
                 
                 {/* Complete Feature Matrix - NEW */}
                 <FeatureMatrix />
-                
+
+                {/* Universal Comparison Table - NEW */}
+                <UniversalComparison
+                  layout="table"
+                  showFilters={true}
+                />
+
                 {/* Integration Ecosystem - NEW */}
                 <IntegrationEcosystem />
                 
