@@ -37,6 +37,12 @@ const WebinarRecapPage = lazy(() => import('./components/WebinarRecapPage'));
 const InstructorProfilePage = lazy(() => import('./pages/InstructorProfilePage'));
 const WebhookTestPage = lazy(() => import('./pages/WebhookTestPage'));
 
+// Lazy load embed sections for better performance
+const DashboardEmbedSection = lazy(() => import('./components/DashboardEmbedSection'));
+const ContactsEmbedSection = lazy(() => import('./components/ContactsEmbedSection'));
+const PipelineEmbedSection = lazy(() => import('./components/PipelineEmbedSection'));
+const AICalendarSection = lazy(() => import('./components/AICalendarSection'));
+
 // Create a context to manage signup modal state across components
 export const SignupContext = React.createContext<{
   openSignupModal: (variant?: 'standard' | 'masterclass' | 'early-access') => void;
@@ -148,7 +154,27 @@ function App() {
                 
                 {/* Enhanced Contacts Module */}
                 <EnhancedContacts />
-                
+
+                {/* Dashboard Embed Section - NEW */}
+                <Suspense fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-lg mx-4" />}>
+                  <DashboardEmbedSection />
+                </Suspense>
+
+                {/* Contacts Embed Section - NEW */}
+                <Suspense fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-lg mx-4" />}>
+                  <ContactsEmbedSection />
+                </Suspense>
+
+                {/* Pipeline Embed Section - NEW */}
+                <Suspense fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-lg mx-4" />}>
+                  <PipelineEmbedSection />
+                </Suspense>
+
+                {/* AI Calendar Section - NEW */}
+                <Suspense fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-lg mx-4" />}>
+                  <AICalendarSection />
+                </Suspense>
+
                 {/* AI Features Catalog - NEW */}
                 <AiFeaturesCatalog />
                 
