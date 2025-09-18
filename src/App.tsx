@@ -34,6 +34,8 @@ import { FeedbackContainer } from './components/Feedback';
 import PerformanceMonitor from './components/PerformanceMonitor';
 import EnhancedContacts from './components/EnhancedContacts';
 
+// Dashboard components will be added here when available
+
 // Lazy load pages for code splitting
 const WebinarRecapPage = lazy(() => import('./components/WebinarRecapPage'));
 const InstructorProfilePage = lazy(() => import('./pages/InstructorProfilePage'));
@@ -154,13 +156,13 @@ function App() {
                 {/* How It Works */}
                 <HowItWorks />
                 
-                {/* Enhanced Contacts Module */}
-                <EnhancedContacts />
-
                 {/* Dashboard Embed Section - NEW */}
                 <Suspense fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-lg mx-4" />}>
                   <DashboardEmbedSection />
                 </Suspense>
+
+                {/* Enhanced Contacts Module */}
+                <EnhancedContacts />
 
                 {/* Contacts Embed Section - NEW */}
                 <Suspense fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-lg mx-4" />}>
