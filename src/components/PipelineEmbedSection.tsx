@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GitBranch, TrendingUp, Target, Award, ArrowRight, CheckCircle, ExternalLink, Zap, BarChart3, Users, X, Settings, Lightbulb, Activity } from 'lucide-react';
+import { GitBranch, TrendingUp, Target, Award, ArrowRight, CheckCircle, ExternalLink, Zap, BarChart3, Users, X, Settings, Lightbulb, Activity, Database, Brain } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
 import CollapsibleSection from './CollapsibleSection';
+import CRMGoalsAnimation from './CRMGoalsAnimation';
 
 const PipelineEmbedSection: React.FC = () => {
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
@@ -62,6 +63,85 @@ const PipelineEmbedSection: React.FC = () => {
     { value: "3.2x", label: "Faster sales cycles", icon: <Zap size={18} className="text-blue-400" /> },
     { value: "$2.1M", label: "Average deal size increase", icon: <BarChart3 size={18} className="text-purple-400" /> },
     { value: "94%", label: "Team engagement", icon: <Users size={18} className="text-amber-400" /> }
+  ];
+
+  const pipelineGoals = [
+    {
+      id: "improve-forecasting",
+      title: "Improve Sales Forecasting",
+      icon: <TrendingUp className="text-green-400" size={24} />,
+      description: "AI-powered predictions with 85%+ accuracy for better planning",
+      primaryColor: "green",
+      features: [
+        "Predictive analytics engine",
+        "Win/loss probability scoring",
+        "Real-time forecast updates",
+        "Scenario planning tools"
+      ],
+      benefits: [
+        "41% higher win rates",
+        "3.5x more accurate predictions",
+        "Better resource allocation",
+        "Improved revenue planning"
+      ]
+    },
+    {
+      id: "enhance-insights",
+      title: "Enhance Customer Insights",
+      icon: <Brain className="text-purple-400" size={24} />,
+      description: "360° customer intelligence with AI relationship mapping",
+      primaryColor: "purple",
+      features: [
+        "Relationship intelligence scoring",
+        "Behavioral analysis tracking",
+        "Communication pattern insights",
+        "Automated customer profiling"
+      ],
+      benefits: [
+        "3.5x more effective interactions",
+        "Better customer retention",
+        "Personalized engagement",
+        "Predictive churn prevention"
+      ]
+    },
+    {
+      id: "boost-adoption",
+      title: "Boost Team Adoption",
+      icon: <Users className="text-amber-400" size={24} />,
+      description: "94% adoption rate with intuitive design and gamification",
+      primaryColor: "amber",
+      features: [
+        "Intuitive drag-and-drop interface",
+        "Gamification and leaderboards",
+        "Mobile-optimized experience",
+        "Smart onboarding tutorials"
+      ],
+      benefits: [
+        "94% user adoption rate",
+        "Faster team ramp-up",
+        "Higher user satisfaction",
+        "Reduced training costs"
+      ]
+    },
+    {
+      id: "streamline-deals",
+      title: "Streamline Deal Management",
+      icon: <Target className="text-blue-400" size={24} />,
+      description: "Advanced deal tracking and management for faster closes",
+      primaryColor: "blue",
+      features: [
+        "Kanban board visualization",
+        "Automated stage progression",
+        "Deal risk monitoring",
+        "Custom pipeline workflows"
+      ],
+      benefits: [
+        "3.2x faster sales cycles",
+        "$2.1M average deal size increase",
+        "Better pipeline visibility",
+        "Improved deal conversion"
+      ]
+    }
   ];
 
   return (
@@ -133,6 +213,14 @@ const PipelineEmbedSection: React.FC = () => {
             </p>
           </div>
         </AnimatedElement>
+
+        {/* CRM Goals Animation */}
+        <CRMGoalsAnimation
+          title="What are you looking for in Pipeline Management?"
+          subtitle="Select your primary goal to see how SmartCRM's AI Pipeline delivers results"
+          goals={pipelineGoals}
+          ctaText="Get SmartCRM Pipeline"
+        />
 
         {/* Pipeline Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">

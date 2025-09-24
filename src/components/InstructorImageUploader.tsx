@@ -3,21 +3,23 @@ import { motion } from 'framer-motion';
 import { Upload, User, AlertTriangle, Check, Camera, X, Loader2 } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 import { getInstructorImageUrl } from '../utils/supabaseClient';
+import { useMessageQueue } from '../hooks/useMessageQueue';
 
 interface InstructorImageUploaderProps {
   onImageUploaded?: (url: string) => void;
   initialImageUrl?: string | null;
+  showMessages?: boolean;
 }
 
 const InstructorImageUploader: React.FC<InstructorImageUploaderProps> = ({
   onImageUploaded,
-  initialImageUrl
+  initialImageUrl,
+  showMessages = true
 }) => {
   const [imageUrl, setImageUrl] = useState<string | null>(initialImageUrl || null);
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
   const [supabase, setSupabase] = useState<any | null>(null);
+  const { addSuccess, addError, addInfo } = useMessageQueue();
   
   // Initialize Supabase client
   useEffect(() => {
@@ -26,7 +28,9 @@ const InstructorImageUploader: React.FC<InstructorImageUploaderProps> = ({
       const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
       
       if (!supabaseUrl || !supabaseAnonKey) {
-        setError("Supabase configuration is missing. Please connect to Supabase first.");
+        if (showMessages) {
+          addError("Configuration Error", "Supabase configuration is missing. Please connect to Supabase first.");
+        }
         return;
       }
       
@@ -41,7 +45,9 @@ const InstructorImageUploader: React.FC<InstructorImageUploaderProps> = ({
       }
     } catch (err: any) {
       console.error("Error initializing Supabase client:", err);
-      setError("Failed to initialize database connection.");
+      if (showMessages) {
+        addError("Connection Error", "Failed to initialize database connection.");
+      }
     }
   }, [initialImageUrl]);
 
@@ -58,18 +64,24 @@ const InstructorImageUploader: React.FC<InstructorImageUploaderProps> = ({
     
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      setError('Please upload an image file');
+      if (showMessages) {
+        addError('Invalid File Type', 'Please upload an image file');
+      }
       return;
     }
-    
+
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      setError('Image size should be less than 5MB');
+      if (showMessages) {
+        addError('File Too Large', 'Image size should be less than 5MB');
+      }
       return;
     }
-    
+
     if (!supabase) {
-      setError('Storage connection not available');
+      if (showMessages) {
+        addError('Connection Error', 'Storage connection not available');
+      }
       return;
     }
     

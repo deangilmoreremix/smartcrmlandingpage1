@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, BrainCircuit, Mail, MessageSquare, Search, Star, ArrowRight, CheckCircle, ExternalLink, Zap, X, Settings, Lightbulb, Target } from 'lucide-react';
+import { Users, BrainCircuit, Mail, MessageSquare, Search, Star, ArrowRight, CheckCircle, ExternalLink, Zap, X, Settings, Lightbulb, Target, TrendingDown, UserMinus, Clock, Info, Database, TrendingUp, Brain } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
 import CollapsibleSection from './CollapsibleSection';
+import CRMGoalsAnimation from './CRMGoalsAnimation';
 
 const ContactsEmbedSection: React.FC = () => {
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
@@ -62,6 +63,85 @@ const ContactsEmbedSection: React.FC = () => {
     { value: "95%", label: "Data accuracy rate", icon: <CheckCircle size={18} className="text-green-400" /> },
     { value: "3.5x", label: "Faster lead qualification", icon: <Zap size={18} className="text-purple-400" /> },
     { value: "89%", label: "User satisfaction", icon: <Star size={18} className="text-amber-400" /> }
+  ];
+
+  const contactsGoals = [
+    {
+      id: "reduce-manual-data",
+      title: "Reduce Manual Data Entry",
+      icon: <Database className="text-blue-400" size={24} />,
+      description: "SmartCRM eliminates 70% of manual data entry with AI-powered automation",
+      primaryColor: "blue",
+      features: [
+        "AI Auto-Enrichment from web research",
+        "Smart data capture and validation",
+        "Automated workflow triggers",
+        "Bulk processing and imports"
+      ],
+      benefits: [
+        "Save 2.5 hours weekly per rep",
+        "95% data accuracy improvement",
+        "Reduced human error",
+        "Focus on selling, not data entry"
+      ]
+    },
+    {
+      id: "enhance-insights",
+      title: "Enhance Customer Insights",
+      icon: <Brain className="text-purple-400" size={24} />,
+      description: "360° customer intelligence with AI relationship mapping",
+      primaryColor: "purple",
+      features: [
+        "Relationship intelligence scoring",
+        "Behavioral analysis tracking",
+        "Communication pattern insights",
+        "Automated customer profiling"
+      ],
+      benefits: [
+        "3.5x more effective interactions",
+        "Better customer retention",
+        "Personalized engagement",
+        "Predictive churn prevention"
+      ]
+    },
+    {
+      id: "boost-adoption",
+      title: "Boost Team Adoption",
+      icon: <Users className="text-amber-400" size={24} />,
+      description: "94% adoption rate with intuitive design and gamification",
+      primaryColor: "amber",
+      features: [
+        "Intuitive drag-and-drop interface",
+        "Gamification and leaderboards",
+        "Mobile-optimized experience",
+        "Smart onboarding tutorials"
+      ],
+      benefits: [
+        "94% user adoption rate",
+        "Faster team ramp-up",
+        "Higher user satisfaction",
+        "Reduced training costs"
+      ]
+    },
+    {
+      id: "improve-organization",
+      title: "Improve Contact Organization",
+      icon: <Search className="text-green-400" size={24} />,
+      description: "Advanced organization and search capabilities for better contact management",
+      primaryColor: "green",
+      features: [
+        "Advanced search and filtering",
+        "Smart tagging and categorization",
+        "Duplicate detection and merging",
+        "Custom fields and segmentation"
+      ],
+      benefits: [
+        "Find contacts instantly",
+        "Eliminate duplicate entries",
+        "Better lead segmentation",
+        "Improved data organization"
+      ]
+    }
   ];
 
   return (
@@ -133,6 +213,14 @@ const ContactsEmbedSection: React.FC = () => {
             </p>
           </div>
         </AnimatedElement>
+
+        {/* CRM Goals Animation */}
+        <CRMGoalsAnimation
+          title="What are you looking for in Contact Management?"
+          subtitle="Select your primary goal to see how SmartCRM's AI Contacts deliver results"
+          goals={contactsGoals}
+          ctaText="Get SmartCRM Contacts"
+        />
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
@@ -228,6 +316,157 @@ const ContactsEmbedSection: React.FC = () => {
                     {stat.value}
                   </motion.span>
                   <span className="text-white/70 text-sm">{stat.label}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </AnimatedElement>
+
+        {/* The CRM Reality Statistics */}
+        <AnimatedElement animation="fadeIn" delay={0.8}>
+          <div className="text-center mt-10 max-w-5xl mx-auto relative">
+            <InteractiveFloatingButton
+              text="Click Stats for Details"
+              position="top-right"
+              color="purple"
+              delay={1}
+            />
+
+            <h3 className="text-2xl font-semibold text-white mb-8 relative inline-block">
+              The CRM Reality
+              <motion.div
+                className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-purple-500 to-blue-500"
+                initial={{ width: 0, left: "50%" }}
+                whileInView={{ width: "100%", left: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+              />
+            </h3>
+
+            {/* Enhanced Stats with Animations */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              {[
+                {
+                  id: "failed-implementations",
+                  value: "67%",
+                  label: "of CRM implementations fail to meet business expectations",
+                  icon: <TrendingDown size={24} />,
+                  color: "red",
+                  details: [
+                    "Poor user adoption is the #1 reason for failure",
+                    "Inadequate training contributes to 22% of failures",
+                    "Complex interfaces lead to abandonment",
+                    "Data quality issues impact business decisions"
+                  ]
+                },
+                {
+                  id: "adoption-rate",
+                  value: "30%",
+                  label: "average adoption rate for traditional CRM systems",
+                  icon: <UserMinus size={24} />,
+                  color: "red",
+                  details: [
+                    "Sales reps avoid systems that create extra work",
+                    "Only 13% of sales reps find value in their current CRM",
+                    "40% of companies struggle with CRM user adoption",
+                    "Teams revert to spreadsheets and personal systems"
+                  ]
+                },
+                {
+                  id: "selling-time",
+                  value: "23%",
+                  label: "of sales reps' time spent on actual selling activities",
+                  icon: <Clock size={24} />,
+                  color: "red",
+                  details: [
+                    "Manual data entry consumes 32% of sales reps' time",
+                    "Finding and organizing information takes 19% of time",
+                    "Only 35% of CRM data is actively used for decision-making",
+                    "Teams spend 9.1 hours per week on CRM-related admin tasks"
+                  ]
+                }
+              ].map((stat, idx) => (
+                <motion.div
+                  key={stat.id}
+                  className={`bg-white/5 backdrop-blur-md rounded-xl overflow-hidden border border-${stat.color}-500/30 cursor-pointer relative`}
+                  onClick={() => {
+                    const card = document.getElementById(`contacts-stat-${stat.id}`);
+                    if (card) {
+                      const details = card.querySelector('.stat-details');
+                      if (details) {
+                        details.classList.toggle('hidden');
+                      }
+                    }
+                  }}
+                  whileHover={{
+                    y: -8,
+                    backgroundColor: "rgba(255, 255, 255, 0.08)",
+                    borderColor: `rgba(${stat.color === "red" ? "239, 68, 68" : "59, 130, 246"}, 0.4)`
+                  }}
+                  layoutId={`contacts-stat-card-${stat.id}`}
+                >
+                  <motion.div className="p-6" layoutId={`contacts-stat-content-${stat.id}`}>
+                    <motion.div
+                      className={`h-12 w-12 rounded-full bg-${stat.color}-500/20 flex items-center justify-center mx-auto mb-4`}
+                      layoutId={`contacts-stat-icon-${stat.id}`}
+                      animate={{
+                        rotate: [0, 10, -10, 0],
+                        scale: [1, 1.1, 1]
+                      }}
+                      transition={{ duration: 4, repeat: Infinity, delay: idx * 0.5 }}
+                    >
+                      {stat.icon}
+                    </motion.div>
+
+                    <motion.span
+                      className={`text-${stat.color}-400 text-3xl font-bold block mb-2`}
+                      layoutId={`contacts-stat-value-${stat.id}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + idx * 0.1 }}
+                    >
+                      {stat.value}
+                    </motion.span>
+
+                    <motion.span
+                      className="text-white/70 text-sm"
+                      layoutId={`contacts-stat-label-${stat.id}`}
+                    >
+                      {stat.label}
+                    </motion.span>
+
+                    <motion.div
+                      className="mt-3 text-blue-400 text-sm flex items-center justify-center"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.5 + idx * 0.1 }}
+                    >
+                      <span>Learn more</span>
+                      <motion.div
+                        animate={{ rotate: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <ArrowRight size={14} className="ml-1" />
+                      </motion.div>
+                    </motion.div>
+                  </motion.div>
+
+                  <div className="stat-details hidden bg-white/5 p-4 border-t border-white/10">
+                    <ul className="space-y-2">
+                      {stat.details.map((detail, detailIdx) => (
+                        <motion.li
+                          key={detailIdx}
+                          className="flex items-start"
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.1 * detailIdx }}
+                        >
+                          <Info size={12} className="text-blue-400 mt-1 mr-2 flex-shrink-0" />
+                          <span className="text-white/70 text-xs">{detail}</span>
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </div>
                 </motion.div>
               ))}
             </div>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, X, Mail, Calendar, Zap, BrainCircuit, LineChart, MessageSquare, PieChart, FileText, 
-         BarChart3, Clipboard, Workflow, Layers, ChevronRight, CornerUpRight, Users, ThumbsUp, Star, 
-         Volume2, Image, Database, ArrowRight, Cpu } from 'lucide-react';
+import { Search, Filter, X, Mail, Calendar, Zap, BrainCircuit, LineChart, MessageSquare, PieChart, FileText,
+         BarChart3, Clipboard, Workflow, Layers, ChevronRight, CornerUpRight, Users, ThumbsUp, Star,
+         Volume2, Image, Database, ArrowRight, Cpu, Activity, Gauge, TrendingUp, Brain, GitBranch, Award, Clock } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
@@ -22,298 +22,180 @@ interface AIFeature {
 }
 
 const features: AIFeature[] = [
+  // Dashboard AI Features
   {
-    title: 'Smart Email Composer',
-    description: 'Generate personalized, professional emails for your contacts in seconds',
-    icon: <Mail size={24} />,
-    categories: ['All Tools', 'Email Tools', 'Content Tools'],
-    popularity: 5,
-    complexityLevel: 1,
-    integrations: ['Gmail', 'Outlook', 'Custom Email Providers']
-  },
-  {
-    title: 'Email Analysis',
-    description: 'Extract key insights, sentiment, and action items from customer emails',
-    icon: <Mail size={24} />,
-    categories: ['All Tools', 'Email Tools', 'Analysis Tools'],
-    popularity: 4,
-    complexityLevel: 2,
-    integrations: ['Gmail', 'Outlook', 'Custom Email Providers']
-  },
-  {
-    title: 'Meeting Summary',
-    description: 'Transform meeting transcripts into concise, actionable summaries',
-    icon: <Calendar size={24} />,
-    categories: ['All Tools', 'Meeting Tools', 'Content Tools'],
+    title: 'Real-Time Analytics',
+    description: 'Live dashboard updates with instant metrics and KPI tracking across all business functions',
+    icon: <Activity size={24} />,
+    categories: ['All Tools', 'Analysis Tools', 'Real-time'],
+    isNew: true,
+    hasDemo: true,
     popularity: 5,
     complexityLevel: 2,
-    integrations: ['Zoom', 'Microsoft Teams', 'Google Meet']
+    integrations: ['Business Intelligence Tools', 'Data Warehouses', 'Real-time Databases']
   },
   {
-    title: 'Smart Proposal Generator',
-    description: 'Create professional, customized sales proposals in seconds',
-    icon: <FileText size={24} />,
-    categories: ['All Tools', 'Sales Tools', 'Content Tools'],
+    title: 'Advanced Visualizations',
+    description: 'Interactive charts, graphs, and data visualizations with drill-down capabilities',
+    icon: <BarChart3 size={24} />,
+    categories: ['All Tools', 'Analysis Tools', 'Content Tools'],
+    isNew: true,
     popularity: 5,
     complexityLevel: 2,
-    integrations: ['DocuSign', 'Adobe Sign', 'PandaDoc']
+    integrations: ['Chart Libraries', 'Data Visualization Platforms', 'Business Intelligence Tools']
   },
   {
-    title: 'Call Script Generator',
-    description: 'Create personalized sales call scripts for more effective conversations',
-    icon: <MessageSquare size={24} />,
-    categories: ['All Tools', 'Sales Tools', 'Content Tools'],
+    title: 'Performance Monitoring',
+    description: 'Comprehensive system health monitoring with predictive analytics and alerting',
+    icon: <Gauge size={24} />,
+    categories: ['All Tools', 'Analysis Tools', 'Real-time'],
+    isNew: true,
+    hasDemo: true,
     popularity: 4,
-    complexityLevel: 1,
-    integrations: ['Zoom', 'Microsoft Teams', 'Phone Systems']
+    complexityLevel: 3,
+    integrations: ['Monitoring Systems', 'Alert Platforms', 'Predictive Analytics Tools']
   },
   {
-    title: 'Subject Line Optimizer',
-    description: 'Generate high-converting email subject lines with performance predictions',
-    icon: <Mail size={24} />,
-    categories: ['All Tools', 'Email Tools', 'Sales Tools'],
-    popularity: 4,
-    complexityLevel: 1,
-    integrations: ['Gmail', 'Outlook', 'Marketing Automation Tools']
+    title: 'Business Intelligence',
+    description: 'AI-powered insights and recommendations based on your data patterns and trends',
+    icon: <TrendingUp size={24} />,
+    categories: ['All Tools', 'Analysis Tools', 'Advanced AI'],
+    isNew: true,
+    popularity: 5,
+    complexityLevel: 3,
+    integrations: ['Business Intelligence Platforms', 'Data Analytics Tools', 'Machine Learning Models']
   },
+
+  // Contacts AI Features
   {
-    title: 'Competitor Analysis',
-    description: 'Analyze competitors and develop effective differentiation strategies',
+    title: 'AI Contact Scoring',
+    description: 'Multi-model scoring (GPT-5 + Gemini) on 0-100 scale with behavioral insights, psychological profiles, and relationship mapping',
     icon: <Users size={24} />,
-    categories: ['All Tools', 'Analysis Tools', 'Sales Tools'],
-    popularity: 3,
+    categories: ['All Tools', 'Analysis Tools', 'Advanced AI'],
+    isNew: true,
+    hasDemo: true,
+    popularity: 5,
     complexityLevel: 3,
-    integrations: ['Market Research Tools', 'Web Scraping Services']
+    integrations: ['CRM Systems', 'Contact Databases', 'AI Model APIs']
   },
   {
-    title: 'Market Trend Analysis',
-    description: 'Get insights on industry trends and market opportunities',
-    icon: <LineChart size={24} />,
-    categories: ['All Tools', 'Analysis Tools'],
+    title: 'Smart Enrichment',
+    description: 'Automatic data gap filling using web research, LinkedIn discovery, and market intelligence',
+    icon: <Database size={24} />,
+    categories: ['All Tools', 'Content Tools', 'Advanced AI'],
+    isNew: true,
     popularity: 4,
-    complexityLevel: 3,
-    integrations: ['Market Research Databases', 'News Aggregation Services']
+    complexityLevel: 2,
+    integrations: ['LinkedIn API', 'Web Scraping Tools', 'Market Research Databases']
   },
   {
-    title: 'Sales Insights Generator',
-    description: 'AI-powered insights and recommendations based on your CRM data',
-    icon: <BrainCircuit size={24} />,
-    categories: ['All Tools', 'Sales Tools', 'Analysis Tools'],
+    title: 'Communication Tools',
+    description: 'AI-powered email composers, social messaging generators, objection handlers, and subject line optimizers',
+    icon: <MessageSquare size={24} />,
+    categories: ['All Tools', 'Email Tools', 'Content Tools'],
+    isNew: true,
+    hasDemo: true,
     popularity: 5,
     complexityLevel: 2,
-    integrations: ['Sales Analytics Platforms', 'Business Intelligence Tools']
+    integrations: ['Email Platforms', 'Social Media APIs', 'Communication Tools']
   },
   {
-    title: 'Sales Forecasting',
-    description: 'Revenue projections and deal closure probability analysis',
+    title: 'Bulk Processing',
+    description: 'CSV/JSON import with validation, bulk scoring/enrichment, and automated tagging',
+    icon: <FileText size={24} />,
+    categories: ['All Tools', 'Content Tools', 'Advanced AI'],
+    isNew: true,
+    popularity: 4,
+    complexityLevel: 2,
+    integrations: ['Data Import Tools', 'CSV Processors', 'Batch Processing Systems']
+  },
+
+  // Pipeline AI Features
+  {
+    title: 'AI Deal Intelligence',
+    description: 'Real-time win probability scoring, risk alerts and bottleneck identification, timeline predictions and optimal next steps, competitive intelligence and market insights',
+    icon: <Brain size={24} />,
+    categories: ['All Tools', 'Sales Tools', 'Advanced AI'],
+    isNew: true,
+    hasDemo: true,
+    popularity: 5,
+    complexityLevel: 3,
+    integrations: ['Sales Platforms', 'CRM Systems', 'Market Intelligence Tools']
+  },
+  {
+    title: 'Kanban Board',
+    description: 'Intuitive drag-and-drop interface, stage-based workflow visualization, custom pipeline configurations, real-time collaboration features',
+    icon: <GitBranch size={24} />,
+    categories: ['All Tools', 'Sales Tools', 'Content Tools'],
+    isNew: true,
+    popularity: 4,
+    complexityLevel: 2,
+    integrations: ['Project Management Tools', 'Collaboration Platforms', 'Workflow Systems']
+  },
+  {
+    title: 'Gamification',
+    description: 'Team leaderboards and performance tracking, achievement badges and milestones, streak tracking and motivation tools, points system with leveling mechanics',
+    icon: <Award size={24} />,
+    categories: ['All Tools', 'Sales Tools', 'Advanced AI'],
+    isNew: true,
+    popularity: 4,
+    complexityLevel: 2,
+    integrations: ['Gamification Platforms', 'Performance Tracking Systems', 'Team Management Tools']
+  },
+  {
+    title: 'Advanced Analytics',
+    description: 'Conversion rate analysis by stage, sales velocity and time-to-close metrics, forecast accuracy and pipeline health, custom reporting and dashboard creation',
     icon: <PieChart size={24} />,
     categories: ['All Tools', 'Sales Tools', 'Analysis Tools'],
+    isNew: true,
+    hasDemo: true,
+    popularity: 5,
+    complexityLevel: 3,
+    integrations: ['Analytics Platforms', 'Reporting Tools', 'Business Intelligence Systems']
+  },
+
+  // AI Calendar Features
+  {
+    title: 'AI Meeting Intelligence',
+    description: 'Smart scheduling with optimal time slots, participant analysis, and meeting outcome predictions',
+    icon: <Calendar size={24} />,
+    categories: ['All Tools', 'Meeting Tools', 'Advanced AI'],
+    isNew: true,
+    hasDemo: true,
     popularity: 5,
     complexityLevel: 2,
-    integrations: ['Financial Planning Systems', 'ERP Systems']
+    integrations: ['Calendar Systems', 'Meeting Platforms', 'Scheduling Tools']
   },
   {
-    title: 'Objection Handler',
-    description: 'Get expert strategies for handling sales objections effectively',
-    icon: <CornerUpRight size={24} />,
-    categories: ['All Tools', 'Sales Tools'],
+    title: 'Time Optimization',
+    description: 'AI-powered time management with focus blocks, productivity analysis, and smart reminders',
+    icon: <Clock size={24} />,
+    categories: ['All Tools', 'Meeting Tools', 'Advanced AI'],
+    isNew: true,
     popularity: 4,
-    complexityLevel: 1,
-    integrations: ['Sales Training Platforms', 'Learning Management Systems']
+    complexityLevel: 2,
+    integrations: ['Time Tracking Tools', 'Productivity Apps', 'Reminder Systems']
   },
   {
-    title: 'Customer Persona Generator',
-    description: 'Create detailed, data-driven customer personas for targeted sales',
+    title: 'Team Coordination',
+    description: 'Advanced collaboration features with resource booking, team availability, and conflict resolution',
     icon: <Users size={24} />,
-    categories: ['All Tools', 'Sales Tools', 'Content Tools'],
-    popularity: 3,
-    complexityLevel: 2,
-    integrations: ['Marketing Automation', 'Customer Analytics Platforms']
-  },
-  {
-    title: 'Voice Tone Optimizer',
-    description: 'Perfect your communication tone for different audiences and purposes',
-    icon: <Volume2 size={24} />,
-    categories: ['All Tools', 'Content Tools', 'Voice & Audio'],
-    popularity: 3,
-    complexityLevel: 1,
-    integrations: ['Content Management', 'Marketing Automation']
-  },
-  {
-    title: 'Email Response Generator',
-    description: 'Quickly create personalized responses to customer and prospect emails',
-    icon: <Mail size={24} />,
-    categories: ['All Tools', 'Email Tools', 'Content Tools'],
-    popularity: 5,
-    complexityLevel: 1,
-    integrations: ['Gmail', 'Outlook', 'Custom Email Providers']
-  },
-  {
-    title: 'Visual Content Generator',
-    description: 'Generate professional visual content ideas for sales presentations, marketing materials, and client communications',
-    icon: <Image size={24} />,
-    categories: ['All Tools', 'Content Tools', 'Vision & Image'],
-    popularity: 3,
-    complexityLevel: 2,
-    integrations: ['Presentation Software', 'Design Tools']
-  },
-  {
-    title: 'Meeting Agenda Generator',
-    description: 'Create structured, effective meeting agendas for your sales meetings',
-    icon: <Clipboard size={24} />,
-    categories: ['All Tools', 'Meeting Tools', 'Content Tools'],
-    popularity: 4,
-    complexityLevel: 1,
-    integrations: ['Calendar Apps', 'Project Management Tools']
-  },
-  {
-    title: 'AI Assistant',
-    description: 'Interact with a persistent AI assistant that remembers context and can help with various sales tasks',
-    icon: <Cpu size={24} />,
-    categories: ['All Tools', 'Advanced AI'],
-    isNew: true,
-    popularity: 5,
-    complexityLevel: 2,
-    integrations: ['All CRM Modules', 'External Knowledge Bases']
-  },
-  {
-    title: 'Vision Analyzer',
-    description: 'Analyze images, screenshots, and visual content to extract insights and information',
-    icon: <Image size={24} />,
-    categories: ['All Tools', 'Vision & Image', 'Advanced AI'],
+    categories: ['All Tools', 'Meeting Tools', 'Advanced AI'],
     isNew: true,
     popularity: 4,
-    complexityLevel: 3,
-    integrations: ['Document Management Systems', 'Cloud Storage']
-  },
-  {
-    title: 'Image Generator',
-    description: 'Create professional images for presentations, proposals, and marketing materials',
-    icon: <Image size={24} />,
-    categories: ['All Tools', 'Content Tools', 'Vision & Image'],
-    isNew: true,
-    popularity: 3,
     complexityLevel: 2,
-    integrations: ['Presentation Software', 'Design Tools']
+    integrations: ['Team Collaboration Tools', 'Resource Management Systems', 'Calendar Sync']
   },
   {
-    title: 'Semantic Search',
-    description: 'Find anything in your CRM with natural language queries and contextual understanding',
-    icon: <Search size={24} />,
-    categories: ['All Tools', 'Advanced AI'],
-    isNew: true,
-    popularity: 5,
-    complexityLevel: 2,
-    integrations: ['Knowledge Bases', 'Document Storage']
-  },
-  {
-    title: 'Real-time Chat',
-    description: 'Experience real-time AI responses with our streaming chat interface',
-    icon: <MessageSquare size={24} />,
-    categories: ['All Tools', 'Advanced AI', 'Real-time'],
-    isNew: true,
-    hasDemo: true,
-    popularity: 5,
-    complexityLevel: 1,
-    integrations: ['Chat Systems', 'Knowledge Bases']
-  },
-  {
-    title: 'Function Assistant',
-    description: 'Chat with an AI that can perform real actions in your CRM through natural conversation',
-    icon: <Workflow size={24} />,
-    categories: ['All Tools', 'Advanced AI'],
-    isNew: true,
-    popularity: 5,
-    complexityLevel: 2,
-    integrations: ['All CRM Modules', 'Workflow Automations']
-  },
-  {
-    title: 'Real-time Form Validation',
-    description: 'Get instant feedback on form fields with AI-powered validation',
-    icon: <Clipboard size={24} />,
-    categories: ['All Tools', 'Real-time'],
-    isNew: true,
-    hasDemo: true,
-    popularity: 3,
-    complexityLevel: 1,
-    integrations: ['Web Forms', 'Data Validation Systems']
-  },
-  {
-    title: 'Live Deal Analysis',
-    description: 'Get real-time insights and recommendations on your deals',
-    icon: <BarChart3 size={24} />,
-    categories: ['All Tools', 'Sales Tools', 'Analysis Tools', 'Real-time'],
-    isNew: true,
-    hasDemo: true,
-    popularity: 5,
-    complexityLevel: 2,
-    integrations: ['Sales Analytics', 'Deal Management']
-  },
-  {
-    title: 'Instant Response Generator',
-    description: 'Generate professional responses to common scenarios in milliseconds',
+    title: 'Smart Automation',
+    description: 'Intelligent workflow automation with recurring meetings, follow-ups, and task assignments',
     icon: <Zap size={24} />,
-    categories: ['All Tools', 'Email Tools', 'Real-time'],
-    isNew: true,
-    hasDemo: true,
-    popularity: 4,
-    complexityLevel: 1,
-    integrations: ['Email Systems', 'Chat Applications']
-  },
-  {
-    title: 'Real-time Document Analyzer',
-    description: 'Extract insights from documents and images with live progress updates',
-    icon: <FileText size={24} />,
-    categories: ['All Tools', 'Analysis Tools', 'Real-time', 'Vision & Image'],
-    isNew: true,
-    hasDemo: true,
-    popularity: 4,
-    complexityLevel: 3,
-    integrations: ['Document Management', 'OCR Systems']
-  },
-  {
-    title: 'Real-time Email Composer',
-    description: 'Write emails with real-time AI suggestions and sentiment analysis',
-    icon: <Mail size={24} />,
-    categories: ['All Tools', 'Email Tools', 'Real-time', 'Content Tools'],
+    categories: ['All Tools', 'Meeting Tools', 'Advanced AI'],
     isNew: true,
     hasDemo: true,
     popularity: 5,
-    complexityLevel: 1,
-    integrations: ['Email Clients', 'Grammar Checkers']
-  },
-  {
-    title: 'Real-time Voice Analysis',
-    description: 'Analyze voice calls in real-time for sentiment, pacing, and coaching',
-    icon: <Volume2 size={24} />,
-    categories: ['All Tools', 'Voice & Audio', 'Real-time', 'Analysis Tools'],
-    isNew: true,
-    hasDemo: true,
-    popularity: 4,
-    complexityLevel: 3,
-    integrations: ['VoIP Systems', 'Call Recording Software']
-  },
-  {
-    title: 'Smart Search with Typeahead',
-    description: 'Semantic search with AI-powered suggestions as you type',
-    icon: <Search size={24} />,
-    categories: ['All Tools', 'Real-time', 'Advanced AI'],
-    isNew: true,
-    hasDemo: true,
-    popularity: 4,
     complexityLevel: 2,
-    integrations: ['Search Systems', 'Knowledge Bases']
-  },
-  {
-    title: 'AI Form Auto-completion',
-    description: 'Automatically fill forms using AI-powered suggestions',
-    icon: <Clipboard size={24} />,
-    categories: ['All Tools', 'Real-time', 'Advanced AI'],
-    isNew: true,
-    hasDemo: true,
-    popularity: 4,
-    complexityLevel: 2,
-    integrations: ['Web Forms', 'Customer Databases']
+    integrations: ['Automation Platforms', 'Workflow Tools', 'Task Management Systems']
   }
 ];
 
@@ -751,10 +633,7 @@ const AiFeaturesCatalog: React.FC = () => {
                     </motion.div>
                   </motion.h3>
                   <p className="text-white/80">
-                    Experience our latest real-time AI capabilities powered by Gemini 2.5 Flash and Pro models. Get instant responses, live analysis, and streaming results that feel more natural and responsive than ever before.
-                  </p>
-                  <p className="text-white/80 mt-2">
-                    Try the interactive demos below!
+                    Experience our latest real-time AI capabilities powered by GPT5 2.5 Flash and Pro models. Get instant responses, live analysis, and streaming results that feel more natural and responsive than ever before.
                   </p>
                 </div>
               </div>

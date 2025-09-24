@@ -1,12 +1,92 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertTriangle, CheckCircle, ArrowRight, BarChart2, Clock, DollarSign, X, Info, Activity, TrendingDown, UserMinus, UserX, Database, Cpu } from 'lucide-react';
+import { AlertTriangle, CheckCircle, ArrowRight, BarChart2, Clock, DollarSign, X, Info, Activity, TrendingDown, UserMinus, UserX, Database, Cpu, Brain, Users, TrendingUp } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
+import CRMGoalsAnimation from './CRMGoalsAnimation';
 
 const ProblemStatement: React.FC = () => {
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
+
+  const problemGoals = [
+    {
+      id: "reduce-manual-data",
+      title: "Reduce Manual Data Entry",
+      icon: <Database className="text-blue-400" size={24} />,
+      description: "SmartCRM eliminates 70% of manual data entry with AI-powered automation",
+      primaryColor: "blue",
+      features: [
+        "AI Auto-Enrichment from web research",
+        "Smart data capture and validation",
+        "Automated workflow triggers",
+        "Bulk processing and imports"
+      ],
+      benefits: [
+        "Save 2.5 hours weekly per rep",
+        "95% data accuracy improvement",
+        "Reduced human error",
+        "Focus on selling, not data entry"
+      ]
+    },
+    {
+      id: "improve-forecasting",
+      title: "Improve Sales Forecasting",
+      icon: <TrendingUp className="text-green-400" size={24} />,
+      description: "AI-powered predictions with 85%+ accuracy for better planning",
+      primaryColor: "green",
+      features: [
+        "Predictive analytics engine",
+        "Win/loss probability scoring",
+        "Real-time forecast updates",
+        "Scenario planning tools"
+      ],
+      benefits: [
+        "41% higher win rates",
+        "3.5x more accurate predictions",
+        "Better resource allocation",
+        "Improved revenue planning"
+      ]
+    },
+    {
+      id: "enhance-insights",
+      title: "Enhance Customer Insights",
+      icon: <Brain className="text-purple-400" size={24} />,
+      description: "360° customer intelligence with AI relationship mapping",
+      primaryColor: "purple",
+      features: [
+        "Relationship intelligence scoring",
+        "Behavioral analysis tracking",
+        "Communication pattern insights",
+        "Automated customer profiling"
+      ],
+      benefits: [
+        "3.5x more effective interactions",
+        "Better customer retention",
+        "Personalized engagement",
+        "Predictive churn prevention"
+      ]
+    },
+    {
+      id: "boost-adoption",
+      title: "Boost Team Adoption",
+      icon: <Users className="text-amber-400" size={24} />,
+      description: "94% adoption rate with intuitive design and gamification",
+      primaryColor: "amber",
+      features: [
+        "Intuitive drag-and-drop interface",
+        "Gamification and leaderboards",
+        "Mobile-optimized experience",
+        "Smart onboarding tutorials"
+      ],
+      benefits: [
+        "94% user adoption rate",
+        "Faster team ramp-up",
+        "Higher user satisfaction",
+        "Reduced training costs"
+      ]
+    }
+  ];
   
   const toggleCard = (cardId: string) => {
     if (expandedCard === cardId) {
@@ -211,7 +291,15 @@ const ProblemStatement: React.FC = () => {
             </div>
           </AnimatedElement>
         </div>
-        
+
+        {/* CRM Goals Animation */}
+        <CRMGoalsAnimation
+          title="What are you looking for in a CRM?"
+          subtitle="Select your primary goal to see how SmartCRM delivers results"
+          goals={problemGoals}
+          ctaText="Get SmartCRM Now"
+        />
+
         <AnimatedElement animation="fadeIn" delay={0.6}>
           <div className="text-center mt-10 max-w-5xl mx-auto relative">
             <InteractiveFloatingButton 

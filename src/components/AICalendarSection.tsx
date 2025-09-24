@@ -309,9 +309,9 @@ const AICalendarSection: React.FC = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="relative w-full" style={{ height: '800px' }}>
+                    <div className="iframe-responsive-container">
                       <iframe
-                        src="https://ai-calendar-demo.netlify.app"
+                        src="https://voluble-vacherin-add80d.netlify.app"
                         className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
                         onLoad={() => setIsIframeLoaded(true)}
                         title="Smart CRM AI Calendar Intelligence Demo"

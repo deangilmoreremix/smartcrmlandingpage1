@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, BookOpen, Star, Check, CheckCircle, Gift, Zap, PlusCircle, ArrowRight, Users, Award, CloudLightning as Lightning, BrainCircuit, Sparkles, Lightbulb, BadgeCheck, User, Mail } from 'lucide-react';
+import { Calendar, BookOpen, Star, Check, CheckCircle, Gift, Zap, PlusCircle, ArrowRight, Users, Award, CloudLightning as Lightning, BrainCircuit, Sparkles, Lightbulb, BadgeCheck, User, Mail, AlertTriangle, Clock, TrendingDown } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
 import EmailSubscribe from './EmailSubscribe';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
@@ -20,6 +20,19 @@ interface TrainingDay {
 
 const trainingDays: TrainingDay[] = [
   {
+    day: 1,
+    title: "The Broken Sales Process & Why It's Costing You",
+    description: "Discover why traditional CRM systems are failing sales teams and learn the hidden costs of manual data entry that's destroying your productivity.",
+    highlights: [
+      'Uncover the true cost of CRM data entry on your sales team',
+      "See why 67% of CRM implementations fail to meet expectations",
+      "Learn how Smart CRM eliminates 70% of manual administrative work"
+    ],
+    icon: <AlertTriangle size={28} />,
+    color: "blue",
+    date: "May 20, 2025"
+  },
+  {
     day: 2,
     title: "Automate, Personalize, and Scale Your Sales",
     description: "See how AI-powered automation can transform your sales process, making personalization scalable without increasing workload.",
@@ -30,7 +43,7 @@ const trainingDays: TrainingDay[] = [
     ],
     icon: <BrainCircuit size={28} />,
     color: "purple",
-    date: "Tomorrow"
+    date: "May 21, 2025"
   },
   {
     day: 3,
@@ -43,17 +56,17 @@ const trainingDays: TrainingDay[] = [
     ],
     icon: <Lightning size={28} />,
     color: "green",
-    date: "Wednesday, May 21, 2025"
+    date: "May 22, 2025"
   }
 ];
 
 const TrainingProgramSection: React.FC = () => {
-  const [activeDay, setActiveDay] = useState<number>(2);
+  const [activeDay, setActiveDay] = useState<number>(1);
   const [isRegistering, setIsRegistering] = useState(false);
   const [isHovering, setIsHovering] = useState<number | null>(null);
   const { openSignupModal } = useContext(SignupContext);
   const [instructorImage, setInstructorImage] = useState<string>("https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1600");
-  
+
   // Fetch instructor image from Supabase
   useEffect(() => {
     const fetchInstructorImage = async () => {
@@ -66,27 +79,27 @@ const TrainingProgramSection: React.FC = () => {
         console.error("Failed to fetch instructor image:", error);
       }
     };
-    
+
     fetchInstructorImage();
   }, []);
-  
+
   return (
     <section id="training" className="py-20 px-4 relative">
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-950/30 to-black/80 pointer-events-none" />
-      
+
       {/* Animated floating icons */}
-      <AnimatedIconsGroup 
-        section="ai" 
+      <AnimatedIconsGroup
+        section="ai"
         iconCount={14}
-        animations={['bounce', 'pulse', 'orbit']} 
+        animations={['bounce', 'pulse', 'orbit']}
         density="high"
       />
-      
+
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div 
-          className="absolute top-20 -right-40 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl" 
-          animate={{ 
+        <motion.div
+          className="absolute top-20 -right-40 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"
+          animate={{
             y: [0, 30, 0],
             opacity: [0.2, 0.3, 0.2]
           }}
@@ -96,9 +109,9 @@ const TrainingProgramSection: React.FC = () => {
             ease: "easeInOut"
           }}
         />
-        <motion.div 
-          className="absolute -bottom-20 left-1/4 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl" 
-          animate={{ 
+        <motion.div
+          className="absolute -bottom-20 left-1/4 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl"
+          animate={{
             y: [0, -20, 0],
             opacity: [0.1, 0.2, 0.1]
           }}
@@ -110,38 +123,38 @@ const TrainingProgramSection: React.FC = () => {
           }}
         />
       </div>
-      
+
       <div className="max-w-7xl mx-auto relative z-10">
         <AnimatedElement animation="fadeIn">
           <div className="text-center mb-12">
-            <motion.div 
+            <motion.div
               className="inline-flex items-center bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-full px-4 py-2 backdrop-blur-md border border-blue-500/30 mb-4"
               whileHover={{ scale: 1.05, backgroundColor: "rgba(59, 130, 246, 0.2)" }}
             >
               <Calendar className="text-blue-400 mr-2" size={18} />
               <span className="text-white font-medium">Limited-Time Training Event</span>
             </motion.div>
-            
-            <motion.h2 
+
+            <motion.h2
               className="text-3xl md:text-5xl font-bold mb-4 text-white"
               whileHover={{ scale: 1.02 }}
             >
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">
-                Free Smart CRM Masterclass Included
+                2-Day Smart CRM Masterclass
               </span>
             </motion.h2>
-            
-            <motion.p 
+
+            <motion.p
               className="text-xl text-white/80 max-w-3xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <span className="text-blue-400 font-medium">Limited time:</span> Register now for the September 21-23 masterclass and get the Smart CRM Implementation Guide ($197 value) for free
+              Join CRM expert Dean Gilmore for a transformative 2-day training on May 20-21, 2025 to revolutionize your sales process using Smart CRM technology
             </motion.p>
           </div>
         </AnimatedElement>
-        
+
         {/* Training Days Tabs */}
         <div className="mb-12">
           <div className="flex justify-center mb-8">
@@ -150,8 +163,8 @@ const TrainingProgramSection: React.FC = () => {
                 <motion.button
                   key={day.day}
                   className={`px-5 py-3 rounded-lg text-sm md:text-base font-medium flex items-center ${
-                    activeDay === day.day 
-                      ? `bg-${day.color}-600 text-white shadow-lg` 
+                    activeDay === day.day
+                      ? `bg-${day.color}-600 text-white shadow-lg`
                       : 'text-white/70 hover:text-white'
                   }`}
                   onClick={() => setActiveDay(day.day)}
@@ -168,7 +181,7 @@ const TrainingProgramSection: React.FC = () => {
               ))}
             </div>
           </div>
-          
+
           <AnimatePresence mode="wait">
             {trainingDays.map((day) => (
               activeDay === day.day && (
@@ -182,12 +195,12 @@ const TrainingProgramSection: React.FC = () => {
                 >
                   {/* Day Content */}
                   <div className={`bg-gradient-to-br from-black to-${day.color}-900/20 backdrop-blur-md rounded-xl p-8 border border-${day.color}-500/30 relative`}>
-                    
+
                     {/* Day Header */}
                     <div className="flex items-center mb-6">
-                      <motion.div 
+                      <motion.div
                         className={`p-3 rounded-full bg-${day.color}-500/20 mr-4`}
-                        animate={{ 
+                        animate={{
                           rotate: [0, 10, -10, 0],
                           scale: [1, 1.1, 1]
                         }}
@@ -199,7 +212,7 @@ const TrainingProgramSection: React.FC = () => {
                         <div className="flex items-center">
                           <span className={`px-2.5 py-0.5 rounded-full text-xs text-${day.color}-400 bg-${day.color}-500/20 mr-2`}>Day {day.day}</span>
                           {day.day === 2 && (
-                            <motion.span 
+                            <motion.span
                               className="px-2.5 py-0.5 rounded-full text-xs bg-gradient-to-r from-purple-400/20 to-purple-500/20 text-purple-400"
                               animate={{ scale: [1, 1.1, 1] }}
                               transition={{ duration: 1.5, repeat: Infinity }}
@@ -208,7 +221,7 @@ const TrainingProgramSection: React.FC = () => {
                             </motion.span>
                           )}
                           {day.day === 3 && (
-                            <motion.span 
+                            <motion.span
                               className="px-2.5 py-0.5 rounded-full text-xs bg-gradient-to-r from-green-400/20 to-green-500/20 text-green-400"
                               animate={{ scale: [1, 1.1, 1] }}
                               transition={{ duration: 1.5, repeat: Infinity }}
@@ -220,20 +233,20 @@ const TrainingProgramSection: React.FC = () => {
                         <h3 className="text-2xl font-bold text-white mt-1">{day.title}</h3>
                       </div>
                     </div>
-                    
+
                     {/* Day Description */}
                     <p className="text-white/80 text-lg mb-8">{day.description}</p>
-                    
+
                     {/* Day Highlights */}
                     <div className="space-y-4">
                       <h4 className="text-white font-medium flex items-center">
                         <Star className={`text-${day.color}-400 mr-2`} size={16} />
                         <span>What You'll Learn:</span>
                       </h4>
-                      
+
                       <div className="space-y-3">
                         {day.highlights.map((highlight, idx) => (
-                          <motion.div 
+                          <motion.div
                             key={idx}
                             className="flex items-start group"
                             initial={{ opacity: 0, x: -20 }}
@@ -242,7 +255,7 @@ const TrainingProgramSection: React.FC = () => {
                             whileHover={{ x: 5 }}
                           >
                             <div className="flex-shrink-0 mt-1 relative">
-                              <motion.div 
+                              <motion.div
                                 className={`absolute inset-0 bg-${day.color}-500/30 rounded-full blur-sm opacity-0 group-hover:opacity-100`}
                                 animate={{ scale: [0.8, 1.2, 0.8] }}
                                 transition={{ duration: 2, repeat: Infinity }}
@@ -254,16 +267,16 @@ const TrainingProgramSection: React.FC = () => {
                         ))}
                       </div>
                     </div>
-                    
+
                     {/* Session Time */}
-                    <motion.div 
+                    <motion.div
                       className={`mt-8 pt-6 border-t border-white/10 flex items-center`}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.8 }}
                     >
                       <Calendar className="text-white/60 mr-2" size={16} />
-                      <span className="text-white/60 text-sm">Live Training: {day.day === 2 ? "8:00 PM EST" : "3:00 PM EST"}</span>
+                      <span className="text-white/60 text-sm">Live Training: 3:00 PM EDT</span>
                       <div className="ml-auto">
                         <span className={`px-3 py-1 rounded-full text-xs bg-${day.color}-500/20 text-${day.color}-400`}>
                           {day.date}
@@ -271,34 +284,36 @@ const TrainingProgramSection: React.FC = () => {
                       </div>
                     </motion.div>
                   </div>
-                  
+
                   {/* Day Visual */}
                   <div>
                     {/* Featured Testimonial */}
                     <div className={`bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10 mb-6`}>
                       <div className="flex items-start">
                         <div className="relative">
-                          <motion.div 
+                          <motion.div
                             className={`absolute inset-0 bg-${day.color}-500/30 rounded-full blur-md`}
-                            animate={{ 
+                            animate={{
                               scale: [1, 1.2, 1],
                             }}
                             transition={{ duration: 3, repeat: Infinity }}
                           />
-                          <img 
-                            src={day.day === 2 
-                              ? "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150" 
+                          <img
+                            src={day.day === 1
+                              ? "https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=150"
+                              : day.day === 2
+                              ? "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=150"
                               : "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150"
-                            } 
-                            alt="Testimonial" 
+                            }
+                            alt="Testimonial"
                             className="w-14 h-14 rounded-full object-cover mr-4 border-2 border-white/20 relative z-10"
                           />
                         </div>
-                        
+
                         <div className="ml-4">
                           <div className="flex mb-2">
                             {[1,2,3,4,5].map((star) => (
-                              <motion.div 
+                              <motion.div
                                 key={star}
                                 initial={{ opacity: 0, scale: 0 }}
                                 animate={{ opacity: 1, scale: 1 }}
@@ -308,18 +323,20 @@ const TrainingProgramSection: React.FC = () => {
                               </motion.div>
                             ))}
                           </div>
-                          
-                          <motion.p 
+
+                          <motion.p
                             className="text-white/80 italic text-sm mb-3"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.4 }}
                           >
-                            "{day.day === 2 
-                              ? "The automation strategies from Day 2 saved my team 15+ hours per week. We're closing deals faster than ever with the AI tools Dean showed us." 
+                            "{day.day === 1
+                              ? "Day 1 opened my eyes to how much time we were wasting with our old CRM. The data entry alone was eating 40% of our week!"
+                              : day.day === 2
+                              ? "The automation strategies from Day 2 saved my team 15+ hours per week. We're closing deals faster than ever with the AI tools Dean showed us."
                               : "The Client Engine System is brilliant! I implemented it the very next day and saw results within a week. Plus the free trial made it risk-free to start."}"
                           </motion.p>
-                          
+
                           <div className="flex justify-between items-center">
                             <motion.div
                               initial={{ opacity: 0 }}
@@ -327,69 +344,82 @@ const TrainingProgramSection: React.FC = () => {
                               transition={{ delay: 0.5 }}
                             >
                               <p className="text-white font-medium text-sm">
-                                {day.day === 2 ? "Jennifer K." : "Michael T."}
+                                {day.day === 1 ? "Sarah M." : day.day === 2 ? "Jennifer K." : "Michael T."}
                               </p>
                               <p className="text-white/60 text-xs">
-                                {day.day === 2 ? "Sales Manager" : "Agency Owner"}
+                                {day.day === 1 ? "VP of Sales" : day.day === 2 ? "Sales Manager" : "Agency Owner"}
                               </p>
                             </motion.div>
-                            
-                            <motion.div 
+
+                            <motion.div
                               className={`px-3 py-1 rounded-full text-xs bg-${day.color}-500/20 text-${day.color}-400`}
                               initial={{ opacity: 0, x: 20 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: 0.6 }}
                             >
-                              {day.day === 2 ? "+32% sales" : "3.5x ROI"}
+                              {day.day === 1 ? "70% time saved" : day.day === 2 ? "+32% sales" : "3.5x ROI"}
                             </motion.div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Visual Content */}
                     <div className={`bg-white/5 backdrop-blur-md rounded-xl overflow-hidden border border-white/10 mb-6 relative aspect-video`}>
-                      <img 
-                        src={day.day === 2 
-                          ? "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                          : "https://images.pexels.com/photos/3182746/pexels-photo-3182746.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                      <img
+                        src={day.day === 1
+                          ? "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                          : day.day === 2
+                          ? "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                          : "https://images.pexels.com/photos/3182746/pexels-photo-3182746.jpeg?auto=compress&cs=tinysrgb&w=1200"
                         }
                         alt={`Day ${day.day} Training`}
                         className="w-full h-full object-cover"
                       />
-                      
+
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/0 flex flex-col justify-end p-6">
-                        <motion.div 
-                          className={`p-3 ${day.color === "purple" ? "bg-purple-500" : "bg-green-500"} rounded-lg w-fit mb-4`}
+                        <motion.div
+                          className={`p-3 ${day.color === "blue" ? "bg-blue-500" : day.color === "purple" ? "bg-purple-500" : "bg-green-500"} rounded-lg w-fit mb-4`}
                           whileHover={{ scale: 1.1, rotate: 10 }}
                         >
-                          {day.day === 2
+                          {day.day === 1
+                            ? <AlertTriangle className="text-white" size={24} />
+                            : day.day === 2
                             ? <Sparkles className="text-white" size={24} />
                             : <BadgeCheck className="text-white" size={24} />
                           }
                         </motion.div>
-                        
+
                         <h4 className="text-xl font-bold text-white">
-                          {day.day === 2 
-                            ? "AI-Powered Sales Automation" 
+                          {day.day === 1
+                            ? "Traditional CRM Problems"
+                            : day.day === 2
+                            ? "AI-Powered Sales Automation"
                             : "The Client Engine System"}
                         </h4>
                         <p className="text-white/80">
-                          {day.day === 2 
+                          {day.day === 1
+                            ? "Identify what's costing you sales"
+                            : day.day === 2
                             ? "Work smarter with AI doing the heavy lifting"
                             : "Build a predictable revenue system that scales"}
                         </p>
                       </div>
-                      
+
                       <div className="absolute top-4 right-4 px-3 py-1.5 bg-black/60 backdrop-blur-sm rounded-full text-white font-medium text-sm flex items-center">
                         <Calendar className="mr-2" size={14} />
                         <span>Day {day.day} Preview</span>
                       </div>
                     </div>
-                    
+
                     {/* Feature Highlights */}
                     <div className="grid grid-cols-2 gap-3">
-                      {(day.day === 2 ? [
+                      {(day.day === 1 ? [
+                        { icon: <AlertTriangle size={18} />, text: "Hidden CRM Costs" },
+                        { icon: <Clock size={18} />, text: "Time Waste Analysis" },
+                        { icon: <TrendingDown size={18} />, text: "Failed Implementations" },
+                        { icon: <Check size={18} />, text: "Smart Solutions" }
+                      ] : day.day === 2 ? [
                         { icon: <Lightning size={18} />, text: "Time-Saving Automations" },
                         { icon: <User size={18} />, text: "Personalization at Scale" },
                         { icon: <Star size={18} />, text: "Lead Scoring" },
@@ -400,11 +430,11 @@ const TrainingProgramSection: React.FC = () => {
                         { icon: <Zap size={18} />, text: "Implementation Plan" },
                         { icon: <Lightbulb size={18} />, text: "Success Roadmap" }
                       ]).map((feature, idx) => (
-                        <motion.div 
+                        <motion.div
                           key={idx}
                           className={`p-3 bg-white/5 backdrop-blur-md rounded-lg border border-white/10`}
-                          whileHover={{ 
-                            y: -5, 
+                          whileHover={{
+                            y: -5,
                             backgroundColor: "rgba(255, 255, 255, 0.1)",
                             borderColor: `rgba(${
                               day.color === 'purple' ? '139, 92, 246' : '34, 197, 94'
@@ -417,9 +447,9 @@ const TrainingProgramSection: React.FC = () => {
                           onHoverEnd={() => setIsHovering(null)}
                         >
                           <div className="flex items-center">
-                            <motion.div 
+                            <motion.div
                               className={`p-2 rounded-full bg-${day.color}-500/20 mr-3`}
-                              animate={isHovering === idx ? { 
+                              animate={isHovering === idx ? {
                                 rotate: [0, 10, -10, 0],
                                 scale: [1, 1.1, 1]
                               } : {}}
@@ -438,14 +468,14 @@ const TrainingProgramSection: React.FC = () => {
             ))}
           </AnimatePresence>
         </div>
-        
+
         {/* Why Attend Section */}
         <AnimatedElement animation="fadeIn" delay={0.3}>
           <div className="mb-16 bg-gradient-to-br from-blue-900/20 to-purple-900/20 backdrop-blur-md rounded-xl p-8 border border-blue-500/30">
             <div className="flex items-center mb-6">
               <motion.div
                 className="p-3 bg-blue-500/20 rounded-full mr-4"
-                animate={{ 
+                animate={{
                   rotate: [0, 10, -10, 0],
                   scale: [1, 1.1, 1]
                 }}
@@ -453,14 +483,14 @@ const TrainingProgramSection: React.FC = () => {
               >
                 <Gift size={24} className="text-blue-400" />
               </motion.div>
-              
+
               <h3 className="text-2xl font-bold text-white">Why Attend?</h3>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <motion.div 
+              <motion.div
                 className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10"
-                whileHover={{ 
+                whileHover={{
                   y: -5,
                   backgroundColor: "rgba(255, 255, 255, 0.08)",
                   borderColor: "rgba(59, 130, 246, 0.3)"
@@ -470,7 +500,7 @@ const TrainingProgramSection: React.FC = () => {
                 transition={{ delay: 0.2 }}
               >
                 <div className="flex items-center mb-4">
-                  <motion.div 
+                  <motion.div
                     className="p-2 rounded-full bg-amber-500/20 mr-3"
                     whileHover={{ rotate: 15 }}
                   >
@@ -479,8 +509,8 @@ const TrainingProgramSection: React.FC = () => {
                   <h4 className="text-lg font-semibold text-white">Expert Training</h4>
                 </div>
                 <p className="text-white/70 mb-4">2 Days of high-impact training from Dean Gilmore, who has helped over 500 businesses transform their sales processes.</p>
-                
-                <motion.div 
+
+                <motion.div
                   className="flex items-center text-amber-400 text-sm"
                   whileHover={{ x: 5 }}
                 >
@@ -488,10 +518,10 @@ const TrainingProgramSection: React.FC = () => {
                   <span>20+ years of CRM implementation experience</span>
                 </motion.div>
               </motion.div>
-              
-              <motion.div 
+
+              <motion.div
                 className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10"
-                whileHover={{ 
+                whileHover={{
                   y: -5,
                   backgroundColor: "rgba(255, 255, 255, 0.08)",
                   borderColor: "rgba(59, 130, 246, 0.3)"
@@ -501,7 +531,7 @@ const TrainingProgramSection: React.FC = () => {
                 transition={{ delay: 0.3 }}
               >
                 <div className="flex items-center mb-4">
-                  <motion.div 
+                  <motion.div
                     className="p-2 rounded-full bg-blue-500/20 mr-3"
                     whileHover={{ rotate: 15 }}
                   >
@@ -510,8 +540,8 @@ const TrainingProgramSection: React.FC = () => {
                   <h4 className="text-lg font-semibold text-white">AI-Powered Tools</h4>
                 </div>
                 <p className="text-white/70 mb-4">Discover 20+ AI-powered CRM tools revealed live during the training that will revolutionize your approach to sales.</p>
-                
-                <motion.div 
+
+                <motion.div
                   className="flex items-center text-blue-400 text-sm"
                   whileHover={{ x: 5 }}
                 >
@@ -519,10 +549,10 @@ const TrainingProgramSection: React.FC = () => {
                   <span>Cutting-edge technology demonstrations</span>
                 </motion.div>
               </motion.div>
-              
-              <motion.div 
+
+              <motion.div
                 className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10"
-                whileHover={{ 
+                whileHover={{
                   y: -5,
                   backgroundColor: "rgba(255, 255, 255, 0.08)",
                   borderColor: "rgba(59, 130, 246, 0.3)"
@@ -532,7 +562,7 @@ const TrainingProgramSection: React.FC = () => {
                 transition={{ delay: 0.4 }}
               >
                 <div className="flex items-center mb-4">
-                  <motion.div 
+                  <motion.div
                     className="p-2 rounded-full bg-green-500/20 mr-3"
                     whileHover={{ rotate: 15 }}
                   >
@@ -541,8 +571,8 @@ const TrainingProgramSection: React.FC = () => {
                   <h4 className="text-lg font-semibold text-white">Proven Results</h4>
                 </div>
                 <p className="text-white/70 mb-4">See real user case studies with documented before-and-after results that demonstrate the power of Smart CRM implementation.</p>
-                
-                <motion.div 
+
+                <motion.div
                   className="flex items-center text-green-400 text-sm"
                   whileHover={{ x: 5 }}
                 >
@@ -550,10 +580,10 @@ const TrainingProgramSection: React.FC = () => {
                   <span>32-46% average sales increase</span>
                 </motion.div>
               </motion.div>
-              
-              <motion.div 
+
+              <motion.div
                 className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10"
-                whileHover={{ 
+                whileHover={{
                   y: -5,
                   backgroundColor: "rgba(255, 255, 255, 0.08)",
                   borderColor: "rgba(59, 130, 246, 0.3)"
@@ -563,7 +593,7 @@ const TrainingProgramSection: React.FC = () => {
                 transition={{ delay: 0.5 }}
               >
                 <div className="flex items-center mb-4">
-                  <motion.div 
+                  <motion.div
                     className="p-2 rounded-full bg-purple-500/20 mr-3"
                     whileHover={{ rotate: 15 }}
                   >
@@ -572,8 +602,8 @@ const TrainingProgramSection: React.FC = () => {
                   <h4 className="text-lg font-semibold text-white">Exclusive Bonuses</h4>
                 </div>
                 <p className="text-white/70 mb-4">Get a FREE 14-day trial plus bonus onboarding session for attendees, all with no credit card required to get started.</p>
-                
-                <motion.div 
+
+                <motion.div
                   className="flex items-center text-purple-400 text-sm"
                   whileHover={{ x: 5 }}
                 >
@@ -582,28 +612,28 @@ const TrainingProgramSection: React.FC = () => {
                 </motion.div>
               </motion.div>
             </div>
-            
-            <motion.div 
+
+            <motion.div
               className="text-center p-6 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl border border-blue-500/20"
-              whileHover={{ 
-                borderColor: "rgba(59, 130, 246, 0.4)", 
+              whileHover={{
+                borderColor: "rgba(59, 130, 246, 0.4)",
                 backgroundColor: "rgba(59, 130, 246, 0.15)"
               }}
             >
-              <motion.p 
+              <motion.p
                 className="text-xl font-medium text-white mb-4"
-                animate={{ 
+                animate={{
                   color: ["#ffffff", "#93c5fd", "#ffffff"]
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
               >
                 Limited to 200 attendees per session — Reserve your spot now!
               </motion.p>
-              
+
               <motion.button
                 className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-lg shadow-lg transition-colors group"
-                whileHover={{ 
-                  scale: 1.05, 
+                whileHover={{
+                  scale: 1.05,
                   boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
                 }}
                 whileTap={{ scale: 0.95 }}
@@ -612,8 +642,8 @@ const TrainingProgramSection: React.FC = () => {
                 <span>Register for Free Masterclass</span>
                 <ArrowRight className="ml-2 inline-block group-hover:translate-x-1 transition-transform" size={18} />
               </motion.button>
-              
-              <motion.p 
+
+              <motion.p
                 className="text-white/60 mt-4 text-sm"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -624,22 +654,22 @@ const TrainingProgramSection: React.FC = () => {
             </motion.div>
           </div>
         </AnimatedElement>
-        
+
         {/* Instructor Info */}
         <AnimatedElement animation="fadeIn" delay={0.6}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <div className="md:col-span-1">
               <motion.div
                 className="bg-white/5 backdrop-blur-md rounded-xl overflow-hidden border border-white/10"
-                whileHover={{ 
+                whileHover={{
                   y: -5,
                   borderColor: "rgba(59, 130, 246, 0.3)"
                 }}
               >
                 <div className="relative">
-                  <img 
-                    src={instructorImage} 
-                    alt="Dean Gilmore" 
+                  <img
+                    src={instructorImage}
+                    alt="Dean Gilmore"
                     className="w-full aspect-[4/3] object-cover"
                     onError={(e) => {
                       console.error("Error loading instructor image:", e);
@@ -657,7 +687,7 @@ const TrainingProgramSection: React.FC = () => {
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-white mb-2">Dean Gilmore</h3>
                   <p className="text-white/70 text-sm mb-4">Serial AI Automation Entrepreneur & Video Personalization Innovator</p>
-                  
+
                   <div className="flex items-center mb-4">
                     <Star size={16} className="text-yellow-400 fill-yellow-400" />
                     <Star size={16} className="text-yellow-400 fill-yellow-400" />
@@ -666,24 +696,24 @@ const TrainingProgramSection: React.FC = () => {
                     <Star size={16} className="text-yellow-400 fill-yellow-400" />
                     <span className="ml-2 text-white/60 text-xs">500+ Five‑Star Reviews</span>
                   </div>
-                  
+
                   <p className="text-white/70 text-sm">
                     Leveraging 22+ years of pioneering CRM and sales‑automation strategies, Dean has built and scaled platforms like Smart CRM, TrustScout.ai, and VideoRemix—helping businesses of all sizes unlock over $75 million in new revenue through streamlined pipelines, AI‑powered personalization, and turnkey automated workflows.
                   </p>
                 </div>
               </motion.div>
             </div>
-            
+
             <div className="md:col-span-2">
               <motion.div
                 className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 h-full"
-                whileHover={{ 
+                whileHover={{
                   y: -5,
                   borderColor: "rgba(59, 130, 246, 0.3)"
                 }}
               >
                 <h3 className="text-xl font-bold text-white mb-4">What Past Attendees Are Saying</h3>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     {
@@ -707,10 +737,10 @@ const TrainingProgramSection: React.FC = () => {
                       role: "Agency Founder"
                     }
                   ].map((testimonial, idx) => (
-                    <motion.div 
+                    <motion.div
                       key={idx}
                       className="bg-white/5 rounded-lg p-4 border border-white/10"
-                      whileHover={{ 
+                      whileHover={{
                         y: -3,
                         backgroundColor: "rgba(255, 255, 255, 0.1)"
                       }}
@@ -735,12 +765,12 @@ const TrainingProgramSection: React.FC = () => {
                     </motion.div>
                   ))}
                 </div>
-                
+
                 <div className="mt-5 bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
                   <div className="flex items-center">
                     <motion.div
                       className="p-2 bg-blue-500/20 rounded-full mr-3"
-                      animate={{ 
+                      animate={{
                         rotate: [0, 10, -10, 0],
                         scale: [1, 1.1, 1]
                       }}
@@ -751,9 +781,6 @@ const TrainingProgramSection: React.FC = () => {
                     <div>
                       <h4 className="text-white font-medium">Satisfaction Guarantee</h4>
                       <p className="text-white/70 text-sm">If you don't get value from the masterclass, we'll refund your Smart CRM subscription in full.</p>
-                      <p className="text-white/70 text-sm">
-                        <span className="font-semibold">September 21-23, 2025</span> - Day 1: 8:00 PM EST, Days 2-3: 3:00 PM EST
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -761,40 +788,40 @@ const TrainingProgramSection: React.FC = () => {
             </div>
           </div>
         </AnimatedElement>
-        
+
         {/* Final CTA */}
-        <motion.div 
+        <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.6 }}
         >
-          <motion.h3 
+          <motion.h3
             className="text-3xl font-bold text-white mb-6"
-            animate={{ 
+            animate={{
               color: ["#ffffff", "#93c5fd", "#ffffff"]
             }}
             transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
           >
             Join 500+ Businesses Already Registered
           </motion.h3>
-          
+
           <motion.button
             className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-full font-bold text-lg shadow-lg transition-colors group"
-            whileHover={{ 
-              scale: 1.05, 
+            whileHover={{
+              scale: 1.05,
               boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
             }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => openSignupModal('early-access')}
+            onClick={() => openSignupModal('masterclass')}
           >
-            <span>Get Smart CRM Now</span>
+            <span>Secure Your Spot Now</span>
             <ArrowRight className="ml-2 inline-block group-hover:translate-x-1 transition-transform" size={18} />
           </motion.button>
-          
-          <motion.p 
-            className="text-white/60 mt-4"
+
+          <motion.p
+            className="text-white/60 mt-4 text-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}

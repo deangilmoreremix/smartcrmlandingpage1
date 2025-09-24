@@ -11,7 +11,7 @@ const features = [
     id: 'ai-insights',
     title: 'AI-Powered Insights',
     description: 'Smart CRM analyzes your customer data to provide actionable recommendations.',
-    thumbnailUrl: 'https://images.pexels.com/photos/5473298/pexels-photo-5473298.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    thumbnailUrl: 'https://images.pexels.com/photos/5473298/pexels-photo-5473298.jpeg?auto=compress&cs=tinysrgb&w=1200',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     demoDescription: 'Watch how our AI identifies patterns in customer behavior and suggests the next best action for your sales team.',
     testimonials: [
@@ -91,7 +91,7 @@ const features = [
     id: 'automation',
     title: 'Workflow Automation',
     description: 'Automate repetitive tasks and keep your team focused on what matters.',
-    thumbnailUrl: 'https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    thumbnailUrl: 'https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg?auto=compress&cs=tinysrgb&w=1200',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     demoDescription: 'See how Smart CRM automatically logs emails, schedules follow-ups, and updates records without manual input.',
     testimonials: [
@@ -171,7 +171,7 @@ const features = [
     id: 'dashboard',
     title: 'Interactive Dashboards',
     description: 'Visualize your data with customizable dashboards that update in real-time.',
-    thumbnailUrl: 'https://images.pexels.com/photos/7689340/pexels-photo-7689340.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    thumbnailUrl: 'https://images.pexels.com/photos/7689340/pexels-photo-7689340.jpeg?auto=compress&cs=tinysrgb&w=1200',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     demoDescription: 'Explore how Smart CRM dashboards provide a complete view of your sales pipeline and team performance.',
     testimonials: [
@@ -251,7 +251,7 @@ const features = [
     id: 'mobile',
     title: 'Mobile Experience',
     description: 'Access your CRM anytime, anywhere with our native mobile apps.',
-    thumbnailUrl: 'https://images.pexels.com/photos/6393013/pexels-photo-6393013.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    thumbnailUrl: 'https://images.pexels.com/photos/6393013/pexels-photo-6393013.jpeg?auto=compress&cs=tinysrgb&w=1200',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     demoDescription: 'Discover how Smart CRM\'s mobile app keeps you connected with customers even when you\'re on the go.',
     testimonials: [
@@ -331,7 +331,7 @@ const features = [
     id: 'security',
     title: 'Enterprise Security',
     description: 'Keep your data protected with advanced security and compliance features.',
-    thumbnailUrl: 'https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    thumbnailUrl: 'https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=1200',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     demoDescription: 'Learn how Smart CRM\'s security features keep your sensitive customer data protected while maintaining compliance.',
     testimonials: [

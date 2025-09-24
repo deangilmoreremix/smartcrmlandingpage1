@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import AnimatedLogo from './AnimatedLogo';
@@ -8,6 +8,7 @@ import { SignupContext } from '../App';
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { openSignupModal } = useContext(SignupContext);
 
   useEffect(() => {
@@ -56,7 +57,35 @@ const Navbar: React.FC = () => {
               transition={{ duration: 0.5, staggerChildren: 0.1, delayChildren: 0.2 }}
             >
               <NavLink href="/">Home</NavLink>
-              <NavLink href="#features">Features</NavLink>
+              <motion.div className="relative">
+                <motion.button
+                  className="text-white/80 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ y: 0 }}
+                  onMouseEnter={() => setIsDropdownOpen(true)}
+                  onMouseLeave={() => setIsDropdownOpen(false)}
+                >
+                  Features <ChevronDown className="ml-1" size={16} />
+                </motion.button>
+                <AnimatePresence>
+                  {isDropdownOpen && (
+                    <motion.div
+                      className="absolute top-full left-0 mt-2 w-48 bg-black/90 backdrop-blur-lg rounded-md shadow-lg py-2 z-50"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      onMouseEnter={() => setIsDropdownOpen(true)}
+                      onMouseLeave={() => setIsDropdownOpen(false)}
+                    >
+                      <Link to="/dashboard" className="block px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors">Dashboard</Link>
+                      <Link to="/contacts" className="block px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors">Contacts</Link>
+                      <Link to="/pipeline" className="block px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors">Pipeline</Link>
+                      <Link to="/ai-features" className="block px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors">AI Features</Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
               <NavLink href="#demo">Demo</NavLink>
               <NavLink href="#training">Masterclass</NavLink>
               <NavLink href="/webinar-recap">Webinar Recap</NavLink>
@@ -96,6 +125,11 @@ const Navbar: React.FC = () => {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <MobileNavLink href="/" onClick={() => setIsOpen(false)}>Home</MobileNavLink>
               <MobileNavLink href="#features" onClick={() => setIsOpen(false)}>Features</MobileNavLink>
+              <MobileNavLink href="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</MobileNavLink>
+              <MobileNavLink href="/ai-calendar" onClick={() => setIsOpen(false)}>AI Calendar</MobileNavLink>
+              <MobileNavLink href="/contacts" onClick={() => setIsOpen(false)}>Contacts</MobileNavLink>
+              <MobileNavLink href="/pipeline" onClick={() => setIsOpen(false)}>Pipeline</MobileNavLink>
+              <MobileNavLink href="/ai-features" onClick={() => setIsOpen(false)}>AI Features</MobileNavLink>
               <MobileNavLink href="#demo" onClick={() => setIsOpen(false)}>Demo</MobileNavLink>
               <MobileNavLink href="#training" onClick={() => setIsOpen(false)}>Masterclass (Sep 21-23)</MobileNavLink>
               <MobileNavLink href="/webinar-recap" onClick={() => setIsOpen(false)}>Webinar Recap</MobileNavLink>
