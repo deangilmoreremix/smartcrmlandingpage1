@@ -47,6 +47,7 @@ const HowItWorks: React.FC = () => {
   const [expandedStep, setExpandedStep] = useState<number | null>(null);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [isAutoAdvancing, setIsAutoAdvancing] = useState(true);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const { openSignupModal } = useContext(SignupContext);
 
   // Auto-advance steps every 5 seconds if user isn't interacting
@@ -151,27 +152,159 @@ const HowItWorks: React.FC = () => {
     }
   };
 
+  const toggleCategoryDetails = (categoryName: string) => {
+    if (expandedCategory === categoryName) {
+      setExpandedCategory(null);
+    } else {
+      setExpandedCategory(categoryName);
+    }
+  };
+
   // Each feature category showcases different Smart CRM capabilities
   const featureCategories = [
     {
       name: "Sales Acceleration",
       icon: <Cpu size={24} className="text-blue-400" />,
-      features: ["Deal intelligence", "Sales playbooks", "Pipeline optimization", "Revenue forecasting"]
+      features: ["Deal intelligence", "Sales playbooks", "Pipeline optimization", "Revenue forecasting"],
+      detailedContent: {
+        description: "Transform your sales process with AI-powered acceleration that identifies opportunities, optimizes strategies, and predicts outcomes with unprecedented accuracy.",
+        benefits: [
+          "41% higher win rates through predictive deal intelligence",
+          "3.2x faster sales cycles with automated optimization",
+          "$2.1M average increase in deal size per rep",
+          "85%+ accuracy in revenue forecasting"
+        ],
+        features: [
+          {
+            title: "Deal Intelligence",
+            description: "AI analyzes deal patterns, competitor actions, and customer signals to predict win probability and optimal next steps.",
+            impact: "Identifies at-risk deals 14 days earlier than traditional methods"
+          },
+          {
+            title: "Sales Playbooks",
+            description: "Dynamic, AI-generated playbooks that adapt to each prospect's unique profile and behavior patterns.",
+            impact: "Personalized strategies for every deal scenario"
+          },
+          {
+            title: "Pipeline Optimization",
+            description: "Real-time pipeline analysis with bottleneck identification and automated deal routing.",
+            impact: "Eliminates 65% of manual pipeline management tasks"
+          },
+          {
+            title: "Revenue Forecasting",
+            description: "Multi-scenario forecasting with 91% accuracy, considering market conditions and deal velocity.",
+            impact: "Reduces forecasting variance by 75%"
+          }
+        ]
+      }
     },
     {
       name: "Customer Insights",
       icon: <Users size={24} className="text-purple-400" />,
-      features: ["Relationship scoring", "Sentiment analysis", "Engagement tracking", "Churn prediction"]
+      features: ["Relationship scoring", "Sentiment analysis", "Engagement tracking", "Churn prediction"],
+      detailedContent: {
+        description: "Understand your customers like never before with AI-driven insights that reveal hidden patterns, predict behavior, and guide relationship-building strategies.",
+        benefits: [
+          "3.5x more effective customer interactions",
+          "94% improvement in customer retention rates",
+          "Personalized engagement strategies for every customer",
+          "Predictive churn prevention with 89% accuracy"
+        ],
+        features: [
+          {
+            title: "Relationship Scoring",
+            description: "Multi-dimensional scoring (0-100) combining engagement, value, loyalty, and growth potential.",
+            impact: "Prioritizes high-value relationships automatically"
+          },
+          {
+            title: "Sentiment Analysis",
+            description: "Real-time analysis of all customer communications to detect mood, intent, and satisfaction levels.",
+            impact: "Identifies satisfaction issues before they escalate"
+          },
+          {
+            title: "Engagement Tracking",
+            description: "Comprehensive tracking of all touchpoints across email, calls, meetings, and social media.",
+            impact: "Creates complete customer journey visibility"
+          },
+          {
+            title: "Churn Prediction",
+            description: "Early warning system that predicts churn risk with behavioral and sentiment indicators.",
+            impact: "Reduces churn by 67% through proactive intervention"
+          }
+        ]
+      }
     },
     {
       name: "Workflow Intelligence",
       icon: <Workflow size={24} className="text-green-400" />,
-      features: ["Task prioritization", "Time optimization", "Meeting preparation", "Follow-up automation"]
+      features: ["Task prioritization", "Time optimization", "Meeting preparation", "Follow-up automation"],
+      detailedContent: {
+        description: "Streamline your daily workflow with AI that prioritizes tasks, optimizes your time, and automates repetitive processes to focus on what matters most.",
+        benefits: [
+          "68% reduction in administrative work time",
+          "3.2x more customer touchpoints per day",
+          "94% improvement in meeting productivity",
+          "57% increase in overall time utilization"
+        ],
+        features: [
+          {
+            title: "Task Prioritization",
+            description: "AI analyzes task urgency, impact, and your work patterns to create optimal daily task lists.",
+            impact: "Ensures critical tasks are never missed"
+          },
+          {
+            title: "Time Optimization",
+            description: "Smart scheduling that finds optimal meeting times and creates focus blocks for deep work.",
+            impact: "Maximizes productive time utilization"
+          },
+          {
+            title: "Meeting Preparation",
+            description: "Automated agenda creation, background research, and talking point generation for every meeting.",
+            impact: "Reduces preparation time by 75%"
+          },
+          {
+            title: "Follow-up Automation",
+            description: "Intelligent follow-up sequences that adapt based on meeting outcomes and customer responses.",
+            impact: "Increases follow-up response rates by 40%"
+          }
+        ]
+      }
     },
     {
       name: "Data Intelligence",
       icon: <Database size={24} className="text-amber-400" />,
-      features: ["Data enrichment", "Lead scoring", "Contact management", "Account mapping"]
+      features: ["Data enrichment", "Lead scoring", "Contact management", "Account mapping"],
+      detailedContent: {
+        description: "Transform raw data into actionable intelligence with AI-powered enrichment, scoring, and management that ensures data quality and strategic insights.",
+        benefits: [
+          "95% improvement in data accuracy and completeness",
+          "3.5x faster lead qualification process",
+          "Elimination of duplicate and outdated records",
+          "Strategic account mapping for better targeting"
+        ],
+        features: [
+          {
+            title: "Data Enrichment",
+            description: "Automatic gap-filling using web research, LinkedIn data, and market intelligence sources.",
+            impact: "Enriches contact data by 85% automatically"
+          },
+          {
+            title: "Lead Scoring",
+            description: "Multi-model scoring combining firmographic, technographic, and behavioral data.",
+            impact: "Increases qualified lead conversion by 60%"
+          },
+          {
+            title: "Contact Management",
+            description: "Intelligent deduplication, relationship mapping, and lifecycle management.",
+            impact: "Maintains clean, accurate contact databases"
+          },
+          {
+            title: "Account Mapping",
+            description: "Visual organization charts and relationship mapping for account-based marketing.",
+            impact: "Improves account penetration by 45%"
+          }
+        ]
+      }
     }
   ];
 
@@ -555,10 +688,79 @@ const HowItWorks: React.FC = () => {
                     <motion.button
                       className="mt-4 text-sm text-blue-400 flex items-center"
                       whileHover={{ x: 3 }}
+                      onClick={() => toggleCategoryDetails(category.name)}
+                      style={{ cursor: 'pointer' }}
                     >
-                      Learn more
-                      <ChevronRight size={14} className="ml-1" />
+                      {expandedCategory === category.name ? "Show less" : "Learn more"}
+                      <motion.div
+                        animate={{ rotate: expandedCategory === category.name ? 90 : 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <ChevronRight size={14} className="ml-1" />
+                      </motion.div>
                     </motion.button>
+
+                    {/* Expanded Content */}
+                    <AnimatePresence>
+                      {expandedCategory === category.name && category.detailedContent && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 pt-4 border-t border-white/10"
+                        >
+                          <div className="space-y-4">
+                            {/* Description */}
+                            <p className="text-white/80 text-sm leading-relaxed">
+                              {category.detailedContent.description}
+                            </p>
+
+                            {/* Key Benefits */}
+                            <div>
+                              <h5 className="text-white font-medium text-sm mb-2">Key Benefits:</h5>
+                              <ul className="space-y-1">
+                                {category.detailedContent.benefits.map((benefit, benefitIdx) => (
+                                  <motion.li
+                                    key={benefitIdx}
+                                    className="flex items-start text-white/70 text-xs"
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: benefitIdx * 0.1, duration: 0.3 }}
+                                  >
+                                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 mr-2 flex-shrink-0" />
+                                    {benefit}
+                                  </motion.li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            {/* Detailed Features */}
+                            <div>
+                              <h5 className="text-white font-medium text-sm mb-3">Detailed Features:</h5>
+                              <div className="space-y-3">
+                                {category.detailedContent.features.map((feature, featureIdx) => (
+                                  <motion.div
+                                    key={featureIdx}
+                                    className="bg-white/5 rounded-lg p-3 border border-white/10"
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: featureIdx * 0.1 + 0.2, duration: 0.3 }}
+                                  >
+                                    <h6 className="text-white font-medium text-sm mb-1">{feature.title}</h6>
+                                    <p className="text-white/70 text-xs mb-2">{feature.description}</p>
+                                    <div className="flex items-center">
+                                      <div className="w-2 h-2 rounded-full bg-green-500 mr-2" />
+                                      <span className="text-green-400 text-xs font-medium">{feature.impact}</span>
+                                    </div>
+                                  </motion.div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </motion.div>
                 ))}
               </div>

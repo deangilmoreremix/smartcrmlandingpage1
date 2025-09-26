@@ -24,7 +24,7 @@ import Footer from './components/Footer';
 import FloatingCta from './components/FloatingCta';
 import ParallaxSection from './components/ParallaxSection';
 import AiFeaturesCatalog from './components/AiFeaturesCatalog';
-import PricingComparison from './components/PricingComparison';
+import FEComparisonFull from './components/FEComparisonFull';
 import IntegrationEcosystem from './components/IntegrationEcosystem';
 import WorkflowShowcase from './components/WorkflowShowcase';
 import TrainingProgramSection from './components/TrainingProgramSection';
@@ -261,7 +261,7 @@ function App() {
                 </section>
 
                 {/* Complete Feature Matrix - NEW */}
-                <PricingComparison />
+                <FEComparisonFull />
 
 
                 {/* Integration Ecosystem - NEW */}
