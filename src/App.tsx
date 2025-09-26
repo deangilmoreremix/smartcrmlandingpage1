@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import ErrorBoundary from './components/ErrorBoundary';
 import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import ScrollProgress from './components/ScrollProgress';
@@ -113,7 +114,8 @@ function App() {
       {isDevMode && <PerformanceMonitor />}
       <AnimationToggle />
 
-      <Routes>
+      <ErrorBoundary>
+        <Routes>
           <Route path="/webinar-recap" element={
             <Suspense fallback={<PageLoadingFallback />}>
               <WebinarRecapPage />
@@ -311,6 +313,7 @@ function App() {
             </div>
           } />
         </Routes>
+      </ErrorBoundary>
     </SignupContext.Provider>
   );
 }

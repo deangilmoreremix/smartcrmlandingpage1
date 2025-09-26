@@ -51,12 +51,31 @@ const ExitIntentOffer: React.FC<ExitIntentOfferProps> = ({
   }, [oncePerHours]);
 
   const handleCopy = async () => {
+    // Check if clipboard API is supported
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      console.warn("Clipboard API not supported");
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(couponCode);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy:", err);
+      // Fallback: try to use document.execCommand for older browsers
+      try {
+        const textArea = document.createElement("textarea");
+        textArea.value = couponCode;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (fallbackErr) {
+        console.error("Fallback copy also failed:", fallbackErr);
+      }
     }
   };
 
@@ -95,6 +114,7 @@ const ExitIntentOffer: React.FC<ExitIntentOfferProps> = ({
           <button
             onClick={() => closeModal()}
             className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-colors"
+            aria-label="Close offer modal"
           >
             <X size={20} />
           </button>

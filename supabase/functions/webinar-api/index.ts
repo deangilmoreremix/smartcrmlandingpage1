@@ -1,71 +1,68 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { withAuth, AuthenticatedUser } from "../_shared/auth.ts";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "https://smartcrm.com",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
-// Simulated API responses for webinar functionality
-serve(async (req) => {
-  // Handle CORS preflight requests
-  if (req.method === "OPTIONS") {
-    return new Response(null, {
-      status: 200,
-      headers: corsHeaders,
-    });
-  }
-
+// Main handler function with authentication
+async function handleWebinarApi(req: Request, user: AuthenticatedUser): Promise<Response> {
   try {
     const url = new URL(req.url);
     const path = url.pathname.split('/').filter(Boolean);
-    
+
     // Skip "functions" and function name in the path
     const endpoint = path.length >= 3 ? path[2] : '';
-    
+
     // API endpoints
     if (req.method === "GET" && endpoint === "days") {
       // Get webinar days metadata
-      return await getWebinarDays();
-    } 
+      return await getWebinarDays(user);
+    }
     else if (req.method === "GET" && endpoint === "video-url") {
       // Get signed URL for webinar video
       const day = url.searchParams.get("day");
-      return await getVideoUrl(day);
+      return await getVideoUrl(day, user);
     }
     else if (req.method === "POST" && endpoint === "upload-url") {
       // Get pre-signed upload URL
       const { day, fileType, fileName } = await req.json();
-      return await getUploadUrl(day, fileType, fileName);
+      return await getUploadUrl(day, fileType, fileName, user);
     }
     else if (req.method === "POST" && endpoint === "generate-summary") {
       // Generate AI summary for a webinar
       const { day, videoUrl } = await req.json();
-      return await generateSummary(day, videoUrl);
+      return await generateSummary(day, videoUrl, user);
     }
     else if (req.method === "POST" && endpoint === "generate-transcript") {
       // Generate transcript for a webinar
       const { day, videoUrl } = await req.json();
-      return await generateTranscript(day, videoUrl);
+      return await generateTranscript(day, videoUrl, user);
     }
-    
+
     // If no matching endpoint is found
     return new Response(JSON.stringify({ error: "Endpoint not found" }), {
       status: 404,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Error in webinar-api function:", error.message);
-    
-    return new Response(JSON.stringify({ error: error.message }), {
+    console.error("Error in webinar-api function:", error);
+
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
+    return new Response(JSON.stringify({ error: errorMessage }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
-});
+}
+
+// Wrap the handler with authentication middleware
+serve(withAuth(handleWebinarApi));
 
 // Get webinar days metadata
-async function getWebinarDays() {
+async function getWebinarDays(user: AuthenticatedUser) {
   try {
     // Mock webinar days data
     const webinarDays = [
@@ -122,50 +119,52 @@ async function getWebinarDays() {
 }
 
 // Get video URL
-async function getVideoUrl(day) {
+async function getVideoUrl(day: string | null, user: AuthenticatedUser) {
   try {
     if (!day) {
       throw new Error("Day parameter is required");
     }
-    
+
     // Simulated video URL
     return new Response(JSON.stringify({ videoUrl: null }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
-    throw new Error(`Failed to get video URL: ${error.message}`);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Failed to get video URL: ${errorMessage}`);
   }
 }
 
 // Get pre-signed upload URL
-async function getUploadUrl(day, fileType, fileName) {
+async function getUploadUrl(day: any, fileType: any, fileName: any, user: AuthenticatedUser) {
   try {
     if (!day || !fileType || !fileName) {
       throw new Error("Day, fileType, and fileName parameters are required");
     }
-    
+
     // Simulated upload URL
-    return new Response(JSON.stringify({ 
+    return new Response(JSON.stringify({
       uploadUrl: "https://example.com/upload",
       filePath: `webinar-day-${day}/${fileName}`
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
-    throw new Error(`Failed to get upload URL: ${error.message}`);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Failed to get upload URL: ${errorMessage}`);
   }
 }
 
 // Generate summary
-async function generateSummary(day, videoUrl) {
+async function generateSummary(day: any, videoUrl: any, user: AuthenticatedUser) {
   try {
     if (!day || !videoUrl) {
       throw new Error("Day and videoUrl parameters are required");
     }
-    
+
     // Simulated summary generation
     const summaryText = "This webinar provided a comprehensive overview of how traditional CRM systems are failing sales teams and introduced Smart CRM's revolutionary approach. The presenter explained the hidden costs of manual data entry and demonstrated how AI automation can free up sales reps to focus on building relationships rather than administration. The session included practical demonstrations and real-world case studies showing significant improvements in sales productivity and customer engagement.";
-    
+
     const keyPoints = [
       "Smart CRM's AI component can reduce data entry time by up to 70%",
       "The platform integrates seamlessly with major email and calendar systems",
@@ -173,7 +172,7 @@ async function generateSummary(day, videoUrl) {
       "The cloud-based system requires minimal IT support for deployment",
       "Automation rules can be customized for different sales processes and industries"
     ];
-    
+
     return new Response(JSON.stringify({
       summaryText,
       keyPoints
@@ -181,20 +180,21 @@ async function generateSummary(day, videoUrl) {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
-    throw new Error(`Failed to generate summary: ${error.message}`);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Failed to generate summary: ${errorMessage}`);
   }
 }
 
 // Generate transcript
-async function generateTranscript(day, videoUrl) {
+async function generateTranscript(day: any, videoUrl: any, user: AuthenticatedUser) {
   try {
     if (!day || !videoUrl) {
       throw new Error("Day and videoUrl parameters are required");
     }
-    
+
     // Simulated transcript generation
     const transcriptText = generateMockTranscriptForDay(day);
-    
+
     const segments = [
       { title: "Introduction", startTime: "00:00:00", endTime: "00:05:30" },
       { title: "The CRM Problem", startTime: "00:05:30", endTime: "00:15:45" },
@@ -203,7 +203,7 @@ async function generateTranscript(day, videoUrl) {
       { title: "Q&A Session", startTime: "00:45:10", endTime: "00:55:40" },
       { title: "Conclusion", startTime: "00:55:40", endTime: "01:00:00" }
     ];
-    
+
     return new Response(JSON.stringify({
       transcriptText,
       segments
@@ -211,12 +211,13 @@ async function generateTranscript(day, videoUrl) {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
-    throw new Error(`Failed to generate transcript: ${error.message}`);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Failed to generate transcript: ${errorMessage}`);
   }
 }
 
 // Helper function to generate mock transcript for a webinar day
-function generateMockTranscriptForDay(day) {
+function generateMockTranscriptForDay(day: any) {
   if (day === 1) {
     return `[00:00:00] Host: Welcome everyone to the Smart CRM Masterclass! I'm Dean Gilmore, and I'm thrilled to have you all here today for what I promise will be a transformative series on revolutionizing your customer relationships using our Smart CRM technology.
 

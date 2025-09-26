@@ -2,10 +2,14 @@ import { useState, useEffect } from 'react';
 
 export const useAnimationPreference = () => {
   const [animationsEnabled, setAnimationsEnabled] = useState<boolean>(() => {
-    // Get initial value from localStorage if available
-    const savedPreference = localStorage.getItem('smartCRM_animationsEnabled');
-    if (savedPreference !== null) {
-      return savedPreference === 'true';
+    try {
+      // Get initial value from localStorage if available
+      const savedPreference = localStorage.getItem('smartCRM_animationsEnabled');
+      if (savedPreference !== null) {
+        return savedPreference === 'true';
+      }
+    } catch (error) {
+      console.warn('Failed to access localStorage for animation preference:', error);
     }
     // Otherwise, check for system preference
     return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -35,9 +39,13 @@ export const useAnimationPreference = () => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     
     const handleMediaChange = (e: MediaQueryListEvent) => {
-      // Only update if there's no saved preference
-      if (localStorage.getItem('smartCRM_animationsEnabled') === null) {
-        setAnimationsEnabled(!e.matches);
+      try {
+        // Only update if there's no saved preference
+        if (localStorage.getItem('smartCRM_animationsEnabled') === null) {
+          setAnimationsEnabled(!e.matches);
+        }
+      } catch (error) {
+        console.warn('Failed to access localStorage in media change handler:', error);
       }
     };
     

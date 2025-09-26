@@ -1,22 +1,14 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { withAuth, AuthenticatedUser } from "../_shared/auth.ts";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "https://smartcrm.com",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
-// Simulated chapter generation - in a real implementation, 
-// this would use AI to analyze video content and create meaningful chapters
-serve(async (req: Request) => {
-  // Handle CORS preflight requests
-  if (req.method === "OPTIONS") {
-    return new Response(null, {
-      status: 200,
-      headers: corsHeaders,
-    });
-  }
-
+// Main handler function with authentication
+async function handleGenerateChapters(req: Request, user: AuthenticatedUser): Promise<Response> {
   try {
     // Only accept POST requests
     if (req.method !== "POST") {
@@ -25,12 +17,21 @@ serve(async (req: Request) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    
+
     // Parse request body
-    const { webinarDay, videoUrl } = await req.json();
-    
-    if (!webinarDay) {
-      return new Response(JSON.stringify({ error: "webinarDay is required" }), {
+    const body = await req.json();
+    const { webinarDay, videoUrl } = body;
+
+    // Input validation
+    if (!webinarDay || typeof webinarDay !== 'number' || webinarDay < 1 || webinarDay > 3) {
+      return new Response(JSON.stringify({ error: "webinarDay must be a number between 1 and 3" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (videoUrl && typeof videoUrl !== 'string') {
+      return new Response(JSON.stringify({ error: "videoUrl must be a string" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -39,23 +40,32 @@ serve(async (req: Request) => {
     // Generate mock chapters based on webinar day
     const chapters = generateMockChapters(webinarDay);
 
-    // Return the generated chapters
+    // Return the generated chapters with user info
     return new Response(JSON.stringify({
       success: true,
-      chapters: chapters
+      chapters: chapters,
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role
+      }
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
-    
+
   } catch (error) {
     console.error("Error in generate-chapters function:", error);
-    
-    return new Response(JSON.stringify({ error: error.message }), {
+
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
+    return new Response(JSON.stringify({ error: errorMessage }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
-});
+}
+
+// Wrap the handler with authentication middleware
+serve(withAuth(handleGenerateChapters));
 
 // Helper function to generate mock chapters based on webinar day
 function generateMockChapters(day: number) {

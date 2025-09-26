@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import AnimatedLogo from './AnimatedLogo';
 import { SignupContext } from '../App';
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC = React.memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -105,6 +105,8 @@ const Navbar: React.FC = () => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-white p-2 rounded-md hover:bg-white/10"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -157,7 +159,9 @@ const Navbar: React.FC = () => {
       </AnimatePresence>
     </motion.nav>
   );
-};
+});
+
+Navbar.displayName = 'Navbar';
 
 interface NavLinkProps {
   href: string;

@@ -227,6 +227,19 @@ export default function FEComparisonFull() {
         </p>
       </header>
 
+      {/* Pricing Section with Buy Buttons */}
+      <div className="mb-8 flex justify-center">
+        <div className="text-center bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl p-8 shadow-xl">
+          <h3 className="text-2xl font-bold text-white mb-2">One-Time Purchase</h3>
+          <div className="text-5xl font-bold text-white mb-4">$97</div>
+          <p className="text-emerald-100 mb-6">Lifetime access to SmartCRM FE with all AI features included</p>
+          <button className="px-8 py-4 bg-white text-emerald-700 rounded-full text-lg font-bold hover:bg-emerald-50 transition-colors shadow-lg">
+            Buy Now - Limited Time
+          </button>
+          <p className="text-emerald-200 text-sm mt-2">No monthly fees • No hidden costs • Instant download</p>
+        </div>
+      </div>
+
       {/* Tabs */}
       <div className="mb-3 flex flex-wrap gap-2">
         {SECTIONS.map((s) => (

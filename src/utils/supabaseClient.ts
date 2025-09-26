@@ -10,7 +10,7 @@ export const getSupabaseClient = () => {
   const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
   
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn("Supabase credentials are not available");
+    // Supabase credentials are not available
     return null;
   }
 
@@ -31,7 +31,7 @@ export const getInstructorImageUrl = async (): Promise<string | null> => {
     const { data: files, error } = await supabase.storage.from('avatar').list();
     
     if (error || !files || files.length === 0) {
-      console.warn("No files found in avatar bucket or error:", error);
+      // No files found in avatar bucket
       return defaultImage;
     }
     
@@ -43,7 +43,6 @@ export const getInstructorImageUrl = async (): Promise<string | null> => {
       return defaultImage;
     }
     
-    console.log("Loaded instructor image URL:", urlData.publicUrl);
     return urlData.publicUrl;
   } catch (err) {
     console.error("Error getting instructor image:", err);

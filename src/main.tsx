@@ -2,6 +2,7 @@ import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
+import ErrorBoundary from './components/ErrorBoundary.tsx';
 import './index.css';
 import { initScrollAnimations, initHoverEffects } from './utils/animation.ts';
 import { shouldReduceEffects } from './utils/deviceDetection.ts';
@@ -65,9 +66,11 @@ const AnimatedApp = () => {
   }, []);
 
   return (
-    <HelmetProvider>
-      <App />
-    </HelmetProvider>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+    </ErrorBoundary>
   );
 };
 
