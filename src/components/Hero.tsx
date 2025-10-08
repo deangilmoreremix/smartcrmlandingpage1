@@ -149,7 +149,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
               transition={{ duration: 0.2 }}
             >
               <Tag className="text-red-400 mr-2" size={16} />
-              <span className="text-red-400 font-medium text-sm">6-Day Special Sale</span>
+              <span className="text-red-400 font-medium text-sm">5-Day Special Sale</span>
             </motion.div>
             <motion.div 
               className="inline-flex items-center bg-green-600/20 rounded-full px-4 py-2 backdrop-blur-md border border-green-500/30"
@@ -172,14 +172,14 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
-            Smart CRM 6-Day Sale:<br />
+            Smart CRM 5-Day Sale:<br />
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">AI-Powered CRM Revolution</span>
           </motion.h1>
         </AnimatedElement>
         
         <AnimatedElement animation="slideUp" delay={0.4} duration={0.8}>
           <p className="text-xl md:text-2xl text-white/80 mb-6 max-w-2xl mx-auto">
-            Get Smart CRM at special pricing during our 6-day sale (October 13-18, 2025). Transform your business with AI-powered customer relationship management plus receive exclusive access to our live masterclass on October 14-16, 2025.
+            Get Smart CRM at special pricing during our 5-day sale (October 13-18, 2025). Transform your business with AI-powered customer relationship management plus receive exclusive access to our live masterclass on October 14-16, 2025.
           </p>
         </AnimatedElement>
 

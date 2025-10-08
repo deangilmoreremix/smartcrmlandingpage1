@@ -58,7 +58,7 @@ const FloatingCta: React.FC = () => {
               <X size={18} />
             </button>
             
-            <h3 className="text-lg font-bold mb-2">Smart CRM Special Sale - 6 Days Only</h3>
+            <h3 className="text-lg font-bold mb-2">Smart CRM Special Sale - 5 Days Only</h3>
             <p className="text-white/80 text-sm mb-4">
               Get Smart CRM at special pricing through October 18th. Includes free masterclass on October 14-16, 2025 at 3:00 PM EST plus AI-powered automation features.
             </p>

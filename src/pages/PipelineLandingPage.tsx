@@ -28,7 +28,7 @@ export const SignupContext = React.createContext<{
 });
 
 const PipelineLandingPage: React.FC = () => {
-  // Set launch date to end of 6-day Smart CRM sale - October 18, 2025 at 11:59 PM EST
+  // Set launch date to end of 5-day Smart CRM sale - October 18, 2025 at 11:59 PM EST
   const launchDate = new Date('2025-10-18T23:59:59-05:00');
 
   // Modal state management

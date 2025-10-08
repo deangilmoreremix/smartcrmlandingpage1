@@ -59,7 +59,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                Smart CRM: Final Days of 6-Day Sale
+                Smart CRM: Final Days of 5-Day Sale
               </motion.h2>
               <p className="text-xl text-white/80 max-w-2xl mx-auto">
                 Don't miss your chance to get Smart CRM at special pricing. Transform your business with AI-powered customer relationship management.
@@ -140,7 +140,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                       }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
                     >
-                      Special sale pricing ends October 18th - only 6 days left!
+                      Special sale pricing ends October 18th - only 5 days left!
                     </motion.p>
                   </div>
                   <p className="text-white/60 text-sm ml-7">Prices return to regular rates after the sale ends.</p>

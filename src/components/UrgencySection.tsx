@@ -82,10 +82,10 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                Smart CRM: 6-Day Special Sale
+                Smart CRM: 5-Day Special Sale
               </motion.h2>
               <p className="text-xl text-white/80 max-w-2xl mx-auto">
-                Get Smart CRM at special pricing during our limited 6-day sale (October 13-18, 2025). Transform your business with AI-powered customer relationship management.
+                Get Smart CRM at special pricing during our limited 5-day sale (October 13-18, 2025). Transform your business with AI-powered customer relationship management.
               </p>
             </div>
             
