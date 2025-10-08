@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { User, AlertTriangle, Check, X, Image } from 'lucide-react';
+import { User, TriangleAlert as AlertTriangle, Check, X, Image } from 'lucide-react';
 import { getSupabaseClient, getInstructorImageUrl } from '../utils/supabaseClient';
 
 interface AvatarUploaderProps {

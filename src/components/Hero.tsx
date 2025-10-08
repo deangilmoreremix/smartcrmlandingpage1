@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import CountdownTimer from './CountdownTimer';
-import { ChevronDown, CheckCircle, ExternalLink, ArrowRight, Calendar, Users, BookOpen, Star, User, Mail, Building, Tag, Gift, Zap, BarChart3 } from 'lucide-react';
+import { ChevronDown, CircleCheck as CheckCircle, ExternalLink, ArrowRight, Calendar, Users, BookOpen, Star, User, Mail, Building, Tag, Gift, Zap, ChartBar as BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedElement from './AnimatedElement';
 import { SignupContext } from '../App';

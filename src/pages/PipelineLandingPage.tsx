@@ -154,7 +154,7 @@ const PipelineLandingPage: React.FC = () => {
                   <li><strong>Dimensions</strong>: 800px height, full width</li>
                   <li><strong>Features</strong>: Fullscreen allowed, scrolling enabled</li>
                   <li><strong>Loading State</strong>: Shows spinner and "Loading demo..." text until iframe loads</li>
-                  <li><strong>Toggle</strong>: Button to show/hide the demo with "View Live Demo" / "Hide Demo" text</li>
+                  <li><strong>Toggle</strong>: Button to show/hide the demo with "View Live Demo" / "Hide Demo\" text</li>
                 </ul>
 
                 <h3 className="text-2xl font-bold text-white mb-4">Detailed Feature Documentation</h3>

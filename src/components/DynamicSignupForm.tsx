@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, AlertCircle, Mail, User, Building, ArrowRight } from 'lucide-react';
+import { Check, CircleAlert as AlertCircle, Mail, User, Building, ArrowRight } from 'lucide-react';
 import { handleFormSubmission } from '../utils/formHelpers';
 import CanvasConfetti from './CanvasConfetti';
 

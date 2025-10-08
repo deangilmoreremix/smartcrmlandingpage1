@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Clock, Users, Tag, Gift, Check, X, AlertTriangle, Calendar, BookOpen, Star, User, Mail, Zap, BarChart3 } from 'lucide-react';
+import { Clock, Users, Tag, Gift, Check, X, TriangleAlert as AlertTriangle, Calendar, BookOpen, Star, User, Mail, Zap, ChartBar as BarChart3 } from 'lucide-react';
 import CountdownTimer from './CountdownTimer';
 import { motion } from 'framer-motion';
 import AnimatedElement from './AnimatedElement';
