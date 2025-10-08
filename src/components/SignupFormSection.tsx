@@ -86,8 +86,8 @@ interface SignupFormSectionProps {
 }
 
 const SignupFormSection: React.FC<SignupFormSectionProps> = ({
-  title = "Get Smart CRM - Special 7-Day Sale",
-  subtitle = "Transform your business with AI-powered customer relationship management. Special pricing ends September 27, 2025."
+  title = "Get Smart CRM - Special 6-Day Sale",
+  subtitle = "Transform your business with AI-powered customer relationship management. Special pricing ends October 18, 2025."
 }) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { setHasSignedUp } = useContext(SignupContext);
@@ -251,7 +251,7 @@ const SignupFormSection: React.FC<SignupFormSectionProps> = ({
                   {
                     icon: <Gift size={24} className="text-purple-400" />,
                     title: "Free Masterclass Included",
-                    description: "Exclusive 3-day training on September 10-12, 2025 included with your purchase."
+                    description: "Exclusive 3-day training on October 14-16, 2025 included with your purchase."
                   },
                   {
                     icon: <Star size={24} className="text-amber-400" />,

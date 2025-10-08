@@ -15,8 +15,8 @@ export const submitToZapier = async (formData: Record<string, string>): Promise<
     const enhancedFormData = {
       ...formData,
       submittedAt: new Date().toISOString(),
-      masterclassDates: "September 21-23, 2025",
-      masterclassTime: "Day 1: 8:00 PM EST, Days 2-3: 3:00 PM EST"
+      masterclassDates: "October 14-16, 2025",
+      masterclassTime: "3:00 PM EST each day"
     };
     
     console.log('Submitting data to Zapier:', enhancedFormData);

@@ -14,7 +14,7 @@ interface FaqItem {
 const faqs: FaqItem[] = [
   {
     question: "When is the Smart CRM masterclass?",
-    answer: "Our 3-day Smart CRM masterclass is scheduled for September 21-23, 2025. Day 1 starts at 8:00 PM EST on September 21st, and Days 2-3 are at 3:00 PM EST on September 22nd and 23rd. This interactive online training will teach you how to transform your customer relationships using AI-powered CRM strategies.",
+    answer: "Our 3-day Smart CRM masterclass is scheduled for October 14-16, 2025 at 3:00 PM EST each day. This interactive online training will teach you how to transform your customer relationships using AI-powered CRM strategies.",
     category: "Masterclass"
   },
   {
@@ -64,7 +64,7 @@ const faqs: FaqItem[] = [
   },
   {
     question: "What's included in the free masterclass that comes with Smart CRM?",
-    answer: "Day 1 (September 10): Advanced Smart CRM AI Features - Master all AI-powered automation, lead scoring, and predictive analytics. Day 2 (September 11): Implementation & Optimization - Learn advanced setup strategies and how to maximize your Smart CRM ROI.",
+    answer: "Day 1 (October 14): Advanced Smart CRM AI Features - Master all AI-powered automation, lead scoring, and predictive analytics. Day 2 (October 15): Implementation & Optimization - Learn advanced setup strategies and how to maximize your Smart CRM ROI. Day 3 (October 16): Advanced Workflows - Master automation and optimization strategies.",
     category: "Masterclass"
   },
   {
@@ -74,7 +74,7 @@ const faqs: FaqItem[] = [
   },
   {
     question: "Is the masterclass really free with Smart CRM purchase?",
-    answer: "Yes! The 3-day masterclass is completely included with your Smart CRM purchase during our special sale. This training normally costs $697, but it's free for all Smart CRM customers who purchase during September 21-27, 2025.",
+    answer: "Yes! The 3-day masterclass is completely included with your Smart CRM purchase during our special sale. This training normally costs $697, but it's free for all Smart CRM customers who purchase during October 13-18, 2025.",
     category: "Masterclass"
   }
 ];

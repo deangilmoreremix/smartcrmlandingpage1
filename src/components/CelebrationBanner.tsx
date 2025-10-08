@@ -128,7 +128,7 @@ const CelebrationBanner: React.FC<CelebrationBannerProps> = ({
                   <div className="flex items-center">
                     <Calendar className="text-white mr-2 flex-shrink-0" size={16} />
                     <p className="text-white/90 text-sm">
-                      <span className="font-semibold">September 21-23, 2025</span> - Day 1: 8:00 PM EST, Days 2-3: 3:00 PM EST
+                      <span className="font-semibold">October 14-16, 2025</span> - All days at 3:00 PM EST
                     </p>
                   </div>
                 </motion.div>

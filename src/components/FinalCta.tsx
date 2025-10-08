@@ -59,7 +59,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                Smart CRM: Final Days of 7-Day Sale
+                Smart CRM: Final Days of 6-Day Sale
               </motion.h2>
               <p className="text-xl text-white/80 max-w-2xl mx-auto">
                 Don't miss your chance to get Smart CRM at special pricing. Transform your business with AI-powered customer relationship management.
@@ -76,7 +76,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 {
                   icon: <BookOpen className="text-green-400" size={24} />,
                   title: "Free Expert Training",
-                  description: "Exclusive 3-day masterclass on September 10-12, 2025 included with your Smart CRM purchase."
+                  description: "Exclusive 3-day masterclass on October 14-16, 2025 included with your Smart CRM purchase."
                 },
                 {
                   icon: <Gift className="text-purple-400" size={24} />,
@@ -119,7 +119,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                       <Check size={14} className="text-green-400 mt-0.5" />
                       <p className="text-white/60 text-xs">
                         {index === 0 ? "Multi-model AI from OpenAI and Google" : 
-                         index === 1 ? "Live training September 10-11, 2025 at 3PM EDT" :
+                         index === 1 ? "Live training October 14-16, 2025 at 3PM EST" :
                          "Dedicated success manager included"}
                       </p>
                     </div>
@@ -140,7 +140,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                       }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
                     >
-                      Special sale pricing ends September 27th - only 6 days left!
+                      Special sale pricing ends October 18th - only 6 days left!
                     </motion.p>
                   </div>
                   <p className="text-white/60 text-sm ml-7">Prices return to regular rates after the sale ends.</p>
@@ -194,7 +194,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
               >
-                Special sale ends September 27, 2025 - free masterclass included (Sep 21-23)
+                Special sale ends October 18, 2025 - free masterclass included (Oct 14-16)
               </motion.p>
             </div>
           </motion.div>

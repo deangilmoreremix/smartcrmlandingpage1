@@ -82,10 +82,10 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                Smart CRM: 7-Day Special Sale
+                Smart CRM: 6-Day Special Sale
               </motion.h2>
               <p className="text-xl text-white/80 max-w-2xl mx-auto">
-                Get Smart CRM at special pricing during our limited 7-day sale (September 21-27, 2025). Transform your business with AI-powered customer relationship management.
+                Get Smart CRM at special pricing during our limited 6-day sale (October 13-18, 2025). Transform your business with AI-powered customer relationship management.
               </p>
             </div>
             
@@ -117,7 +117,7 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                 {
                   icon: <Gift className="text-purple-400" size={24} />,
                   title: "Free Live Masterclass",
-                  description: "Exclusive 3-day training on September 10-12, 2025 included with your purchase."
+                  description: "Exclusive 3-day training on October 14-16, 2025 included with your purchase."
                 }
               ].map((benefit, index) => (
                 <motion.div
@@ -156,7 +156,7 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                       <p className="text-white/60 text-xs">
                         {index === 0 ? "Automate workflows with natural language commands" : 
                          index === 1 ? "Machine learning models predict deal outcomes" :
-                         "Expert-led training on September 10-11, 2025 at 3PM EDT"}
+                         "Expert-led training on October 14-16, 2025 at 3PM EST"}
                       </p>
                     </div>
                   </motion.div>
@@ -176,7 +176,7 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                       }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
                     >
-                      Sale ends in just a few days - September 27th at midnight!
+                      Sale ends in just a few days - October 18th at 11:59 PM EST!
                     </motion.p>
                   </div>
                   <p className="text-white/60 text-sm ml-7">Return to regular pricing after the sale ends.</p>
@@ -229,7 +229,7 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                 }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
               >
-                Special sale pricing ends September 27, 2025 - includes free masterclass (Sep 21-23)
+                Special sale pricing ends October 18, 2025 - includes free masterclass (Oct 14-16)
               </motion.p>
             </div>
           </motion.div>

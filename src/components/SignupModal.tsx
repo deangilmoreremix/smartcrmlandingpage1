@@ -34,7 +34,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
       case 'masterclass':
         return {
           title: "Get Smart CRM + Free Masterclass", 
-          subtitle: "Get Smart CRM during our special 7-day sale and receive free access to our exclusive 3-day training on September 10-12, 2025",
+          subtitle: "Get Smart CRM during our special 6-day sale and receive free access to our exclusive 3-day training on October 14-16, 2025",
           cta: "Get Smart CRM Now",
           benefits: [
             {
@@ -43,7 +43,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
             },
             {
               icon: <Gift className="text-purple-400" />,
-              text: "Free 3-day masterclass (Sep 10-12, 2025)"
+              text: "Free 3-day masterclass (Oct 14-16, 2025)"
             },
             {
               icon: <Calendar className="text-green-400" />,
@@ -54,7 +54,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
       case 'early-access':
         return {
           title: "Get Smart CRM - Special Sale",
-          subtitle: "Transform your business with AI-powered CRM during our limited 7-day sale (September 21-27, 2025)",
+          subtitle: "Transform your business with AI-powered CRM during our limited 6-day sale (October 13-18, 2025)",
           cta: "Get Smart CRM Now",
           benefits: [
             {
@@ -67,7 +67,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
             },
             {
               icon: <Gift className="text-green-400" />,
-              text: "Free masterclass on Sep 10-11, 2025"
+              text: "Free masterclass on Oct 14-16, 2025"
             }
           ]
         };
@@ -291,7 +291,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
                     transition={{ delay: 0.8 }}
                   >
                     <Calendar className="text-blue-400" size={16} />
-                    <span className="ml-2">Masterclass: September 21-23, 2025 (Day 1: 8:00 PM EST, Days 2-3: 3:00 PM EST)</span>
+                    <span className="ml-2">Masterclass: October 14-16, 2025 at 3:00 PM EST</span>
                   </motion.div>
                 </div>
               </div>

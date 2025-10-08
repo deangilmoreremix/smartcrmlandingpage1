@@ -111,7 +111,7 @@ const AvatarUploader: React.FC<AvatarUploaderProps> = ({
             <p className="text-green-400 text-sm">Instructor image loaded successfully.</p>
           </div>
           <p className="text-white/60 text-xs mt-1 ml-7">
-            Dean Gilmore is ready to deliver the September 21-23, 2025 masterclass.
+            Dean Gilmore is ready to deliver the October 14-16, 2025 masterclass.
           </p>
         </div>
       )}

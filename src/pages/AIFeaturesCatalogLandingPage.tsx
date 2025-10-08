@@ -28,8 +28,8 @@ export const SignupContext = React.createContext<{
 });
 
 const AIFeaturesCatalogLandingPage: React.FC = () => {
-  // Set launch date to end of 7-day Smart CRM sale - September 27, 2025 at 11:59 PM EST
-  const launchDate = new Date('2025-09-27T23:59:59-05:00');
+  // Set launch date to end of 6-day Smart CRM sale - October 18, 2025 at 11:59 PM EST
+  const launchDate = new Date('2025-10-18T23:59:59-05:00');
 
   // Modal state management
   const [signupModalOpen, setSignupModalOpen] = useState(false);
