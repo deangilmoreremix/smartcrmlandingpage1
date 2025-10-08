@@ -34,7 +34,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
       case 'masterclass':
         return {
           title: "Get Smart CRM + Free Masterclass", 
-          subtitle: "Get Smart CRM during our special 7-day sale and receive free access to our exclusive 2-day training on September 10-11, 2025",
+          subtitle: "Get Smart CRM during our special 7-day sale and receive free access to our exclusive 3-day training on September 10-12, 2025",
           cta: "Get Smart CRM Now",
           benefits: [
             {
@@ -43,7 +43,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
             },
             {
               icon: <Gift className="text-purple-400" />,
-              text: "Free 2-day masterclass (Sep 10-11, 2025)"
+              text: "Free 3-day masterclass (Sep 10-12, 2025)"
             },
             {
               icon: <Calendar className="text-green-400" />,

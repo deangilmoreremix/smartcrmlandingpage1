@@ -627,7 +627,7 @@ const HowItWorks: React.FC = React.memo(() => {
       </div>
     </section>
   );
-};
+});
 
 
 export default HowItWorks;

@@ -117,7 +117,7 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                 {
                   icon: <Gift className="text-purple-400" size={24} />,
                   title: "Free Live Masterclass",
-                  description: "Exclusive 2-day training on September 10-11, 2025 included with your purchase."
+                  description: "Exclusive 3-day training on September 10-12, 2025 included with your purchase."
                 }
               ].map((benefit, index) => (
                 <motion.div

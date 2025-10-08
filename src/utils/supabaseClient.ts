@@ -22,27 +22,44 @@ export const getSupabaseClient = () => {
 export const getInstructorImageUrl = async (): Promise<string | null> => {
   // Default image to use if we can't get one from storage
   const defaultImage = "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1600";
-  
+
   try {
     const supabase = getSupabaseClient();
-    if (!supabase) return defaultImage;
-    
-    // Try to get files from the avatar bucket
-    const { data: files, error } = await supabase.storage.from('avatar').list();
-    
-    if (error || !files || files.length === 0) {
-      // No files found in avatar bucket
+    if (!supabase) {
+      console.warn("Supabase client not available");
       return defaultImage;
     }
-    
-    // Get the public URL for the first file
-    const { data: urlData } = supabase.storage.from('avatar').getPublicUrl(files[0].name);
-    
+
+    console.log("Attempting to get instructor image from Supabase...");
+
+    // First, check if the file exists
+    const { data: files, error: listError } = await supabase.storage.from('avatar').list('', {
+      limit: 100,
+      offset: 0
+    });
+
+    if (listError) {
+      console.error("Error listing files in avatar bucket:", listError);
+      return defaultImage;
+    }
+
+    console.log("Files in avatar bucket:", files?.map((f: any) => f.name));
+
+    const instructorFile = files?.find((file: any) => file.name === 'instructor-1747337582893.jpg');
+    if (!instructorFile) {
+      console.warn("instructor-1747337582893.jpg not found in avatar bucket. Available files:", files?.map((f: any) => f.name));
+      return defaultImage;
+    }
+
+    // Get the public URL for the instructor image
+    const { data: urlData } = supabase.storage.from('avatar').getPublicUrl('instructor-1747337582893.jpg');
+
     if (!urlData?.publicUrl) {
-      console.warn("Could not get public URL for avatar");
+      console.warn("Could not get public URL for dean-gilmore.jpg");
       return defaultImage;
     }
-    
+
+    console.log("Successfully got instructor image URL:", urlData.publicUrl);
     return urlData.publicUrl;
   } catch (err) {
     console.error("Error getting instructor image:", err);

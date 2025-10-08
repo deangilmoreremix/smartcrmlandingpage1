@@ -251,7 +251,7 @@ const SignupFormSection: React.FC<SignupFormSectionProps> = ({
                   {
                     icon: <Gift size={24} className="text-purple-400" />,
                     title: "Free Masterclass Included",
-                    description: "Exclusive 2-day training on September 10-11, 2025 included with your purchase."
+                    description: "Exclusive 3-day training on September 10-12, 2025 included with your purchase."
                   },
                   {
                     icon: <Star size={24} className="text-amber-400" />,

@@ -140,7 +140,7 @@ const TrainingProgramSection: React.FC = () => {
               whileHover={{ scale: 1.02 }}
             >
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">
-                2-Day Smart CRM Masterclass
+                3-Day Smart CRM Masterclass
               </span>
             </motion.h2>
 
@@ -150,7 +150,7 @@ const TrainingProgramSection: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Join CRM expert Dean Gilmore for a transformative 2-day training on May 20-21, 2025 to revolutionize your sales process using Smart CRM technology
+              Join CRM expert Dean Gilmore for a transformative 3-day training on May 20-22, 2025 to revolutionize your sales process using Smart CRM technology
             </motion.p>
           </div>
         </AnimatedElement>

@@ -76,7 +76,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 {
                   icon: <BookOpen className="text-green-400" size={24} />,
                   title: "Free Expert Training",
-                  description: "Exclusive 2-day masterclass on September 10-11, 2025 included with your Smart CRM purchase."
+                  description: "Exclusive 3-day masterclass on September 10-12, 2025 included with your Smart CRM purchase."
                 },
                 {
                   icon: <Gift className="text-purple-400" size={24} />,
