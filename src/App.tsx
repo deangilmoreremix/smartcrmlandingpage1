@@ -45,6 +45,8 @@ const ContactsLandingPage = lazy(() => import('./pages/ContactsLandingPage'));
 const PipelineLandingPage = lazy(() => import('./pages/PipelineLandingPage'));
 const AIFeaturesCatalogLandingPage = lazy(() => import('./pages/AIFeaturesCatalogLandingPage'));
 
+import { LAUNCH_DATE } from './constants/dates';
+
 // Create a context to manage signup modal state across components
 export const SignupContext = React.createContext<{
   openSignupModal: (variant?: 'standard' | 'masterclass' | 'early-access') => void;
@@ -68,7 +70,7 @@ const PageLoadingFallback = () => (
 
 function App() {
   // Set launch date to end of 5-day Smart CRM sale - October 18, 2025 at 11:59 PM EST
-  const launchDate = new Date('2025-10-18T23:59:59-05:00');
+  const launchDate = LAUNCH_DATE;
   
   // Modal state management
   const [signupModalOpen, setSignupModalOpen] = useState(false);

@@ -8,10 +8,11 @@ import ExitIntentModal from '../components/ExitIntentModal';
 import CelebrationBanner from '../components/CelebrationBanner';
 import ExitIntentOffer from '../components/ExitIntentOffer';
 import { SignupContext } from '../App';
+import { LAUNCH_DATE } from '../constants/dates';
 
 const AICalendarLandingPage: React.FC = () => {
   // Set launch date to end of 5-day Smart CRM sale - October 18, 2025 at 11:59 PM EST
-  const launchDate = new Date('2025-10-18T23:59:59-05:00');
+  const launchDate = LAUNCH_DATE;
 
   // Modal state management
   const [signupModalOpen, setSignupModalOpen] = useState(false);
