@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import AnimatedLogo from './AnimatedLogo';
@@ -36,16 +36,32 @@ const Navbar: React.FC = React.memo(() => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <motion.div 
-            className="flex items-center"
+          <motion.div
+            className="flex items-center relative"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 relative">
               <Link to="/" className="flex items-center text-white">
                 <AnimatedLogo />
               </Link>
+              {/* JUST LAUNCHED badge */}
+              <motion.div
+                className="absolute -top-2 -right-20 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-lg flex items-center"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  rotate: [-2, 2, -2],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              >
+                <Sparkles size={10} className="mr-1" />
+                LIVE NOW
+              </motion.div>
             </div>
           </motion.div>
           
@@ -90,13 +106,41 @@ const Navbar: React.FC = React.memo(() => {
               <NavLink href="#training">Masterclass</NavLink>
               <NavLink href="/webinar-recap">Webinar Recap</NavLink>
               <NavLink href="#faq">FAQ</NavLink>
-              <motion.button 
-                className="px-4 py-2 rounded-full bg-blue-600 text-white font-medium shadow-lg hover:bg-blue-700 transition-colors"
+              <motion.button
+                className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold shadow-lg overflow-hidden"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => openSignupModal('early-access')}
               >
-                Get Smart CRM
+                {/* Animated shine effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{
+                    x: ['-200%', '200%'],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'linear',
+                  }}
+                />
+                {/* Pulsing border */}
+                <motion.div
+                  className="absolute inset-0 rounded-full border-2 border-yellow-400/50"
+                  animate={{
+                    scale: [1, 1.05, 1],
+                    opacity: [0.5, 0.8, 0.5],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+                <span className="relative z-10 flex items-center">
+                  Join the Revolution
+                  <Sparkles size={16} className="ml-2" />
+                </span>
               </motion.button>
             </motion.div>
           </div>
