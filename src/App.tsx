@@ -8,7 +8,6 @@ import ScrollingBanner from './components/ScrollingBanner';
 import AnimationToggle from './components/AnimationToggle';
 import { FeedbackContainer } from './components/Feedback';
 import PerformanceMonitor from './components/PerformanceMonitor';
-import ExitIntentOffer from './components/ExitIntentOffer';
 import SignupModal from './components/SignupModal';
 import CelebrationBanner from './components/CelebrationBanner';
 import ProblemStatement from './components/ProblemStatement';
@@ -300,9 +299,6 @@ function App() {
                 onSubmit={handleSignup}
                 variant={signupModalVariant}
               />
-              
-              {/* Exit Intent Modal - only show if user hasn't signed up */}
-              {!hasSignedUp && <ExitIntentOffer onAccept={() => openSignupModal('early-access')} />}
               
               {/* Post-signup Celebration Banner */}
               {showCelebration && (
