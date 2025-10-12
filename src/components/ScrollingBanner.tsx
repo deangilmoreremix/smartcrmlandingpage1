@@ -61,7 +61,7 @@ const ScrollingBanner: React.FC = () => {
           animate={{ x: ['-100%', '100%'] }}
           transition={{
             repeat: Infinity,
-            duration: 60,
+            duration: 120,
             ease: 'linear'
           }}
           className="flex items-center whitespace-nowrap gap-8"
