@@ -13,7 +13,7 @@ const ScrollingBanner: React.FC = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-r from-blue-900 via-purple-900 to-blue-900 py-3 overflow-hidden relative z-50">
+    <div className="bg-gradient-to-r from-blue-900 via-purple-900 to-blue-900 py-3 overflow-hidden relative z-30">
       {/* Animated background gradient */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20"

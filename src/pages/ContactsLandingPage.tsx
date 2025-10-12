@@ -14,6 +14,7 @@ import ContactsEmbedSection from '../components/ContactsEmbedSection';
 import SignupFormSection from '../components/SignupFormSection';
 import UrgencySection from '../components/UrgencySection';
 import FinalCta from '../components/FinalCta';
+import ConversionOptimizer from '../components/ConversionOptimizer';
 import { LAUNCH_DATE } from '../constants/dates';
 
 // Create a context to manage signup modal state across components
@@ -83,6 +84,20 @@ const ContactsLandingPage: React.FC = () => {
         <main>
           {/* Contacts Embed Section */}
           <ContactsEmbedSection />
+
+          {/* Conversion Optimizer Section */}
+          <section className="py-20 px-4 bg-gradient-to-b from-black via-gray-900 to-black">
+            <div className="max-w-5xl mx-auto">
+              <ConversionOptimizer
+                onCtaClick={() => openSignupModal('standard')}
+                ctaText="Get Smart CRM Contacts Now"
+                urgencyEnabled={true}
+                socialProofEnabled={true}
+                guaranteeEnabled={true}
+                priceAnchoringEnabled={true}
+              />
+            </div>
+          </section>
 
           {/* Contacts Feature Analysis Section */}
           <section className="py-20 px-4 relative">
