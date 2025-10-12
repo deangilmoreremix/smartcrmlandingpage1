@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Check, Star, Lock, ArrowRight } from "lucide-react";
+import JVZooBuyButton from "./JVZooBuyButton";
+import JVZooNoThanksButton from "./JVZooNoThanksButton";
 
 interface ExitIntentOfferProps {
   couponCode?: string;
@@ -139,15 +141,18 @@ const ExitIntentOffer: React.FC<ExitIntentOfferProps> = ({
                 <span className="font-bold text-green-400">$97 one-time</span> with instant coupon code: <strong className="text-blue-400">{couponCode}</strong>
               </p>
 
-              <motion.button
-                onClick={accept}
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white rounded-full font-bold text-lg shadow-lg shadow-orange-600/30"
-                whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(249, 115, 22, 0.4)" }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span>Claim My SmartCRM VIP Deal Now</span>
-                <ArrowRight className="ml-2" size={20} />
-              </motion.button>
+              <JVZooBuyButton>
+                <motion.button
+                  onClick={accept}
+                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white rounded-full font-bold text-lg shadow-lg shadow-orange-600/30"
+                  whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(249, 115, 22, 0.4)" }}
+                  whileTap={{ scale: 0.95 }}
+                  type="button"
+                >
+                  <span>Claim My SmartCRM VIP Deal Now</span>
+                  <ArrowRight className="ml-2" size={20} />
+                </motion.button>
+              </JVZooBuyButton>
             </div>
 
             {/* Problem Section */}
@@ -346,19 +351,23 @@ const ExitIntentOffer: React.FC<ExitIntentOfferProps> = ({
               </h3>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
-                <motion.button
-                  onClick={accept}
-                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full font-bold text-lg shadow-lg shadow-green-600/30"
-                  whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(34, 197, 94, 0.4)" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span>Claim My SmartCRM VIP Deal Now</span>
-                  <ArrowRight className="ml-2" size={20} />
-                </motion.button>
+                <JVZooBuyButton>
+                  <motion.button
+                    onClick={accept}
+                    className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full font-bold text-lg shadow-lg shadow-green-600/30"
+                    whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(34, 197, 94, 0.4)" }}
+                    whileTap={{ scale: 0.95 }}
+                    type="button"
+                  >
+                    <span>Claim My SmartCRM VIP Deal Now</span>
+                    <ArrowRight className="ml-2" size={20} />
+                  </motion.button>
+                </JVZooBuyButton>
 
                 <button
                   onClick={handleCopy}
                   className="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-full font-medium border border-white/20"
+                  type="button"
                 >
                   {copied ? "✅ Copied!" : `📋 Copy ${couponCode}`}
                 </button>
@@ -377,19 +386,25 @@ const ExitIntentOffer: React.FC<ExitIntentOfferProps> = ({
             </div>
 
             {/* Footer */}
-            <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
-              <button
-                onClick={() => closeModal(true)}
-                className="text-sm text-white/50 hover:text-white/70 underline-offset-2 hover:underline"
-              >
-                No thanks — I'll pay full price later
-              </button>
-              <button
-                onClick={() => closeModal()}
-                className="rounded-lg px-3 py-2 text-sm text-white/50 hover:bg-white/10 hover:text-white transition-colors"
-              >
-                Close
-              </button>
+            <div className="mt-8 pt-6 border-t border-white/10 flex flex-col items-center gap-4">
+              <div className="flex items-center justify-between w-full">
+                <a
+                  href="https://www.jvzoo.com/nothanks/426193"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-white/50 hover:text-white/70 underline-offset-2 hover:underline"
+                  style={{ textDecoration: 'none' }}
+                >
+                  No thanks — I'll pay full price later
+                </a>
+                <button
+                  onClick={() => closeModal()}
+                  className="rounded-lg px-3 py-2 text-sm text-white/50 hover:bg-white/10 hover:text-white transition-colors"
+                  type="button"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </motion.div>

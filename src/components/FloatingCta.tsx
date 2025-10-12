@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { SignupContext } from '../App';
+import JVZooBuyButton from './JVZooBuyButton';
 
 const FloatingCta: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -62,14 +63,16 @@ const FloatingCta: React.FC = () => {
             <p className="text-white/80 text-sm mb-4">
               Get Smart CRM at special pricing through October 18th. Includes free masterclass on October 14-16, 2025 at 3:00 PM EST plus AI-powered automation features.
             </p>
-            <motion.button
-              className="w-full py-2 px-4 bg-white text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleCtaClick}
-            >
-              Get Smart CRM Now
-            </motion.button>
+            <JVZooBuyButton>
+              <motion.button
+                className="w-full py-2 px-4 bg-white text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                type="button"
+              >
+                Get Smart CRM Now
+              </motion.button>
+            </JVZooBuyButton>
           </div>
         </motion.div>
       )}

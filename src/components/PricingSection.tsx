@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Check, X, HelpCircle } from 'lucide-react';
+import JVZooBuyButton from './JVZooBuyButton';
+import JVZooNoThanksButton from './JVZooNoThanksButton';
 
 interface PricingFeature {
   name: string;
@@ -86,9 +88,9 @@ const PricingSection: React.FC = () => {
               <p className="text-white/60 text-xs mb-4">
                 {billingPeriod === 'annual' ? 'Billed annually' : 'Billed monthly'}
               </p>
-              <button className="w-full py-3 rounded-lg bg-white/10 text-white font-medium hover:bg-white/20 transition-colors">
-                Join Waitlist
-              </button>
+              <JVZooBuyButton className="w-full py-3 rounded-lg bg-white/10 text-white font-medium hover:bg-white/20 transition-colors inline-block text-center">
+                Get Smart CRM
+              </JVZooBuyButton>
             </div>
             <div className="p-6">
               <p className="font-medium text-white mb-4">Included features:</p>
@@ -121,9 +123,9 @@ const PricingSection: React.FC = () => {
               <p className="text-white/60 text-xs mb-4">
                 {billingPeriod === 'annual' ? 'Billed annually' : 'Billed monthly'}
               </p>
-              <button className="w-full py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors">
-                Join Waitlist
-              </button>
+              <JVZooBuyButton className="w-full py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors inline-block text-center">
+                Get Smart CRM
+              </JVZooBuyButton>
             </div>
             <div className="p-6">
               <p className="font-medium text-white mb-4">Everything in Starter, plus:</p>
@@ -150,9 +152,9 @@ const PricingSection: React.FC = () => {
               <p className="text-white/60 text-xs mb-4">
                 Tailored to your specific requirements
               </p>
-              <button className="w-full py-3 rounded-lg bg-white/10 text-white font-medium hover:bg-white/20 transition-colors">
-                Contact Sales
-              </button>
+              <JVZooBuyButton className="w-full py-3 rounded-lg bg-white/10 text-white font-medium hover:bg-white/20 transition-colors inline-block text-center">
+                Get Smart CRM
+              </JVZooBuyButton>
             </div>
             <div className="p-6">
               <p className="font-medium text-white mb-4">Everything in Professional, plus:</p>
@@ -172,6 +174,9 @@ const PricingSection: React.FC = () => {
         <div className="mt-16 text-center">
           <p className="text-white/70 mb-3">All plans include unlimited access to our help center and community support</p>
           <p className="text-white font-medium">Need a custom solution? <a href="#contact" className="text-blue-400 hover:underline">Contact our sales team</a></p>
+          <div className="mt-6">
+            <JVZooNoThanksButton />
+          </div>
         </div>
       </div>
     </section>

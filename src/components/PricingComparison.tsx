@@ -2,6 +2,8 @@ import React, { useState, useMemo } from "react";
 import { Check, X, Search } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./ui/Tabs";
 import { competitorComparisonData } from "../data/competitorData";
+import JVZooBuyButton from "./JVZooBuyButton";
+import JVZooNoThanksButton from "./JVZooNoThanksButton";
 
 const PricingComparison: React.FC = () => {
   const [activeTab, setActiveTab] = useState("All");
@@ -33,12 +35,15 @@ const PricingComparison: React.FC = () => {
       <h3 className="text-xl font-bold text-white mb-4 text-center">Pricing Comparison</h3>
 
       {/* Pricing Section with Buy Buttons */}
-      <div className="flex justify-center mb-8">
+      <div className="flex flex-col items-center mb-8">
         <div className="text-center">
           <h4 className="text-orange-400 font-semibold">One-Time Plan</h4>
           <p className="text-white">$97</p>
-          <button className="mt-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded">Buy Now</button>
+          <JVZooBuyButton className="mt-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded inline-block">
+            Buy Now
+          </JVZooBuyButton>
         </div>
+        <JVZooNoThanksButton className="mt-3" />
       </div>
 
       {/* Tabs and Search */}

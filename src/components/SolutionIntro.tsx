@@ -5,6 +5,8 @@ import AnimatedElement from './AnimatedElement';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
 import { SignupContext } from '../App';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
+import JVZooBuyButton from './JVZooBuyButton';
+import JVZooNoThanksButton from './JVZooNoThanksButton';
 
 // Define detailed information for each CRM option
 interface CrmOptionDetail {
@@ -278,23 +280,18 @@ const SolutionIntro: React.FC = () => {
                 <motion.div
                   className="mt-4 pt-4 border-t border-white/10"
                   initial={{ opacity: 0, height: 0 }}
-                  animate={hoveredCard === idx ? { 
-                    opacity: 1, 
-                    height: 'auto' 
-                  } : { 
-                    opacity: 0, 
-                    height: 0 
+                  animate={hoveredCard === idx ? {
+                    opacity: 1,
+                    height: 'auto'
+                  } : {
+                    opacity: 0,
+                    height: 0
                   }}
                   transition={{ duration: 0.3 }}
                 >
-                  <motion.button
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg w-full"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => openSignupModal('masterclass')}
-                  >
+                  <JVZooBuyButton className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg w-full inline-block text-center">
                     Get Smart CRM
-                  </motion.button>
+                  </JVZooBuyButton>
                 </motion.div>
               </motion.div>
             </AnimatedElement>
@@ -569,21 +566,26 @@ const SolutionIntro: React.FC = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 1 }}
                     >
-                      <motion.button
-                        className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors shadow-lg font-medium"
-                        whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => openSignupModal('masterclass')}
-                      >
-                        Get Smart CRM
-                      </motion.button>
+                      <JVZooBuyButton>
+                        <motion.button
+                          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors shadow-lg font-medium"
+                          whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
+                          whileTap={{ scale: 0.95 }}
+                          type="button"
+                        >
+                          Get Smart CRM
+                        </motion.button>
+                      </JVZooBuyButton>
                       <p className="text-white/60 text-sm mt-3">
-                        See how Smart CRM addresses 
-                        {selectedLookingFor.length > 1 
-                          ? ` all ${selectedLookingFor.length} of your priorities` 
-                          : ` your ${selectedLookingFor[0].toLowerCase()} need`} 
+                        See how Smart CRM addresses
+                        {selectedLookingFor.length > 1
+                          ? ` all ${selectedLookingFor.length} of your priorities`
+                          : ` your ${selectedLookingFor[0].toLowerCase()} need`}
                         in a personalized demonstration
                       </p>
+                      <div className="mt-3">
+                        <JVZooNoThanksButton />
+                      </div>
                     </motion.div>
                   </motion.div>
                 </motion.div>

@@ -7,6 +7,8 @@ import { SignupContext } from '../App';
 import { handleFormSubmission } from '../utils/formHelpers';
 import CanvasConfetti from './CanvasConfetti';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
+import JVZooBuyButton from './JVZooBuyButton';
+import JVZooNoThanksButton from './JVZooNoThanksButton';
 
 const SuccessMessage: React.FC = () => {
   return (
@@ -224,10 +226,31 @@ const SignupFormSection: React.FC<SignupFormSectionProps> = ({
               </div>
               
               {!formSubmitted ? (
-                <DynamicSignupForm 
-                  onSubmit={handleFormSubmit} 
-                  fields={signupFields}
-                />
+                <>
+                  <DynamicSignupForm
+                    onSubmit={handleFormSubmit}
+                    fields={signupFields}
+                  />
+                  <div className="mt-6 text-center">
+                    <p className="text-white/60 text-sm mb-3">Or purchase directly:</p>
+                    <JVZooBuyButton>
+                      <motion.button
+                        className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-full text-lg font-bold shadow-lg hover:shadow-xl transition-all"
+                        whileHover={{
+                          scale: 1.05,
+                          boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        type="button"
+                      >
+                        Get Smart CRM Now - $97
+                      </motion.button>
+                    </JVZooBuyButton>
+                    <div className="mt-3">
+                      <JVZooNoThanksButton />
+                    </div>
+                  </div>
+                </>
               ) : (
                 <SuccessMessage />
               )}

@@ -7,6 +7,8 @@ import { SignupContext } from '../App';
 import { handleFormSubmission } from '../utils/formHelpers';
 import CanvasConfetti from './CanvasConfetti';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
+import JVZooBuyButton from './JVZooBuyButton';
+import JVZooNoThanksButton from './JVZooNoThanksButton';
 
 interface UrgencySectionProps {
   launchDate: Date;
@@ -182,18 +184,15 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                   <p className="text-white/60 text-sm ml-7">Return to regular pricing after the sale ends.</p>
                 </div>
                 
-                <motion.div 
+                <motion.div
                   className="w-full md:w-auto"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.5 }}
                 >
-                  <button
-                    onClick={() => openSignupModal('early-access')}
-                    className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-                  >
+                  <JVZooBuyButton className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors inline-block text-center">
                     Get Smart CRM Now
-                  </button>
+                  </JVZooBuyButton>
                 </motion.div>
               </div>
             </div>
@@ -211,26 +210,31 @@ const UrgencySection: React.FC<UrgencySectionProps> = ({ launchDate }) => {
                 </p>
               </motion.div>
               
-              <motion.button 
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-full text-lg font-bold shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
-                }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => openSignupModal('early-access')}
-              >
-                Get Smart CRM - Special Pricing
-              </motion.button>
-              <motion.p 
+              <JVZooBuyButton>
+                <motion.button
+                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-full text-lg font-bold shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  type="button"
+                >
+                  Get Smart CRM - Special Pricing
+                </motion.button>
+              </JVZooBuyButton>
+              <motion.p
                 className="text-white/60 text-sm mt-4"
-                animate={{ 
+                animate={{
                   color: ['rgba(255,255,255,0.6)', 'rgba(239,68,68,0.8)', 'rgba(255,255,255,0.6)']
                 }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
               >
                 Special sale pricing ends October 18, 2025 - includes free masterclass (Oct 14-16)
               </motion.p>
+              <div className="mt-2">
+                <JVZooNoThanksButton />
+              </div>
             </div>
           </motion.div>
         </AnimatedElement>
