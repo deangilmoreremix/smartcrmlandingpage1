@@ -40,7 +40,7 @@ const WebinarRecapPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [instructorImage, setInstructorImage] = useState<string>(
-    "https://pqbzgfdctflbtrgofvto.supabase.co/storage/v1/object/public/avatar/instructor-1747337582893.jpg"
+    "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=400"
   );
   const [activeChapter, setActiveChapter] = useState<string | null>(null);
   const [isGeneratingChapters, setIsGeneratingChapters] = useState<boolean>(false);
@@ -1001,6 +1001,9 @@ ${webinarDay.chapters.map(chapter => `• ${chapter.title} (${chapter.startTime}
                           src={instructorImage}
                           alt="Dean Gilmore"
                           className="w-16 h-16 rounded-full object-cover border-2 border-white/20"
+                          onError={(e) => {
+                            e.currentTarget.src = "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=400";
+                          }}
                         />
                       </div>
                       <div className="ml-4">

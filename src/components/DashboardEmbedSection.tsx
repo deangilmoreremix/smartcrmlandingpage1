@@ -10,6 +10,7 @@ import CRMGoalsAnimation from './CRMGoalsAnimation';
 const DashboardEmbedSection: React.FC = () => {
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
   const [showEmbed, setShowEmbed] = useState(true);
+  const [iframeError, setIframeError] = useState(false);
 
   const dashboardFeatures = [
     {
@@ -818,23 +819,53 @@ const DashboardEmbedSection: React.FC = () => {
                       </div>
                     </div>
                     <div style={{ position: 'relative', width: '100%', height: '0', paddingBottom: '60%' }}>
-                      <iframe
-                        src="https://smartcrm-videoremix.replit.app/demo-dashboard"
-                        style={{
-                          position: 'absolute',
-                          top: '0',
-                          left: '0',
-                          width: '100%',
-                          height: '100%',
-                          border: 'none',
-                          borderRadius: '8px',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                        }}
-                        onLoad={() => setIsIframeLoaded(true)}
-                        title="Smart CRM Dashboard Analytics Demo"
-                        allow="fullscreen"
-                        scrolling="yes"
-                      />
+                      {!iframeError ? (
+                        <iframe
+                          src="https://smartcrm-videoremix.replit.app/demo-dashboard"
+                          style={{
+                            position: 'absolute',
+                            top: '0',
+                            left: '0',
+                            width: '100%',
+                            height: '100%',
+                            border: 'none',
+                            borderRadius: '8px',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                          }}
+                          onLoad={() => {
+                            setIsIframeLoaded(true);
+                            setIframeError(false);
+                          }}
+                          onError={() => setIframeError(true)}
+                          title="Smart CRM Dashboard Analytics Demo"
+                          allow="fullscreen"
+                          scrolling="yes"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg">
+                          <div className="text-center p-8">
+                            <div className="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <AlertTriangle className="text-orange-400" size={32} />
+                            </div>
+                            <h4 className="text-white text-xl font-semibold mb-2">Demo Temporarily Unavailable</h4>
+                            <p className="text-white/70 mb-4 max-w-md">The dashboard demo is currently offline. This may be due to maintenance or server updates.</p>
+                            <div className="space-y-2">
+                              <motion.button
+                                onClick={() => {
+                                  setIframeError(false);
+                                  setIsIframeLoaded(false);
+                                }}
+                                className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                Retry Connection
+                              </motion.button>
+                              <p className="text-white/60 text-sm mt-2">Or contact us for a personalized demo</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 

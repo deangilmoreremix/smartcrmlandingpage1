@@ -24,9 +24,31 @@ export const getInstructorImageUrl = async (): Promise<string | null> => {
   if (!supabase) return null;
 
   try {
+    // List all files in the avatar bucket to find instructor images
+    const { data: files, error: listError } = await supabase.storage
+      .from('avatar')
+      .list('', {
+        sortBy: { column: 'created_at', order: 'desc' }
+      });
+
+    if (listError) {
+      console.error('Error listing files:', listError);
+      return null;
+    }
+
+    // Find the most recent instructor image
+    const instructorFile = files?.find(file =>
+      file.name.startsWith('instructor-') || file.name === 'instructor.jpg'
+    );
+
+    if (!instructorFile) {
+      return null;
+    }
+
+    // Get the public URL for the found file
     const { data } = supabase.storage
       .from('avatar')
-      .getPublicUrl('instructor.jpg');
+      .getPublicUrl(instructorFile.name);
 
     return data?.publicUrl || null;
   } catch (error) {
