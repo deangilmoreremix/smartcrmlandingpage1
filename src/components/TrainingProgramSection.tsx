@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, BookOpen, Star, Check, CheckCircle, Gift, Zap, PlusCircle, ArrowRight, Users, Award, CloudLightning as Lightning, BrainCircuit, Sparkles, Lightbulb, BadgeCheck, User, Mail, AlertTriangle, Clock, TrendingDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import AnimatedElement from './AnimatedElement';
 import EmailSubscribe from './EmailSubscribe';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
@@ -508,7 +509,7 @@ const TrainingProgramSection: React.FC = () => {
                   </motion.div>
                   <h4 className="text-lg font-semibold text-white">Expert Training</h4>
                 </div>
-                <p className="text-white/70 mb-4">2 Days of high-impact training from Dean Gilmore, who has helped over 500 businesses transform their sales processes.</p>
+                <p className="text-white/70 mb-4">3 Days of high-impact training from Dean Gilmore, who has helped over 500 businesses transform their sales processes.</p>
 
                 <motion.div
                   className="flex items-center text-amber-400 text-sm"
@@ -677,12 +678,15 @@ const TrainingProgramSection: React.FC = () => {
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-                  <motion.div
-                    className="absolute bottom-4 left-4 px-3 py-1.5 bg-blue-600/80 backdrop-blur-sm rounded-full text-white text-sm font-medium"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <span>Meet Your Instructor</span>
-                  </motion.div>
+                  <Link to="/instructor-profile">
+                    <motion.div
+                      className="absolute bottom-4 left-4 px-3 py-1.5 bg-blue-600/80 backdrop-blur-sm rounded-full text-white text-sm font-medium cursor-pointer"
+                      whileHover={{ scale: 1.05, backgroundColor: "rgba(37, 99, 235, 0.9)" }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span>Meet Your Instructor</span>
+                    </motion.div>
+                  </Link>
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-white mb-2">Dean Gilmore</h3>
