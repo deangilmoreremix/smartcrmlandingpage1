@@ -4,7 +4,6 @@ import AICalendarSection from '../components/AICalendarSection';
 import Footer from '../components/Footer';
 import FloatingCta from '../components/FloatingCta';
 import SignupModal from '../components/SignupModal';
-import ExitIntentModal from '../components/ExitIntentModal';
 import CelebrationBanner from '../components/CelebrationBanner';
 import ExitIntentOffer from '../components/ExitIntentOffer';
 import { SignupContext } from '../App';
@@ -94,9 +93,6 @@ const AICalendarLandingPage: React.FC = () => {
           variant={signupModalVariant}
         />
 
-        {/* Exit Intent Modal - only show if user hasn't signed up */}
-        {!hasSignedUp && <ExitIntentModal onClose={() => console.log('Exit intent modal closed')} />}
-
         {/* Post-signup Celebration Banner */}
         {showCelebration && (
           <CelebrationBanner
@@ -105,16 +101,17 @@ const AICalendarLandingPage: React.FC = () => {
           />
         )}
 
-        {/* Exit Intent Offer */}
-        <ExitIntentOffer
-          couponCode="SMARTCRM VIP"
-          oncePerHours={24}
-          idleMs={90000}
-          showOnMobile={true}
-          onAccept={() => {
-            window.open('/checkout?coupon=SMARTCRM%20VIP', '_blank');
-          }}
-        />
+        {/* Exit Intent Offer - only show if user hasn't signed up */}
+        {!hasSignedUp && (
+          <ExitIntentOffer
+            couponCode="SMARTCRM VIP"
+            oncePerHours={24}
+            showOnMobile={true}
+            onAccept={() => {
+              window.open('/checkout?coupon=SMARTCRM%20VIP', '_blank');
+            }}
+          />
+        )}
       </div>
     </SignupContext.Provider>
   );

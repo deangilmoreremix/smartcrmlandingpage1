@@ -7,20 +7,21 @@ import JVZooNoThanksButton from "./JVZooNoThanksButton";
 interface ExitIntentOfferProps {
   couponCode?: string;
   oncePerHours?: number;
-  idleMs?: number;
   showOnMobile?: boolean;
+  minTimeOnPage?: number;
   onAccept?: () => void;
 }
 
 const ExitIntentOffer: React.FC<ExitIntentOfferProps> = ({
   couponCode = "SMARTCRM VIP",
   oncePerHours = 24,
-  idleMs = 0,
   showOnMobile = true,
+  minTimeOnPage = 5,
   onAccept,
 }) => {
   const [show, setShow] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [canTrigger, setCanTrigger] = useState(false);
   const dismissTimer = useRef<NodeJS.Timeout>();
 
   // Check if we should show based on localStorage
@@ -34,12 +35,21 @@ const ExitIntentOffer: React.FC<ExitIntentOfferProps> = ({
     return hoursSinceShown >= oncePerHours;
   };
 
+  // Set minimum time on page before exit intent can trigger
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCanTrigger(true);
+    }, minTimeOnPage * 1000);
+
+    return () => clearTimeout(timer);
+  }, [minTimeOnPage]);
+
   // Handle mouse leave (exit intent)
   useEffect(() => {
-    if (!shouldShow()) return;
+    if (!shouldShow() || !canTrigger) return;
 
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY < 0) {
+      if (e.clientY < 0 && !show) {
         setShow(true);
       }
     };
@@ -50,7 +60,7 @@ const ExitIntentOffer: React.FC<ExitIntentOfferProps> = ({
       document.removeEventListener("mouseleave", handleMouseLeave);
       if (dismissTimer.current) clearTimeout(dismissTimer.current);
     };
-  }, [oncePerHours]);
+  }, [oncePerHours, canTrigger, show]);
 
   const handleCopy = async () => {
     // Check if clipboard API is supported

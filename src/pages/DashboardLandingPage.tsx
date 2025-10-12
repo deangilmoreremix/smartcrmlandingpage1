@@ -5,7 +5,6 @@ import ScrollingBanner from '../components/ScrollingBanner';
 import AnimationToggle from '../components/AnimationToggle';
 import { FeedbackContainer } from '../components/Feedback';
 import PerformanceMonitor from '../components/PerformanceMonitor';
-import ExitIntentModal from '../components/ExitIntentModal';
 import ExitIntentOffer from '../components/ExitIntentOffer';
 import SignupModal from '../components/SignupModal';
 import CelebrationBanner from '../components/CelebrationBanner';
@@ -136,9 +135,6 @@ const DashboardLandingPage: React.FC = () => {
           variant={signupModalVariant}
         />
 
-        {/* Exit Intent Modal - only show if user hasn't signed up */}
-        {!hasSignedUp && <ExitIntentModal onClose={() => console.log('Exit intent modal closed')} />}
-
         {/* Post-signup Celebration Banner */}
         {showCelebration && (
           <CelebrationBanner
@@ -147,17 +143,17 @@ const DashboardLandingPage: React.FC = () => {
           />
         )}
 
-        {/* Exit Intent Offer */}
-        <ExitIntentOffer
-          couponCode="SMARTCRM VIP"
-          oncePerHours={24}
-          idleMs={90000} // 90 seconds
-          showOnMobile={true}
-          onAccept={() => {
-            // Route to checkout and apply coupon
-            window.open('/checkout?coupon=SMARTCRM%20VIP', '_blank');
-          }}
-        />
+        {/* Exit Intent Offer - only show if user hasn't signed up */}
+        {!hasSignedUp && (
+          <ExitIntentOffer
+            couponCode="SMARTCRM VIP"
+            oncePerHours={24}
+            showOnMobile={true}
+            onAccept={() => {
+              window.open('/checkout?coupon=SMARTCRM%20VIP', '_blank');
+            }}
+          />
+        )}
       </div>
     </SignupContext.Provider>
   );
