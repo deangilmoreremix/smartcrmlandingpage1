@@ -33,6 +33,9 @@ const CanvasConfetti: React.FC<CanvasConfettiProps> = ({
   const refAnimationInstance = useRef<confetti.CreateTypes | null>(null);
   
   useEffect(() => {
+    // Ensure we're in browser environment
+    if (typeof document === 'undefined' || typeof window === 'undefined') return;
+
     // Create confetti instance
     const canvas = document.createElement('canvas');
     canvas.style.position = 'fixed';
@@ -42,7 +45,7 @@ const CanvasConfetti: React.FC<CanvasConfettiProps> = ({
     canvas.style.height = '100vh';
     canvas.style.pointerEvents = 'none';
     canvas.style.zIndex = zIndex.toString();
-    
+
     document.body.appendChild(canvas);
     
     refAnimationInstance.current = confetti.create(canvas, {

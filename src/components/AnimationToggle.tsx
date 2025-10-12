@@ -14,17 +14,17 @@ const AnimationToggle: React.FC<AnimationToggleProps> = ({ className = '' }) => 
     // Check for saved preference
     const savedPreference = localStorage.getItem('smartCRM_animationsEnabled');
     if (savedPreference !== null) {
-      setAnimationsEnabled(savedPreference === 'true');
+      const enabled = savedPreference === 'true';
+      setAnimationsEnabled(enabled);
+      document.documentElement.classList.toggle('reduce-animations', !enabled);
     } else {
       // Check system preference
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) {
         setAnimationsEnabled(false);
+        document.documentElement.classList.add('reduce-animations');
       }
     }
-    
-    // Update global CSS class for animation control
-    document.documentElement.classList.toggle('reduce-animations', !animationsEnabled);
   }, []);
   
   // Update when setting changes

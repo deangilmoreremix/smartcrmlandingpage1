@@ -71,21 +71,24 @@ const PageLoadingFallback = () => (
 function App() {
   // Set launch date to end of 5-day Smart CRM sale - October 18, 2025 at 11:59 PM EST
   const launchDate = LAUNCH_DATE;
-  
+
   // Modal state management
   const [signupModalOpen, setSignupModalOpen] = useState(false);
   const [signupModalVariant, setSignupModalVariant] = useState<'standard' | 'masterclass' | 'early-access'>('standard');
   const [hasSignedUp, setHasSignedUp] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [isDevMode, setIsDevMode] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   
   // Check if user has previously signed up
   useEffect(() => {
+    setIsMounted(true);
+
     const signupStatus = localStorage.getItem('smartCRM_signedUp');
     if (signupStatus === 'true') {
       setHasSignedUp(true);
     }
-    
+
     // Check if in development mode
     setIsDevMode(process.env.NODE_ENV === 'development');
   }, []);
@@ -109,7 +112,19 @@ function App() {
     setSignupModalVariant(variant);
     setSignupModalOpen(true);
   };
-  
+
+  // Show loading state until mounted
+  if (!isMounted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-black via-blue-950 to-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="text-white text-xl">Loading...</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <SignupContext.Provider value={{ openSignupModal, setHasSignedUp, hasSignedUp }}>
       <FeedbackContainer />

@@ -41,9 +41,11 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
   ];
 
   const scrollToContent = () => {
-    const featuresSection = document.getElementById('problem');
-    if (featuresSection) {
-      featuresSection.scrollIntoView({ behavior: 'smooth' });
+    if (typeof document !== 'undefined') {
+      const featuresSection = document.getElementById('problem');
+      if (featuresSection) {
+        featuresSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 

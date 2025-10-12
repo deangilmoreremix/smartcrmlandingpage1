@@ -11,17 +11,31 @@ import { HelmetProvider } from 'react-helmet-async';
 // Component that initializes animations after mount
 const AnimatedApp = () => {
   useEffect(() => {
-    // Check if we should reduce effects
-    shouldReduceEffects().then(shouldReduce => {
+    // Defer animation initialization to prevent blocking render
+    const initializeAnimations = async () => {
+      // Check if we should reduce effects
+      const shouldReduce = await shouldReduceEffects();
       if (shouldReduce) {
         document.documentElement.classList.add('reduce-animations');
         localStorage.setItem('smartCRM_animationsEnabled', 'false');
       } else {
         // Only initialize animations if we're not reducing effects
-        initScrollAnimations();
-        initHoverEffects();
+        // Use requestIdleCallback or setTimeout to defer
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => {
+            initScrollAnimations();
+            initHoverEffects();
+          });
+        } else {
+          setTimeout(() => {
+            initScrollAnimations();
+            initHoverEffects();
+          }, 100);
+        }
       }
-    });
+    };
+
+    initializeAnimations();
 
     // Listen for network status changes
     const handleOnline = () => {

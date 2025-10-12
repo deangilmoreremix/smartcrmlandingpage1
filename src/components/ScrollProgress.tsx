@@ -8,10 +8,13 @@ const ScrollProgress: React.FC = () => {
     damping: 30,
     restDelta: 0.001
   });
-  
+
   const [isVisible, setIsVisible] = useState(false);
-  
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
+    setIsMounted(true);
+
     const handleScroll = () => {
       // Show progress bar after scrolling down 100px
       if (window.scrollY > 100) {
@@ -20,12 +23,15 @@ const ScrollProgress: React.FC = () => {
         setIsVisible(false);
       }
     };
-    
-    window.addEventListener('scroll', handleScroll);
+
+    // Check initial scroll position
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  if (!isVisible) return null;
+  if (!isMounted || !isVisible) return null;
   
   return (
     <motion.div

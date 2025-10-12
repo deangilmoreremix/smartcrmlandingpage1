@@ -215,7 +215,7 @@ interface NavLinkProps {
 
 const NavLink: React.FC<NavLinkProps> = ({ href, children }) => {
   const isExternal = href.startsWith('http');
-  const isCurrentPage = href === window.location.pathname;
+  const isCurrentPage = typeof window !== 'undefined' ? href === window.location.pathname : false;
   
   if (isExternal) {
     return (
@@ -260,7 +260,7 @@ const NavLink: React.FC<NavLinkProps> = ({ href, children }) => {
 
 const MobileNavLink: React.FC<NavLinkProps> = ({ href, children, onClick }) => {
   const isExternal = href.startsWith('http');
-  const isCurrentPage = href === window.location.pathname;
+  const isCurrentPage = typeof window !== 'undefined' ? href === window.location.pathname : false;
   
   if (isExternal) {
     return (
