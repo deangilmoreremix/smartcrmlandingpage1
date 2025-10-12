@@ -117,7 +117,7 @@ const AnimatedIconsGroup: React.FC<AnimatedIconsGroupProps> = ({
     const sectionIcons = getSectionIcons();
     const sectionColors = getSectionColors();
     const iconProps: AnimatedFloatingIconProps[] = [];
-    
+
     for (let i = 0; i < iconCount; i++) {
       const icon = sectionIcons[i % sectionIcons.length];
       const color = sectionColors[i % sectionColors.length];
@@ -126,7 +126,7 @@ const AnimatedIconsGroup: React.FC<AnimatedIconsGroupProps> = ({
       const position = getRandomPosition();
       const delay = i * 0.5; // stagger animations
       const glow = Math.random() > 0.5; // 50% chance of having glow
-      
+
       iconProps.push({
         icon,
         color,
@@ -139,9 +139,9 @@ const AnimatedIconsGroup: React.FC<AnimatedIconsGroupProps> = ({
         opacity: 0.6 + Math.random() * 0.3 // 0.6-0.9
       });
     }
-    
+
     return iconProps;
-  }, [iconCount, section, density, animations]);
+  }, [iconCount, section, density, JSON.stringify(animations)]);
   
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${containerClassName}`}>

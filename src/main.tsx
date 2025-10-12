@@ -1,4 +1,4 @@
-import { StrictMode, useEffect } from 'react';
+import { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
@@ -76,8 +76,6 @@ const AnimatedApp = () => {
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
-    <StrictMode>
-      <AnimatedApp />
-    </StrictMode>
+    <AnimatedApp />
   </BrowserRouter>
 );
