@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Clock, Star, Gift, Zap, TrendingUp, Users, ChevronDown, ChevronUp, Award, Shield, Sparkles } from 'lucide-react';
 import { SignupContext } from '../App';
 import JVZooBuyButton from './JVZooBuyButton';
-import { LAUNCH_DATE, MASTERCLASS_DATES, SALE_DATES } from '../constants/dates';
+import { LAUNCH_DATE, WEBINAR_DATE } from '../constants/dates';
 import { trackPopupInteraction, calculateTimeToConversion } from '../utils/popupAnalytics';
 
 const FloatingCta: React.FC = () => {
@@ -190,17 +190,17 @@ const FloatingCta: React.FC = () => {
               </AnimatePresence>
 
               <h3 className="text-xl font-bold mb-2">
-                Transform Your Business with AI
+                Free Webinar: Oct 13th
               </h3>
               <p className="text-white/90 text-sm mb-3">
-                Get Smart CRM at special pricing. Save 70% on data entry time with AI automation.
+                Join our live webinar and discover how AI can transform your CRM. Limited seats!
               </p>
 
               {/* Countdown timer - compact version */}
               <div className="bg-black/20 backdrop-blur-sm rounded-lg p-3 mb-3">
                 <div className="flex items-center justify-center text-xs text-white/70 mb-1">
                   <Clock size={12} className="mr-1" />
-                  Sale ends in:
+                  Webinar starts in:
                 </div>
                 <div className="grid grid-cols-4 gap-2">
                   <div className="text-center">
@@ -226,15 +226,15 @@ const FloatingCta: React.FC = () => {
               <div className="space-y-2 mb-4">
                 <div className="flex items-start text-xs">
                   <Zap size={14} className="mr-2 mt-0.5 text-yellow-300 flex-shrink-0" />
-                  <span className="text-white/90">70% less manual data entry with AI automation</span>
+                  <span className="text-white/90">Live demo of AI-powered automation</span>
                 </div>
                 <div className="flex items-start text-xs">
                   <TrendingUp size={14} className="mr-2 mt-0.5 text-green-300 flex-shrink-0" />
-                  <span className="text-white/90">95% accurate sales forecasting</span>
+                  <span className="text-white/90">Expert Q&A session included</span>
                 </div>
                 <div className="flex items-start text-xs">
                   <Gift size={14} className="mr-2 mt-0.5 text-pink-300 flex-shrink-0" />
-                  <span className="text-white/90">Free masterclass: {MASTERCLASS_DATES.SHORT_WITH_TIME}</span>
+                  <span className="text-white/90">100% Free - {WEBINAR_DATE.FULL}</span>
                 </div>
               </div>
 
@@ -250,35 +250,34 @@ const FloatingCta: React.FC = () => {
                     <div className="bg-white/10 rounded-lg p-3 space-y-2">
                       <div className="text-xs font-semibold mb-2 flex items-center">
                         <Star size={12} className="mr-1 text-yellow-300" />
-                        What's Included:
+                        What You'll Learn:
                       </div>
                       <div className="space-y-1.5 text-xs text-white/80">
                         <div className="flex items-start">
                           <Award size={12} className="mr-2 mt-0.5 flex-shrink-0" />
-                          <span>GPT-5 powered AI assistant for all tasks</span>
+                          <span>Live GPT-5 AI integration demo</span>
                         </div>
                         <div className="flex items-start">
                           <Award size={12} className="mr-2 mt-0.5 flex-shrink-0" />
-                          <span>Predictive analytics & forecasting</span>
+                          <span>Predictive analytics & forecasting techniques</span>
                         </div>
                         <div className="flex items-start">
                           <Award size={12} className="mr-2 mt-0.5 flex-shrink-0" />
-                          <span>Automated workflow & email campaigns</span>
+                          <span>Automated workflow strategies</span>
                         </div>
                         <div className="flex items-start">
                           <Award size={12} className="mr-2 mt-0.5 flex-shrink-0" />
-                          <span>3-day intensive training (Oct 14-16)</span>
+                          <span>Implementation guidance & best practices</span>
                         </div>
                       </div>
 
                       <div className="pt-2 border-t border-white/20">
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-white/70">Regular Price:</span>
-                          <span className="line-through text-white/60">$997/mo</span>
-                        </div>
                         <div className="flex items-center justify-between text-sm font-bold">
-                          <span>Special Sale Price:</span>
-                          <span className="text-yellow-300">Check Offer</span>
+                          <span>Registration:</span>
+                          <span className="text-green-300">100% Free</span>
+                        </div>
+                        <div className="text-xs text-white/70 mt-1">
+                          Limited seats - Register now!
                         </div>
                       </div>
                     </div>
@@ -321,16 +320,15 @@ const FloatingCta: React.FC = () => {
                 </div>
               </div>
 
-              <JVZooBuyButton>
-                <motion.button
-                  className="w-full py-3 px-4 bg-white text-blue-600 font-bold rounded-lg hover:bg-blue-50 transition-colors shadow-lg text-sm"
-                  whileHover={{ scale: 1.03, boxShadow: '0 10px 25px -5px rgba(255, 255, 255, 0.3)' }}
-                  whileTap={{ scale: 0.97 }}
-                  type="button"
-                >
-                  Claim Your Special Pricing Now
-                </motion.button>
-              </JVZooBuyButton>
+              <motion.button
+                onClick={handleCtaClick}
+                className="w-full py-3 px-4 bg-white text-blue-600 font-bold rounded-lg hover:bg-blue-50 transition-colors shadow-lg text-sm"
+                whileHover={{ scale: 1.03, boxShadow: '0 10px 25px -5px rgba(255, 255, 255, 0.3)' }}
+                whileTap={{ scale: 0.97 }}
+                type="button"
+              >
+                Register for Free Webinar
+              </motion.button>
 
               {/* Learn more toggle */}
               <button

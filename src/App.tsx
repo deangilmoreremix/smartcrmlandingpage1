@@ -36,6 +36,7 @@ import AICalendarSection from './components/AICalendarSection';
 
 // Lazy load pages for code splitting
 const WebinarRecapPage = lazy(() => import('./components/WebinarRecapPage'));
+const WebinarConfirmationPage = lazy(() => import('./pages/WebinarConfirmationPage'));
 const InstructorProfilePage = lazy(() => import('./pages/InstructorProfilePage'));
 const WebhookTestPage = lazy(() => import('./pages/WebhookTestPage'));
 const DashboardLandingPage = lazy(() => import('./pages/DashboardLandingPage'));
@@ -122,6 +123,11 @@ function App() {
               <WebinarRecapPage />
             </Suspense>
           } />
+          <Route path="/webinar-confirmation" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <WebinarConfirmationPage />
+            </Suspense>
+          } />
           <Route path="/instructor-profile" element={
             <Suspense fallback={<PageLoadingFallback />}>
               <InstructorProfilePage />
@@ -190,8 +196,8 @@ function App() {
               <main>
                 {/* Hero Section */}
                 <Hero
-                  title="The Smart Smart CRM Revolution"
-                  subtitle="Transform how you connect with customers through AI-powered insights, seamless integrations, and intuitive workflow automation. Built for teams who want to focus on relationships with AI, not data entry."
+                  title="Smart CRM Webinar: Revolutionize Your Customer Relationships"
+                  subtitle="Join us for a free live webinar on October 13th at 3:00 PM EST and discover how AI-powered automation can transform your sales process."
                   launchDate={launchDate}
                 />
 

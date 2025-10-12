@@ -53,21 +53,21 @@ const SignupModal: React.FC<SignupModalProps> = ({
         };
       case 'early-access':
         return {
-          title: "Get Smart CRM - Special Sale",
-          subtitle: "Transform your business with AI-powered CRM during our limited 5-day sale (October 13-18, 2025)",
-          cta: "Get Smart CRM Now",
+          title: "Register for Free Webinar",
+          subtitle: "Join us on October 13, 2025 at 3:00 PM EST for an exclusive live demonstration of Smart CRM's AI-powered features",
+          cta: "Reserve My Spot",
           benefits: [
             {
               icon: <Zap className="text-blue-400" />,
-              text: "70% less manual data entry with AI"
+              text: "See AI automation in action"
             },
             {
-              icon: <Star className="text-purple-400" />,
-              text: "95% accurate sales forecasting"
+              icon: <Star className="text-cyan-400" />,
+              text: "Live Q&A with CRM experts"
             },
             {
               icon: <Gift className="text-green-400" />,
-              text: "Free masterclass on Oct 14-16, 2025"
+              text: "100% Free - Limited seats"
             }
           ]
         };
@@ -104,19 +104,29 @@ const SignupModal: React.FC<SignupModalProps> = ({
         source: 'Signup Modal',
         variant: variant
       };
-      
+
       // Submit to Zapier and handle success
       await handleFormSubmission(formDataWithMetadata, () => {
+        // Store email for confirmation page
+        localStorage.setItem('webinar_registered_email', data.email);
+
         // Trigger confetti animation
         setShowConfetti(true);
-        
-        // Close the modal after a short delay
-        setTimeout(() => {
-          // Show success banner after modal closes
-          setShowSuccessBanner(true);
-          onClose();
-        }, 2000);
-        
+
+        // Close modal and redirect to confirmation page for webinar registrations
+        if (variant === 'early-access') {
+          setTimeout(() => {
+            onClose();
+            window.location.href = '/webinar-confirmation';
+          }, 1500);
+        } else {
+          // For other variants, show success banner
+          setTimeout(() => {
+            setShowSuccessBanner(true);
+            onClose();
+          }, 2000);
+        }
+
         if (onSubmit) {
           onSubmit(data);
         }

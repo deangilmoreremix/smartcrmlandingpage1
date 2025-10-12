@@ -4,16 +4,16 @@ import { Sparkles, Zap, TrendingUp, Star, Rocket, Award } from 'lucide-react';
 
 const ScrollingBanner: React.FC = () => {
   const messages = [
-    { icon: Rocket, text: "SMART CRM IS NOW LIVE", badge: "JUST LAUNCHED", color: "text-blue-300" },
-    { icon: Sparkles, text: "Revolutionary GPT-5 AI Integration", badge: "BREAKTHROUGH", color: "text-purple-300" },
-    { icon: TrendingUp, text: "40% Revenue Increase Proven", badge: "REAL RESULTS", color: "text-green-300" },
-    { icon: Zap, text: "94.6% AI Accuracy", badge: "CUTTING-EDGE", color: "text-yellow-300" },
-    { icon: Award, text: "Trusted by 500+ Companies", badge: "PROVEN", color: "text-blue-300" },
-    { icon: Star, text: "Transform Your Business Today", badge: "AI-POWERED", color: "text-purple-300" },
+    { icon: Rocket, text: "FREE WEBINAR - OCTOBER 13TH", badge: "REGISTER NOW", color: "text-blue-300" },
+    { icon: Sparkles, text: "See GPT-5 AI Integration Live", badge: "EXCLUSIVE DEMO", color: "text-cyan-300" },
+    { icon: TrendingUp, text: "Learn to Boost Revenue by 40%", badge: "PROVEN TACTICS", color: "text-green-300" },
+    { icon: Zap, text: "Live Q&A with CRM Experts", badge: "ASK ANYTHING", color: "text-yellow-300" },
+    { icon: Award, text: "Limited Seats Available", badge: "FILLING FAST", color: "text-blue-300" },
+    { icon: Star, text: "3:00 PM EST - Don't Miss Out!", badge: "FREE EVENT", color: "text-cyan-300" },
   ];
 
   return (
-    <div className="bg-gradient-to-r from-blue-900 via-purple-900 to-blue-900 py-3 overflow-hidden relative z-30">
+    <div className="bg-gradient-to-r from-blue-900 via-cyan-900 to-blue-900 py-3 overflow-hidden relative z-30">
       {/* Animated background gradient */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20"
