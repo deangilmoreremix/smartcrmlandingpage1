@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Clock, Star, Gift, Zap, TrendingUp, Users, ChevronDown, ChevronUp, Award, Shield, Sparkles } from 'lucide-react';
 import { SignupContext } from '../App';
-import JVZooBuyButton from './JVZooBuyButton';
+// import JVZooBuyButton from './JVZooBuyButton';
 import { LAUNCH_DATE, WEBINAR_DATE } from '../constants/dates';
 import { trackPopupInteraction, calculateTimeToConversion } from '../utils/popupAnalytics';
 

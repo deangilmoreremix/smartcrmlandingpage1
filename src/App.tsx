@@ -263,7 +263,7 @@ function App() {
                       onClick={() => openSignupModal('early-access')}
                       className="px-8 py-4 bg-white text-blue-900 rounded-full text-lg font-bold hover:bg-blue-50 transition-colors shadow-lg"
                     >
-                      Start Your Transformation
+                      Register for Free Webinar
                     </button>
                   </div>
                 </ParallaxSection>

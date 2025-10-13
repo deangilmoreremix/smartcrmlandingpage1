@@ -7,8 +7,8 @@ import { SignupContext } from '../App';
 import { handleFormSubmission } from '../utils/formHelpers';
 import CanvasConfetti from './CanvasConfetti';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
-import JVZooBuyButton from './JVZooBuyButton';
-import JVZooNoThanksButton from './JVZooNoThanksButton';
+// import JVZooBuyButton from './JVZooBuyButton';
+// import JVZooNoThanksButton from './JVZooNoThanksButton';
 
 const SuccessMessage: React.FC = () => {
   return (
@@ -88,8 +88,8 @@ interface SignupFormSectionProps {
 }
 
 const SignupFormSection: React.FC<SignupFormSectionProps> = ({
-  title = "Get Smart CRM - Special 5-Day Sale",
-  subtitle = "Transform your business with AI-powered customer relationship management. Special pricing ends October 18, 2025."
+  title = "Register for Free Live Webinar",
+  subtitle = "Join us on October 13, 2025 at 3:00 PM EST for an exclusive demonstration of Smart CRM's AI-powered features."
 }) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { setHasSignedUp } = useContext(SignupContext);
@@ -213,15 +213,15 @@ const SignupFormSection: React.FC<SignupFormSectionProps> = ({
                   whileHover={{ scale: 1.05, backgroundColor: "rgba(59, 130, 246, 0.3)" }}
                 >
                   <BrainCircuit className="text-blue-400 mr-2" size={18} />
-                  <span className="text-white font-medium">Limited Early Access</span>
+                  <span className="text-white font-medium">Limited Seats Available</span>
                 </motion.div>
-                
+
                 <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                   {title}
                 </h2>
-                
+
                 <p className="text-xl text-white/80">
-                  <span className="text-blue-400 font-medium">Sale ends soon</span> — Special pricing through August 30th only
+                  <span className="text-blue-400 font-medium">Free webinar</span> — October 13, 2025 at 3:00 PM EST
                 </p>
               </div>
               
@@ -231,25 +231,6 @@ const SignupFormSection: React.FC<SignupFormSectionProps> = ({
                     onSubmit={handleFormSubmit}
                     fields={signupFields}
                   />
-                  <div className="mt-6 text-center">
-                    <p className="text-white/60 text-sm mb-3">Or purchase directly:</p>
-                    <JVZooBuyButton>
-                      <motion.button
-                        className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-full text-lg font-bold shadow-lg hover:shadow-xl transition-all"
-                        whileHover={{
-                          scale: 1.05,
-                          boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
-                        }}
-                        whileTap={{ scale: 0.95 }}
-                        type="button"
-                      >
-                        Get Smart CRM Now - $97
-                      </motion.button>
-                    </JVZooBuyButton>
-                    <div className="mt-3">
-                      <JVZooNoThanksButton />
-                    </div>
-                  </div>
                 </>
               ) : (
                 <SuccessMessage />
@@ -268,18 +249,18 @@ const SignupFormSection: React.FC<SignupFormSectionProps> = ({
                 {[
                   {
                     icon: <Zap size={24} className="text-blue-400" />,
-                    title: "AI-Powered Automation",
-                    description: "Reduce manual data entry by 70% with advanced AI automation features."
+                    title: "Live AI Demonstration",
+                    description: "Watch GPT-5 AI integration in action with real-time examples and use cases."
                   },
                   {
                     icon: <Gift size={24} className="text-purple-400" />,
-                    title: "Free Masterclass Included",
-                    description: "Exclusive 3-day training on October 14-16, 2025 included with your purchase."
+                    title: "Free Webinar Recording",
+                    description: "Can't attend live? All registrants get access to the full webinar recording."
                   },
                   {
                     icon: <Star size={24} className="text-amber-400" />,
-                    title: "Implementation Support",
-                    description: "Dedicated onboarding and success manager to ensure you get maximum value."
+                    title: "Expert Q&A Session",
+                    description: "Get your specific questions answered by Smart CRM experts during the live session."
                   },
                 ].map((benefit, idx) => (
                   <motion.div 

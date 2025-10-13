@@ -107,7 +107,7 @@ const Navbar: React.FC = React.memo(() => {
               <NavLink href="/webinar-recap">Webinar Recap</NavLink>
               <NavLink href="#faq">FAQ</NavLink>
               <motion.button
-                className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold shadow-lg overflow-hidden"
+                className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold shadow-lg overflow-hidden"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => openSignupModal('early-access')}
@@ -138,7 +138,7 @@ const Navbar: React.FC = React.memo(() => {
                   }}
                 />
                 <span className="relative z-10 flex items-center">
-                  Join the Revolution
+                  Register for Free Webinar
                   <Sparkles size={16} className="ml-2" />
                 </span>
               </motion.button>
@@ -181,20 +181,14 @@ const Navbar: React.FC = React.memo(() => {
               <MobileNavLink href="/webinar-recap" onClick={() => setIsOpen(false)}>Webinar Recap</MobileNavLink>
               <MobileNavLink href="#faq" onClick={() => setIsOpen(false)}>FAQ</MobileNavLink>
               <div className="pt-2">
-                <button 
-                  className="w-full px-4 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors"
+                <button
+                  className="w-full px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-medium hover:from-blue-500 hover:to-cyan-500 transition-colors"
                   onClick={() => {
                     setIsOpen(false);
                     openSignupModal('early-access');
                   }}
                 >
-                  Get Smart CRM
-                </button>
-                <button 
-                  className="w-full px-4 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors"
-                  onClick={() => openSignupModal('early-access')}
-                >
-                  Get Smart CRM
+                  Register for Free Webinar
                 </button>
               </div>
             </div>
