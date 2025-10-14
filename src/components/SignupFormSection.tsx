@@ -89,7 +89,7 @@ interface SignupFormSectionProps {
 
 const SignupFormSection: React.FC<SignupFormSectionProps> = ({
   title = "Register for Free Live Webinar",
-  subtitle = "Join us on October 16, 2025 at 3:00 PM EST for an exclusive demonstration of Smart CRM's AI-powered features."
+  subtitle = "Join us on October 13, 2025 at 3:00 PM EST for an exclusive demonstration of Smart CRM's AI-powered features."
 }) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const { setHasSignedUp } = useContext(SignupContext);
@@ -221,7 +221,7 @@ const SignupFormSection: React.FC<SignupFormSectionProps> = ({
                 </h2>
 
                 <p className="text-xl text-white/80">
-                  <span className="text-blue-400 font-medium">Free webinar</span> — October 16, 2025 at 3:00 PM EST
+                  <span className="text-blue-400 font-medium">Free webinar</span> — October 13, 2025 at 3:00 PM EST
                 </p>
               </div>
               
