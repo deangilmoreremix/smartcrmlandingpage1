@@ -202,7 +202,7 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({
                   transition={{ delay: 0.6 }}
                 >
                   <Gift className="text-green-400 mr-2" size={16} />
-                  <span>Free masterclass on October 14-16, 2025 included</span>
+                  <span>Free masterclass on October 17-19, 2025 included</span>
                 </motion.div>
               </div>
             </div>

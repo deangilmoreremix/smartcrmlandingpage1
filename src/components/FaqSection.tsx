@@ -14,7 +14,7 @@ interface FaqItem {
 const faqs: FaqItem[] = [
   {
     question: "When is the Smart CRM masterclass?",
-    answer: "Our 3-day Smart CRM masterclass is scheduled for October 14-16, 2025 at 3:00 PM EST each day. This interactive online training will teach you how to transform your customer relationships using AI-powered CRM strategies.",
+    answer: "Our 3-day Smart CRM masterclass is scheduled for October 17-19, 2025 at 3:00 PM EST each day. This interactive online training will teach you how to transform your customer relationships using AI-powered CRM strategies.",
     category: "Masterclass"
   },
   {
@@ -64,7 +64,7 @@ const faqs: FaqItem[] = [
   },
   {
     question: "What's included in the free masterclass that comes with Smart CRM?",
-    answer: "Day 1 (October 14): Advanced Smart CRM AI Features - Master all AI-powered automation, lead scoring, and predictive analytics. Day 2 (October 15): Implementation & Optimization - Learn advanced setup strategies and how to maximize your Smart CRM ROI. Day 3 (October 16): Advanced Workflows - Master automation and optimization strategies.",
+    answer: "Day 1 (October 17): Advanced Smart CRM AI Features - Master all AI-powered automation, lead scoring, and predictive analytics. Day 2 (October 18): Implementation & Optimization - Learn advanced setup strategies and how to maximize your Smart CRM ROI. Day 3 (October 19): Advanced Workflows - Master automation and optimization strategies.",
     category: "Masterclass"
   },
   {

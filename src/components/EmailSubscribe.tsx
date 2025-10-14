@@ -128,7 +128,7 @@ const EmailSubscribe: React.FC = () => {
         </div>
       )}
       <p className="text-xs text-white/60 mt-3 text-center">
-        We'll send you the masterclass details for October 14-16, 2025 soon. No spam, ever.
+        We'll send you the masterclass details for October 17-19, 2025 soon. No spam, ever.
       </p>
     </div>
   );

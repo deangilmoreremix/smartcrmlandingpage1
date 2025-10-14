@@ -181,7 +181,7 @@ const InstructorProfile: React.FC<InstructorProfileProps> = ({
                       <Calendar size={16} className="text-green-400 mr-2" />
                       <span className="text-white/70 text-sm">Next Session</span>
                     </div>
-                    <p className="text-white">October 14, 3:00 PM EST</p>
+                    <p className="text-white">October 17, 3:00 PM EST</p>
                   </div>
                   
                   <div className="bg-white/5 p-4 rounded-lg">

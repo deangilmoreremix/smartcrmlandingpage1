@@ -86,7 +86,7 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({
               child.props.children[1], // description
               React.cloneElement(child.props.children[2] as React.ReactElement, {
                 onClick: () => openSignupModal('early-access'),
-                children: "Join October 14-16 Masterclass"
+                children: "Join October 17-19 Masterclass"
               })
             );
           }

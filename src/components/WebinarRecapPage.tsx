@@ -52,7 +52,7 @@ const WebinarRecapPage: React.FC = () => {
       day: 1,
       title: "The Broken Sales Process & Why It's Costing You",
       description: "In this first session, we explore the fundamental flaws in traditional sales approaches. Our experts break down the hidden barriers that prevent most businesses from achieving consistent sales growth, introducing the revolutionary Smart CRM Sales Multiplier System designed to overcome these challenges. You'll discover why contact management, AI-powered emails, and streamlined pipelines are critical components for modern sales success. We also showcase a detailed case study of Sarah's business transformation, demonstrating how proper CRM implementation replaced chaos with clarity in just 7 days, resulting in a 46% increase in closed deals.",
-      date: "October 14, 2025",
+      date: "October 17, 2025",
       videoUrl: "",
       videoThumbnail: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600",
       keyPoints: [
@@ -67,7 +67,7 @@ const WebinarRecapPage: React.FC = () => {
       day: 2,
       title: "Automate, Personalize, and Scale Your Sales",
       description: "Day two focuses on leveraging cutting-edge AI technology to transform your sales process. We demonstrate how Smart CRM's automation capabilities handle lead scoring, follow-ups, and meeting preparation without increasing your workload. This session breaks the common myth that quality sales require more time, showing instead how our intelligent system allows you to scale personalized communications efficiently. We examine Jennifer's sales team case study, where implementing these automation strategies resulted in a 32% sales increase while reducing administrative tasks by 68%. You'll see exactly how AI can augment your sales team's capabilities to achieve more with less effort.",
-      date: "October 15, 2025",
+      date: "October 18, 2025",
       videoUrl: "",
       videoThumbnail: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1600",
       keyPoints: [
@@ -82,7 +82,7 @@ const WebinarRecapPage: React.FC = () => {
       day: 3,
       title: "Your Future Sales System + Smart CRM Offer Reveal",
       description: "Our final session introduces The Client Engine System – a comprehensive framework for building predictable revenue through systematic sales processes. We demonstrate how Smart CRM integrates with this methodology to create a self-sustaining business development machine that generates consistent results without constant manual effort. Through real customer success stories, we illustrate how businesses across various industries have transformed their sales outcomes using these techniques. The session concludes with an exclusive offer for attendees to try Smart CRM's complete suite of tools with special benefits including extended free trial access, implementation assistance, and priority support – all with no credit card required to get started.",
-      date: "October 16, 2025",
+      date: "October 19, 2025",
       videoUrl: "",
       videoThumbnail: "https://images.pexels.com/photos/3182746/pexels-photo-3182746.jpeg?auto=compress&cs=tinysrgb&w=1600",
       keyPoints: [
