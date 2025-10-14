@@ -280,7 +280,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
                         </div>
                       </div>
 
-                      <CountdownTimer targetDate={new Date('2025-10-13T15:00:00-05:00')} variant="compact" />
+                      <CountdownTimer targetDate={new Date('2025-10-16T15:00:00-05:00')} variant="compact" />
 
                       <RegistrationProgress
                         spotsTotal={WEBINAR_INFO.capacity}
