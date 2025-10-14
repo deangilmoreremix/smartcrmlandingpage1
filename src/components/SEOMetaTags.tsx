@@ -67,8 +67,8 @@ const SEOMetaTags: React.FC<SEOMetaTagsProps> = ({
           ...baseSchemaData,
           name: 'Smart CRM Masterclass - Free with Purchase',
           description,
-          startDate: '2025-10-14T15:00:00-05:00',
-          endDate: '2025-10-16T16:30:00-05:00',
+          startDate: '2025-10-16T15:00:00-05:00',
+          endDate: '2025-10-19T16:30:00-05:00',
           location: {
             '@type': 'VirtualLocation',
             url: baseUrl
@@ -79,7 +79,7 @@ const SEOMetaTags: React.FC<SEOMetaTagsProps> = ({
             price: '0',
             priceCurrency: 'USD',
             availability: 'https://schema.org/LimitedAvailability',
-            validFrom: '2025-10-13T00:00:00-05:00'
+            validFrom: '2025-10-16T00:00:00-05:00'
           },
           performer: {
             '@type': 'Person',

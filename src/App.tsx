@@ -212,7 +212,7 @@ function App() {
                 {/* Hero Section */}
                 <Hero
                   title="Smart CRM Webinar: Revolutionize Your Customer Relationships"
-                  subtitle="Join us for a free live webinar on October 13th at 3:00 PM EST and discover how AI-powered automation can transform your sales process."
+                  subtitle="Join us for a free live webinar on October 16th at 3:00 PM EST and discover how AI-powered automation can transform your sales process."
                   launchDate={launchDate}
                 />
 

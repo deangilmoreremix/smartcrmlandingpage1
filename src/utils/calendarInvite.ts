@@ -99,8 +99,8 @@ export const getOutlookCalendarUrl = (event: CalendarEvent): string => {
 };
 
 export const getWebinarCalendarEvent = (): CalendarEvent => {
-  const startTime = new Date('2025-10-13T15:00:00-05:00');
-  const endTime = new Date('2025-10-13T16:30:00-05:00');
+  const startTime = new Date('2025-10-16T15:00:00-05:00');
+  const endTime = new Date('2025-10-16T16:30:00-05:00');
 
   return {
     title: 'Smart CRM: Revolutionize Your Customer Relationships with AI',

@@ -64,7 +64,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 Reserve Your Spot for the Live Webinar
               </motion.h2>
               <p className="text-xl text-white/80 max-w-2xl mx-auto">
-                Join us on October 13th at 3:00 PM EST for an exclusive live demonstration of Smart CRM. See how AI can transform your business.
+                Join us on October 16th at 3:00 PM EST for an exclusive live demonstration of Smart CRM. See how AI can transform your business.
               </p>
             </div>
             
@@ -145,7 +145,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                       Webinar seats filling fast - only 87 spots remaining!
                     </motion.p>
                   </div>
-                  <p className="text-white/60 text-sm ml-7">October 13th at 3:00 PM EST - Register now to secure your spot.</p>
+                  <p className="text-white/60 text-sm ml-7">October 16th at 3:00 PM EST - Register now to secure your spot.</p>
                 </div>
 
                 <motion.div
@@ -197,7 +197,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
               >
-                October 13, 2025 at 3:00 PM EST - Limited seats available
+                October 16, 2025 at 3:00 PM EST - Limited seats available
               </motion.p>
             </div>
           </motion.div>
