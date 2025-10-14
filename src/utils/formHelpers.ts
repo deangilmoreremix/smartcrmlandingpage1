@@ -1,30 +1,51 @@
 export const handleFormSubmission = async (
   formData: Record<string, string>,
-  onSuccess?: () => void
+  onSuccess?: (data?: any) => void
 ): Promise<void> => {
   try {
-    const zapierWebhookUrl = import.meta.env.VITE_ZAPIER_WEBHOOK_URL;
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-    if (!zapierWebhookUrl) {
-      console.warn('Zapier webhook URL not configured');
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.warn('Supabase credentials not configured');
       if (onSuccess) onSuccess();
       return;
     }
 
-    const response = await fetch(zapierWebhookUrl, {
+    const registrationUrl = `${supabaseUrl}/functions/v1/webinar-registration`;
+
+    const response = await fetch(registrationUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${supabaseAnonKey}`,
       },
       body: JSON.stringify(formData),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!response.ok && response.status !== 207) {
+      const errorData = await response.json().catch(() => ({}));
+
+      if (response.status === 409 && errorData.code === 'DUPLICATE_EMAIL') {
+        throw new Error('You are already registered for this webinar');
+      }
+
+      throw new Error(errorData.error || `Registration failed with status: ${response.status}`);
     }
 
+    const result = await response.json();
+
     if (onSuccess) {
-      onSuccess();
+      onSuccess(result);
+    }
+
+    const zapierWebhookUrl = import.meta.env.VITE_ZAPIER_WEBHOOK_URL;
+    if (zapierWebhookUrl) {
+      fetch(zapierWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      }).catch(err => console.warn('Zapier webhook failed:', err));
     }
   } catch (error) {
     console.error('Form submission error:', error);

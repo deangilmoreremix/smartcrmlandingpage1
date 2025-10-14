@@ -72,25 +72,20 @@ const SignupModal: React.FC<SignupModalProps> = ({
         variant: variant
       };
 
-      await handleFormSubmission(formDataWithMetadata, async () => {
+      await handleFormSubmission(formDataWithMetadata, async (result) => {
         localStorage.setItem('webinar_registered_email', data.email);
+
+        if (result?.zoom?.join_url) {
+          localStorage.setItem('webinar_zoom_join_url', result.zoom.join_url);
+        }
+
+        if (result?.registrationId) {
+          localStorage.setItem('webinar_registration_id', result.registrationId);
+        }
+
         setShowConfetti(true);
 
         if (variant === 'early-access') {
-          const supabase = getSupabaseClient();
-          if (supabase) {
-            await supabase.from('webinar_registrations').insert({
-              first_name: data.firstName || '',
-              last_name: data.lastName || '',
-              email: data.email,
-              phone: data.phone || null,
-              company: data.company || null,
-              role: data.role || null,
-              source: 'Signup Modal',
-              registered_at: new Date().toISOString()
-            });
-          }
-
           setTimeout(() => {
             onClose();
             window.location.href = '/webinar-confirmation';
@@ -108,6 +103,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
       });
     } catch (error) {
       console.error('Form submission failed:', error);
+      throw error;
     }
   };
 

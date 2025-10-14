@@ -18,12 +18,18 @@ import {
 const WebinarConfirmationPage: React.FC = () => {
   const [showConfetti, setShowConfetti] = useState(true);
   const [email, setEmail] = useState('');
+  const [zoomJoinUrl, setZoomJoinUrl] = useState('');
   const [calendarAdded, setCalendarAdded] = useState(false);
 
   useEffect(() => {
     const registeredEmail = localStorage.getItem('webinar_registered_email');
     if (registeredEmail) {
       setEmail(registeredEmail);
+    }
+
+    const joinUrl = localStorage.getItem('webinar_zoom_join_url');
+    if (joinUrl) {
+      setZoomJoinUrl(joinUrl);
     }
 
     const confettiTimer = setTimeout(() => {
@@ -121,6 +127,26 @@ const WebinarConfirmationPage: React.FC = () => {
                   </div>
                 </div>
               </div>
+
+              {zoomJoinUrl && (
+                <div className="mt-6 pt-6 border-t border-white/20">
+                  <motion.a
+                    href={zoomJoinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center px-6 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-cyan-700 transition-all shadow-lg"
+                    whileHover={{ scale: 1.02, boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)" }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Video className="mr-3" size={24} />
+                    Join Webinar on Zoom
+                    <ArrowRight className="ml-3" size={20} />
+                  </motion.a>
+                  <p className="text-white/60 text-sm text-center mt-3">
+                    Save this link! You'll also receive it via email.
+                  </p>
+                </div>
+              )}
             </div>
           </AnimatedElement>
 
