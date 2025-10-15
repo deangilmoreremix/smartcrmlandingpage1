@@ -29,7 +29,7 @@ const testimonials: Testimonial[] = [
     industry: "Technology",
     companySize: "51-200 employees",
     impact: "38% more closed deals",
-    yearCustomer: 2024
+    yearCustomer: 2025
   },
   {
     quote: "After trying multiple CRM solutions, Smart CRM stands out for its intuitive design and powerful automation. My team adopted it immediately with virtually no training.",
@@ -53,7 +53,7 @@ const testimonials: Testimonial[] = [
     industry: "Professional Services",
     companySize: "501-1000 employees",
     impact: "27% increase in customer retention",
-    yearCustomer: 2024
+    yearCustomer: 2025
   },
   {
     quote: "Email intelligence alone saved our team 15 hours per week. Smart CRM captures everything automatically - no more manual logging or copy-pasting.",
@@ -65,7 +65,7 @@ const testimonials: Testimonial[] = [
     industry: "E-commerce",
     companySize: "11-50 employees",
     impact: "15 hours saved weekly per rep",
-    yearCustomer: 2024
+    yearCustomer: 2025
   },
   {
     quote: "The forecasting accuracy is incredible. We can now predict our quarterly revenue within a 5% margin of error, which has completely transformed our planning process.",
@@ -89,7 +89,7 @@ const testimonials: Testimonial[] = [
     industry: "Healthcare",
     companySize: "501-1000 employees",
     impact: "Passed compliance audit with zero findings",
-    yearCustomer: 2024
+    yearCustomer: 2025
   },
   {
     quote: "We've tried 3 different CRM solutions in the past 2 years. Smart CRM is the only one where our sales team didn't revolt. The AI automation has eliminated so much busywork.",
@@ -113,7 +113,7 @@ const testimonials: Testimonial[] = [
     industry: "Technology",
     companySize: "51-200 employees",
     impact: "7 integrated systems, 1 day setup",
-    yearCustomer: 2024
+    yearCustomer: 2025
   },
   {
     quote: "Smart CRM's mobile experience is outstanding. Our field sales reps can access everything they need on the go, even when they're offline in remote locations.",
@@ -137,7 +137,7 @@ const testimonials: Testimonial[] = [
     industry: "Software",
     companySize: "501-1000 employees",
     impact: "31% improvement in conversion rates",
-    yearCustomer: 2024
+    yearCustomer: 2025
   },
   {
     quote: "As a small business, we never thought we could afford enterprise-level CRM capabilities. Smart CRM puts powerful tools within reach of growing companies like ours.",
@@ -149,7 +149,7 @@ const testimonials: Testimonial[] = [
     industry: "Professional Services",
     companySize: "1-10 employees",
     impact: "53% revenue growth in 6 months",
-    yearCustomer: 2024
+    yearCustomer: 2025
   },
   {
     quote: "The AI-powered lead scoring has been uncannily accurate. It's helped us focus our energy on the right prospects and increased our conversion rates by 42%.",
@@ -173,7 +173,7 @@ const testimonials: Testimonial[] = [
     industry: "Manufacturing",
     companySize: "501-1000 employees",
     impact: "35% shorter sales cycles",
-    yearCustomer: 2024
+    yearCustomer: 2025
   },
   {
     quote: "The Smart CRM dashboard gives our executives the real-time insights they need. No more waiting for monthly reports or questioning data accuracy.",
@@ -197,7 +197,7 @@ const testimonials: Testimonial[] = [
     industry: "Healthcare",
     companySize: "1001+ employees",
     impact: "4-minute average support response time",
-    yearCustomer: 2024
+    yearCustomer: 2025
   },
   {
     quote: "Smart CRM's pipeline analytics helped us identify bottlenecks in our sales process that we didn't even know existed. Fixing those increased our win rate significantly.",

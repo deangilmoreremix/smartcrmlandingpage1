@@ -7,6 +7,7 @@ export const WEBINAR_DATE = {
   DAY_OF_WEEK: 'Thursday',
 } as const;
 
+export const SALE_END_DATE = new Date('2025-10-20T23:59:59-05:00');
 export const LAUNCH_DATE = new Date('2025-10-16T15:00:00-05:00');
 
 export const EVENT_DESCRIPTIONS = {

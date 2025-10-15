@@ -16,7 +16,7 @@ interface ExitIntentModalProps {
 
 const ExitIntentModal: React.FC<ExitIntentModalProps> = ({
   title = "Wait! Don't Miss This Opportunity",
-  subtitle = "Get Smart CRM during our 5-day sale (October 16-21, 2025) and transform your customer relationships with AI-powered automation",
+  subtitle = "Get Smart CRM during our 5-day sale (October 16-20, 2025) and transform your customer relationships with AI-powered automation",
   cta = "Sign Up for Masterclass",
   delay = 5,
   sessionTimeout = 30,

@@ -192,7 +192,7 @@ const complianceCertifications: ComplianceCertification[] = [
     description: "Standard for protecting personally identifiable information (PII) in public clouds.",
     icon: <Database size={24} />,
     status: "In Process",
-    year: 2024,
+    year: 2025,
     details: [
       "Cloud-specific privacy controls",
       "Transparent data usage policies",
@@ -643,14 +643,14 @@ const SecurityComplianceHub: React.FC = () => {
                         side: "left"
                       },
                       {
-                        year: 2024,
+                        year: 2025,
                         title: "ISO 27018 Certification",
                         description: "Cloud privacy protection standards",
                         icon: <Database size={20} />,
                         side: "right"
                       },
                       {
-                        year: 2024,
+                        year: 2025,
                         title: "FedRAMP Certification",
                         description: "In process for government compliance",
                         icon: <Server size={20} />,

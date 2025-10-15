@@ -70,7 +70,7 @@ async function getWebinarDays(user: AuthenticatedUser) {
         day: 1,
         title: "The Broken Sales Process & Why It's Costing You",
         description: "In this first session, we explore the fundamental flaws in traditional sales approaches.",
-        date: "Friday, May 17, 2025",
+        date: "Friday, October 17, 2025",
         videoThumbnail: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600",
         keyPoints: [
           "Traditional CRM systems create more problems than they solve",
@@ -84,7 +84,7 @@ async function getWebinarDays(user: AuthenticatedUser) {
         day: 2,
         title: "Automate, Personalize, and Scale Your Sales",
         description: "Day two focuses on leveraging cutting-edge AI technology to transform your sales process.",
-        date: "Saturday, May 18, 2025",
+        date: "Saturday, October 18, 2025",
         videoThumbnail: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1600",
         keyPoints: [
           "AI-powered automation can cut administrative work by 68%",
@@ -98,7 +98,7 @@ async function getWebinarDays(user: AuthenticatedUser) {
         day: 3,
         title: "Your Future Sales System + Smart CRM Offer Reveal",
         description: "Our final session introduces The Client Engine System – a comprehensive framework for building predictable revenue.",
-        date: "Tuesday, September 23, 2025",
+        date: "Sunday, October 19, 2025",
         videoThumbnail: "https://images.pexels.com/photos/3182746/pexels-photo-3182746.jpeg?auto=compress&cs=tinysrgb&w=1600",
         keyPoints: [
           "The Client Engine System creates predictable, recurring revenue",
