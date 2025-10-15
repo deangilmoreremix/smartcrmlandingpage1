@@ -109,11 +109,45 @@ const WebinarRecapPage: React.FC = () => {
       setSupabase(client);
 
       fetchInstructorImage();
+      fetchUploadedVideos(client);
     } catch (err) {
       console.error("Error initializing Supabase client:", err);
       setError("Failed to initialize database connection. Some features may be unavailable.");
     }
   }, []);
+
+  const fetchUploadedVideos = async (client: any) => {
+    try {
+      const { data: summaries, error } = await client
+        .from('ai_summaries')
+        .select('*')
+        .order('webinar_day_number', { ascending: true });
+
+      if (error) {
+        console.error('Error fetching videos:', error);
+        return;
+      }
+
+      if (summaries && summaries.length > 0) {
+        setWebinarDays(prevDays =>
+          prevDays.map(day => {
+            const matchingSummary = summaries.find((s: any) => s.webinar_day_number === day.day);
+            if (matchingSummary) {
+              return {
+                ...day,
+                videoUrl: matchingSummary.video_url || day.videoUrl,
+                summaryText: matchingSummary.summary_text || day.summaryText,
+                keyPoints: matchingSummary.key_points?.length > 0 ? matchingSummary.key_points : day.keyPoints
+              };
+            }
+            return day;
+          })
+        );
+      }
+    } catch (err) {
+      console.error('Error fetching uploaded videos:', err);
+    }
+  };
 
   const fetchInstructorImage = async () => {
     try {

@@ -44,6 +44,7 @@ const AICalendarLandingPage = lazy(() => import('./pages/AICalendarLandingPage')
 const ContactsLandingPage = lazy(() => import('./pages/ContactsLandingPage'));
 const PipelineLandingPage = lazy(() => import('./pages/PipelineLandingPage'));
 const AIFeaturesCatalogLandingPage = lazy(() => import('./pages/AIFeaturesCatalogLandingPage'));
+const AdminUploadPage = lazy(() => import('./pages/AdminUploadPage'));
 
 import { SALE_END_DATE } from './constants/dates';
 
@@ -178,6 +179,11 @@ function App() {
                <AIFeaturesCatalogLandingPage />
              </Suspense>
            } />
+          <Route path="/admin-upload" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <AdminUploadPage />
+            </Suspense>
+          } />
           <Route path="/pricing" element={
             <div className="min-h-screen bg-gradient-to-b from-black via-blue-950 to-black flex items-center justify-center">
               <div className="text-center text-white">
