@@ -226,7 +226,7 @@ const ConversionOptimizer: React.FC<ConversionOptimizerProps> = ({
                 transition={{ duration: 2, repeat: Infinity }}
                 className="bg-red-500 text-white px-4 py-2 rounded-full font-bold text-sm"
               >
-                SAVE 67%
+                SAVE 90%
               </motion.div>
             </div>
 
@@ -238,22 +238,22 @@ const ConversionOptimizer: React.FC<ConversionOptimizerProps> = ({
 
               <div className="flex items-end gap-4 mb-6">
                 <div>
-                  <p className="text-sm text-blue-200 line-through">Regular Price: $297/month</p>
+                  <p className="text-sm text-blue-200 line-through">Regular Price: $999</p>
                   <div className="flex items-baseline gap-2">
                     <span className="text-5xl font-bold">$97</span>
-                    <span className="text-2xl text-blue-200">/month</span>
+                    <span className="text-xl text-green-300">one-time</span>
                   </div>
-                  <p className="text-green-300 font-semibold mt-2">You save $200/month!</p>
+                  <p className="text-green-300 font-semibold mt-2">You save $902 • Pay once, use forever!</p>
                 </div>
               </div>
 
               <div className="space-y-3 mb-6">
                 {[
+                  "Lifetime access - no monthly fees",
                   "Unlimited contacts and deals",
                   "GPT-5 AI assistance included",
                   "All premium features unlocked",
-                  "Priority support & training",
-                  "No setup fees or hidden costs"
+                  "Priority support & training"
                 ].map((feature, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
@@ -275,7 +275,7 @@ const ConversionOptimizer: React.FC<ConversionOptimizerProps> = ({
 
               <p className="text-center text-blue-200 text-sm mt-4 flex items-center justify-center gap-2">
                 <Lock className="w-4 h-4" />
-                Secure checkout • 30-day money-back guarantee
+                Secure checkout • One-time payment • 30-day money-back guarantee
               </p>
             </div>
           </div>

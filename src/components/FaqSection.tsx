@@ -23,8 +23,8 @@ const faqs: FaqItem[] = [
     category: "Features"
   },
   {
-    question: "Will there be a free tier?",
-    answer: "Yes! We offer a robust free tier that includes contact management, email integration, and basic analytics. As your needs grow, our flexible pricing scales with your business. The free tier supports up to 3 users and 1,000 contacts, making it perfect for startups and small teams.",
+    question: "What is the pricing for Smart CRM?",
+    answer: "Smart CRM is available for a one-time payment of $97 (regularly $999) with lifetime access to all features. There are no monthly subscription fees, no per-user charges, and no hidden costs. Use coupon 'SMARTCRM VIP' at checkout for this special pricing. This includes unlimited contacts, unlimited users, and all premium AI-powered features.",
     category: "Pricing"
   },
   {

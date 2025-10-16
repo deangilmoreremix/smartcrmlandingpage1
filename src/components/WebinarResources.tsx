@@ -610,7 +610,7 @@ function getMockQAForDay(day: number): { question: string, answer: string }[] {
       },
       {
         question: "How much does Smart CRM cost compared to traditional CRMs?",
-        answer: "Our pricing starts at $19/user/month for the Starter plan and $49/user/month for our Professional plan. Enterprise pricing is custom. While this is comparable to other CRMs, the ROI is much higher because of the time saved on manual data entry and the additional deals you'll close with our AI-powered insights."
+        answer: "Smart CRM is available for a one-time payment of $97 (regularly $999) with lifetime access to all features. There are no monthly fees, no per-user charges, and no hidden costs. Use coupon 'SMARTCRM VIP' at checkout. Compare this to traditional CRMs that charge $150-$330 per user per month. The ROI is exceptional because you own it forever, plus you save time on manual data entry and close more deals with our AI-powered insights."
       },
       {
         question: "How long does the typical implementation take?",

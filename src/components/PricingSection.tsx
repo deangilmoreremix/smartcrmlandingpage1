@@ -1,179 +1,141 @@
-import React, { useState } from 'react';
-import { Check, X, HelpCircle } from 'lucide-react';
+import React from 'react';
+import { Check, Zap, Star, Shield } from 'lucide-react';
 import JVZooBuyButton from './JVZooBuyButton';
 import JVZooNoThanksButton from './JVZooNoThanksButton';
 
 interface PricingFeature {
   name: string;
-  starter: boolean | string;
-  pro: boolean | string;
-  enterprise: boolean | string;
+  included: boolean | string;
   tooltip?: string;
 }
 
 const pricingFeatures: PricingFeature[] = [
-  { name: "Contacts", starter: "Up to 1,000", pro: "Up to 50,000", enterprise: "Unlimited" },
-  { name: "Users", starter: "Up to 3", pro: "Up to 25", enterprise: "Unlimited" },
-  { name: "Email Integration", starter: true, pro: true, enterprise: true },
-  { name: "Lead Management", starter: true, pro: true, enterprise: true },
-  { name: "Contact Management", starter: true, pro: true, enterprise: true },
-  { name: "Deal Pipeline", starter: true, pro: true, enterprise: true },
-  { name: "Mobile App", starter: true, pro: true, enterprise: true },
-  { name: "Basic Reporting", starter: true, pro: true, enterprise: true },
-  { name: "AI-Powered Insights", starter: false, pro: true, enterprise: true, tooltip: "ML-driven opportunity scoring and next-best-action recommendations" },
-  { name: "Advanced Analytics", starter: false, pro: true, enterprise: true },
-  { name: "Workflow Automation", starter: "Basic", pro: "Advanced", enterprise: "Custom", tooltip: "Automate repetitive tasks and processes" },
-  { name: "API Access", starter: false, pro: true, enterprise: true },
-  { name: "Custom Fields", starter: "10 per object", pro: "100 per object", enterprise: "Unlimited" },
-  { name: "Custom Objects", starter: false, pro: "Up to 5", enterprise: "Unlimited" },
-  { name: "Sales Forecasting", starter: false, pro: true, enterprise: true },
-  { name: "Territory Management", starter: false, pro: false, enterprise: true },
-  { name: "Custom AI Training", starter: false, pro: false, enterprise: true, tooltip: "Train the AI on your specific business vocabulary and processes" },
-  { name: "Dedicated Success Manager", starter: false, pro: false, enterprise: true },
-  { name: "SLA", starter: false, pro: "99.9% uptime", enterprise: "99.99% uptime" },
-  { name: "Single Sign-On", starter: false, pro: false, enterprise: true }
+  { name: "Contacts", included: "Unlimited" },
+  { name: "Users", included: "Unlimited" },
+  { name: "Email Integration", included: true },
+  { name: "Lead Management", included: true },
+  { name: "Contact Management", included: true },
+  { name: "Deal Pipeline", included: true },
+  { name: "Mobile App", included: true },
+  { name: "AI-Powered Insights", included: true, tooltip: "ML-driven opportunity scoring and next-best-action recommendations" },
+  { name: "Advanced Analytics", included: true },
+  { name: "Workflow Automation", included: "Advanced", tooltip: "Automate repetitive tasks and processes" },
+  { name: "API Access", included: true },
+  { name: "Custom Fields", included: "Unlimited" },
+  { name: "Custom Objects", included: "Unlimited" },
+  { name: "Sales Forecasting", included: true },
+  { name: "Territory Management", included: true },
+  { name: "Custom AI Training", included: true, tooltip: "Train the AI on your specific business vocabulary and processes" },
+  { name: "Dedicated Success Manager", included: true },
+  { name: "99.99% SLA Uptime", included: true },
+  { name: "Single Sign-On", included: true },
+  { name: "Priority Support", included: true },
+  { name: "All Premium Features", included: true }
 ];
 
 const PricingSection: React.FC = () => {
-  const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annual'>('annual');
-  
-  const toggleBillingPeriod = () => {
-    setBillingPeriod(billingPeriod === 'monthly' ? 'annual' : 'monthly');
-  };
-  
   return (
     <section id="pricing" className="py-20 px-4 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-950/30 pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto relative z-10">
+
+      <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Transparent Pricing, Exceptional Value</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">One Simple Price, Everything Included</h2>
           <div className="w-24 h-1 bg-blue-500 mx-auto rounded-full mb-6" />
           <p className="text-white/70 max-w-2xl mx-auto">
-            Choose the plan that works best for your business. All plans include our core Smart CRM functionality.
+            No subscriptions, no per-user fees, no hidden costs. Pay once and own Smart CRM forever with lifetime access to all features.
           </p>
-          
-          <div className="inline-flex items-center mt-8 p-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
-            <button
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-                billingPeriod === 'monthly' ? 'bg-blue-600 text-white' : 'text-white/70 hover:text-white'
-              }`}
-              onClick={() => setBillingPeriod('monthly')}
-            >
-              Monthly
-            </button>
-            <button
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-                billingPeriod === 'annual' ? 'bg-blue-600 text-white' : 'text-white/70 hover:text-white'
-              }`}
-              onClick={() => setBillingPeriod('annual')}
-            >
-              Annual <span className="text-xs text-blue-300">Save 20%</span>
-            </button>
-          </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Starter Plan */}
-          <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden transition-all hover:border-blue-500/30 hover:translate-y-[-4px]">
-            <div className="p-6 border-b border-white/10">
-              <h3 className="text-xl font-bold text-white mb-2">Starter</h3>
-              <p className="text-white/70 mb-6">Perfect for small teams and startups</p>
-              <div className="flex items-end mb-4">
-                <span className="text-4xl font-bold text-white">
-                  {billingPeriod === 'monthly' ? '$19' : '$15'}
-                </span>
-                <span className="text-white/70 ml-1 mb-1">/ user / month</span>
+
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-gradient-to-b from-blue-900/30 to-blue-950/30 backdrop-blur-md rounded-xl border-2 border-blue-500/50 overflow-hidden transition-all hover:border-blue-400 hover:translate-y-[-4px] shadow-2xl relative">
+            <div className="absolute top-0 inset-x-0 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-center text-xs font-bold py-2">
+              ⚡ SPECIAL OFFER - LIFETIME ACCESS
+            </div>
+
+            <div className="p-8 pt-12">
+              <div className="text-center mb-8">
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <Star className="text-yellow-400" size={24} />
+                  <h3 className="text-2xl font-bold text-white">Smart CRM</h3>
+                  <Star className="text-yellow-400" size={24} />
+                </div>
+                <p className="text-white/70 mb-6">Complete AI-Powered CRM Solution</p>
+
+                <div className="mb-4">
+                  <div className="flex items-center justify-center gap-3 mb-2">
+                    <span className="text-2xl text-white/60 line-through">$999</span>
+                    <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">SAVE 90%</span>
+                  </div>
+                  <div className="flex items-baseline justify-center gap-2 mb-2">
+                    <span className="text-6xl font-bold text-white">$97</span>
+                    <span className="text-xl text-green-400 font-semibold">one-time</span>
+                  </div>
+                  <p className="text-green-400 font-semibold text-lg">
+                    Pay once • Own forever • No monthly fees
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-center gap-6 mt-6 mb-6 text-sm text-white/70">
+                  <div className="flex items-center gap-2">
+                    <Shield size={16} className="text-green-400" />
+                    <span>30-Day Guarantee</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Zap size={16} className="text-blue-400" />
+                    <span>Instant Access</span>
+                  </div>
+                </div>
+
+                <JVZooBuyButton className="w-full py-4 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all inline-block text-center">
+                  Get Smart CRM - $97 One-Time
+                </JVZooBuyButton>
+
+                <p className="text-white/50 text-xs mt-3">
+                  Use coupon "SMARTCRM VIP" at checkout
+                </p>
               </div>
-              <p className="text-white/60 text-xs mb-4">
-                {billingPeriod === 'annual' ? 'Billed annually' : 'Billed monthly'}
-              </p>
-              <JVZooBuyButton className="w-full py-3 rounded-lg bg-white/10 text-white font-medium hover:bg-white/20 transition-colors inline-block text-center">
-                Get Smart CRM
-              </JVZooBuyButton>
-            </div>
-            <div className="p-6">
-              <p className="font-medium text-white mb-4">Included features:</p>
-              <ul className="space-y-3">
-                {pricingFeatures.map((feature, index) => (
-                  <PricingFeatureItem 
-                    key={index} 
-                    feature={feature} 
-                    tier="starter" 
-                  />
-                ))}
-              </ul>
-            </div>
-          </div>
-          
-          {/* Pro Plan */}
-          <div className="bg-gradient-to-b from-blue-900/30 to-blue-950/30 backdrop-blur-md rounded-xl border border-blue-500/30 overflow-hidden transition-all hover:translate-y-[-4px] relative">
-            <div className="absolute top-0 inset-x-0 bg-blue-500 text-white text-center text-xs font-bold py-1">
-              MOST POPULAR
-            </div>
-            <div className="p-6 border-b border-white/10 pt-8">
-              <h3 className="text-xl font-bold text-white mb-2">Professional</h3>
-              <p className="text-white/70 mb-6">Ideal for growing businesses</p>
-              <div className="flex items-end mb-4">
-                <span className="text-4xl font-bold text-white">
-                  {billingPeriod === 'monthly' ? '$49' : '$39'}
-                </span>
-                <span className="text-white/70 ml-1 mb-1">/ user / month</span>
+
+              <div className="border-t border-white/10 pt-6">
+                <p className="font-semibold text-white mb-4 text-center">Everything Included:</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {pricingFeatures.map((feature, index) => (
+                    <PricingFeatureItem
+                      key={index}
+                      feature={feature}
+                    />
+                  ))}
+                </div>
               </div>
-              <p className="text-white/60 text-xs mb-4">
-                {billingPeriod === 'annual' ? 'Billed annually' : 'Billed monthly'}
-              </p>
-              <JVZooBuyButton className="w-full py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors inline-block text-center">
-                Get Smart CRM
-              </JVZooBuyButton>
-            </div>
-            <div className="p-6">
-              <p className="font-medium text-white mb-4">Everything in Starter, plus:</p>
-              <ul className="space-y-3">
-                {pricingFeatures.map((feature, index) => (
-                  <PricingFeatureItem 
-                    key={index} 
-                    feature={feature} 
-                    tier="pro" 
-                  />
-                ))}
-              </ul>
-            </div>
-          </div>
-          
-          {/* Enterprise Plan */}
-          <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden transition-all hover:border-blue-500/30 hover:translate-y-[-4px]">
-            <div className="p-6 border-b border-white/10">
-              <h3 className="text-xl font-bold text-white mb-2">Enterprise</h3>
-              <p className="text-white/70 mb-6">For large organizations with complex needs</p>
-              <div className="flex items-end mb-4">
-                <span className="text-2xl font-bold text-white">Custom Pricing</span>
+
+              <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10">
+                <div className="flex items-start gap-3">
+                  <Zap className="text-yellow-400 flex-shrink-0 mt-1" size={20} />
+                  <div>
+                    <h4 className="text-white font-semibold mb-2">Why This Price?</h4>
+                    <p className="text-white/70 text-sm">
+                      We're offering this exclusive one-time price to early adopters.
+                      No recurring fees means you own Smart CRM forever. Compare that to
+                      competitors charging $150-$330 per user per month!
+                    </p>
+                  </div>
+                </div>
               </div>
-              <p className="text-white/60 text-xs mb-4">
-                Tailored to your specific requirements
-              </p>
-              <JVZooBuyButton className="w-full py-3 rounded-lg bg-white/10 text-white font-medium hover:bg-white/20 transition-colors inline-block text-center">
-                Get Smart CRM
-              </JVZooBuyButton>
-            </div>
-            <div className="p-6">
-              <p className="font-medium text-white mb-4">Everything in Professional, plus:</p>
-              <ul className="space-y-3">
-                {pricingFeatures.map((feature, index) => (
-                  <PricingFeatureItem 
-                    key={index} 
-                    feature={feature} 
-                    tier="enterprise" 
-                  />
-                ))}
-              </ul>
+
+              <div className="mt-6 text-center">
+                <JVZooBuyButton className="w-full py-4 rounded-lg bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all inline-block text-center">
+                  Claim Your Lifetime Access Now
+                </JVZooBuyButton>
+              </div>
             </div>
           </div>
         </div>
-        
-        <div className="mt-16 text-center">
-          <p className="text-white/70 mb-3">All plans include unlimited access to our help center and community support</p>
-          <p className="text-white font-medium">Need a custom solution? <a href="#contact" className="text-blue-400 hover:underline">Contact our sales team</a></p>
+
+        <div className="mt-12 text-center">
+          <p className="text-white/70 mb-3">Questions? Contact our team at support@smartcrm.com</p>
+          <p className="text-white font-medium mb-6">
+            Need enterprise support? <a href="#contact" className="text-blue-400 hover:underline">Contact our sales team</a>
+          </p>
           <div className="mt-6">
             <JVZooNoThanksButton />
           </div>
@@ -185,41 +147,23 @@ const PricingSection: React.FC = () => {
 
 interface PricingFeatureItemProps {
   feature: PricingFeature;
-  tier: 'starter' | 'pro' | 'enterprise';
 }
 
-const PricingFeatureItem: React.FC<PricingFeatureItemProps> = ({ feature, tier }) => {
-  const value = feature[tier];
-  
-  // Only show features that are relevant to this tier
-  if (value === false && typeof value === 'boolean') {
-    return null;
-  }
-  
+const PricingFeatureItem: React.FC<PricingFeatureItemProps> = ({ feature }) => {
+  const value = feature.included;
+
   return (
-    <li className="flex items-start">
+    <div className="flex items-start">
       <div className="mt-1 mr-3 flex-shrink-0">
-        {value === true ? (
-          <Check size={16} className="text-green-400" />
-        ) : typeof value === 'string' ? (
-          <Check size={16} className="text-green-400" />
-        ) : (
-          <X size={16} className="text-red-400" />
-        )}
+        <Check size={16} className="text-green-400" />
       </div>
       <div className="flex items-center">
         <span className="text-white/80 text-sm">{feature.name}</span>
-        {typeof value === 'string' && <span className="text-white/60 text-xs ml-2">({value})</span>}
-        {feature.tooltip && (
-          <div className="group relative ml-1">
-            <HelpCircle size={14} className="text-white/40" />
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 p-2 bg-gray-900 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-              {feature.tooltip}
-            </div>
-          </div>
+        {typeof value === 'string' && value !== 'true' && (
+          <span className="text-white/60 text-xs ml-2">({value})</span>
         )}
       </div>
-    </li>
+    </div>
   );
 };
 
