@@ -12,7 +12,56 @@ const DashboardEmbedSection: React.FC = () => {
   const [showEmbed, setShowEmbed] = useState(true);
   const [iframeError, setIframeError] = useState(false);
   const [loadTimeout, setLoadTimeout] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const [iframeKey, setIframeKey] = useState(0);
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  React.useEffect(() => {
+    if (showEmbed && !isIframeLoaded && !iframeError) {
+      timeoutRef.current = setTimeout(() => {
+        setLoadTimeout(true);
+        console.warn('Dashboard iframe load timeout after 30 seconds');
+      }, 30000);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, [showEmbed, isIframeLoaded, iframeError, iframeKey]);
+
+  const handleRetry = () => {
+    setIframeError(false);
+    setLoadTimeout(false);
+    setIsIframeLoaded(false);
+    setRetryCount(prev => prev + 1);
+    setIframeKey(prev => prev + 1);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+  };
+
+  const handleIframeLoad = () => {
+    setIsIframeLoaded(true);
+    setIframeError(false);
+    setLoadTimeout(false);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  };
+
+  const handleIframeError = () => {
+    setIframeError(true);
+    setLoadTimeout(false);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    console.error('Dashboard iframe failed to load');
+  };
 
   const dashboardFeatures = [
     {
@@ -820,28 +869,32 @@ const DashboardEmbedSection: React.FC = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="relative w-full" style={{ height: '800px' }}>
-                      <iframe
-                        src="https://smartcrm-videoremix.replit.app/demo-dashboard"
-                        className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10 bg-gray-900"
-                        onLoad={() => {
-                          setIsIframeLoaded(true);
-                          if (timeoutRef.current) {
-                            clearTimeout(timeoutRef.current);
-                          }
-                        }}
-                        title="Smart CRM Dashboard Analytics Demo"
-                        allow="fullscreen; display-capture"
-                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
-                        referrerPolicy="no-referrer-when-downgrade"
-                      />
+                    <div className="relative w-full" style={{ minHeight: '600px', height: 'min(800px, 80vh)' }}>
+                      {!iframeError && !loadTimeout && (
+                        <iframe
+                          key={iframeKey}
+                          src="https://smartcrm-videoremix.replit.app/demo-dashboard"
+                          className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10 bg-gray-900"
+                          onLoad={handleIframeLoad}
+                          onError={handleIframeError}
+                          title="Smart CRM Dashboard Analytics Demo"
+                          allow="fullscreen; display-capture"
+                          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation"
+                          referrerPolicy="no-referrer-when-downgrade"
+                          loading="lazy"
+                          importance="high"
+                        />
+                      )}
 
-                      {!isIframeLoaded && (
+                      {!isIframeLoaded && !iframeError && !loadTimeout && (
                         <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg">
                           <div className="text-center p-8 max-w-lg">
                             <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-orange-500 mx-auto mb-6"></div>
                             <h4 className="text-white text-xl font-semibold mb-3">Loading Dashboard Demo</h4>
                             <p className="text-white/70 mb-6">The Replit server may take 30-60 seconds to wake up on first load...</p>
+                            {retryCount > 0 && (
+                              <p className="text-orange-400 text-sm mb-4">Retry attempt {retryCount} of 3</p>
+                            )}
                             <motion.button
                               onClick={() => window.open('https://smartcrm-videoremix.replit.app/demo-dashboard', '_blank')}
                               className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors font-medium"
@@ -851,6 +904,47 @@ const DashboardEmbedSection: React.FC = () => {
                               Open Dashboard in New Tab
                             </motion.button>
                             <p className="text-white/50 text-sm mt-4">If the dashboard doesn't load here, try opening it in a new tab</p>
+                          </div>
+                        </div>
+                      )}
+
+                      {(iframeError || loadTimeout) && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg">
+                          <div className="text-center p-8 max-w-lg">
+                            <div className="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <BarChart3 className="text-orange-400" size={32} />
+                            </div>
+                            <h4 className="text-white text-xl font-semibold mb-2">
+                              {loadTimeout ? 'Dashboard Taking Longer Than Expected' : 'Demo Temporarily Unavailable'}
+                            </h4>
+                            <p className="text-white/70 mb-6 max-w-md">
+                              {loadTimeout
+                                ? 'The Replit server is taking longer than expected to respond. This is normal on first load.'
+                                : 'The dashboard demo is currently offline. This may be due to maintenance or server updates.'}
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                              {retryCount < 3 && (
+                                <motion.button
+                                  onClick={handleRetry}
+                                  className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors font-medium"
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                >
+                                  {retryCount > 0 ? `Retry Again (${retryCount}/3)` : 'Retry Connection'}
+                                </motion.button>
+                              )}
+                              <motion.button
+                                onClick={() => window.open('https://smartcrm-videoremix.replit.app/demo-dashboard', '_blank')}
+                                className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                Open in New Tab
+                              </motion.button>
+                            </div>
+                            {retryCount >= 3 && (
+                              <p className="text-white/60 text-sm mt-4">Maximum retries reached. Please try opening in a new tab or contact support.</p>
+                            )}
                           </div>
                         </div>
                       )}

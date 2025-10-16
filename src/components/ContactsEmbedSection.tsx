@@ -11,6 +11,57 @@ const ContactsEmbedSection: React.FC = () => {
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
   const [showEmbed, setShowEmbed] = useState(true);
   const [iframeError, setIframeError] = useState(false);
+  const [loadTimeout, setLoadTimeout] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const [iframeKey, setIframeKey] = useState(0);
+  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  React.useEffect(() => {
+    if (showEmbed && !isIframeLoaded && !iframeError) {
+      timeoutRef.current = setTimeout(() => {
+        setLoadTimeout(true);
+        console.warn('Contacts iframe load timeout after 30 seconds');
+      }, 30000);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, [showEmbed, isIframeLoaded, iframeError, iframeKey]);
+
+  const handleRetry = () => {
+    setIframeError(false);
+    setLoadTimeout(false);
+    setIsIframeLoaded(false);
+    setRetryCount(prev => prev + 1);
+    setIframeKey(prev => prev + 1);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+  };
+
+  const handleIframeLoad = () => {
+    setIsIframeLoaded(true);
+    setIframeError(false);
+    setLoadTimeout(false);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  };
+
+  const handleIframeError = () => {
+    setIframeError(true);
+    setLoadTimeout(false);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    console.error('Contacts iframe failed to load');
+  };
 
   const contactsFeatures = [
     {
@@ -549,43 +600,81 @@ const ContactsEmbedSection: React.FC = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="relative w-full" style={{ height: '800px' }}>
-                      {!iframeError ? (
+                    <div className="relative w-full" style={{ minHeight: '600px', height: 'min(800px, 80vh)' }}>
+                      {!iframeError && !loadTimeout && (
                         <iframe
+                          key={iframeKey}
                           src="https://taupe-sprinkles-83c9ee.netlify.app"
                           className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
-                          onLoad={() => {
-                            setIsIframeLoaded(true);
-                            setIframeError(false);
-                          }}
-                          onError={() => setIframeError(true)}
+                          onLoad={handleIframeLoad}
+                          onError={handleIframeError}
                           title="Smart CRM Contacts Management Demo"
                           allow="fullscreen"
-                          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-downloads allow-presentation"
+                          referrerPolicy="no-referrer-when-downgrade"
                           loading="lazy"
+                          importance="high"
                         />
-                      ) : (
+                      )}
+
+                      {!isIframeLoaded && !iframeError && !loadTimeout && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg">
+                          <div className="text-center p-8 max-w-lg">
+                            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-purple-500 mx-auto mb-6"></div>
+                            <h4 className="text-white text-xl font-semibold mb-3">Loading Contacts Demo</h4>
+                            <p className="text-white/70 mb-6">Setting up your contact management interface...</p>
+                            {retryCount > 0 && (
+                              <p className="text-purple-400 text-sm mb-4">Retry attempt {retryCount} of 3</p>
+                            )}
+                            <motion.button
+                              onClick={() => window.open('https://taupe-sprinkles-83c9ee.netlify.app', '_blank')}
+                              className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              Open Contacts in New Tab
+                            </motion.button>
+                          </div>
+                        </div>
+                      )}
+
+                      {(iframeError || loadTimeout) && (
                         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg">
-                          <div className="text-center p-8">
+                          <div className="text-center p-8 max-w-lg">
                             <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                               <Users className="text-purple-400" size={32} />
                             </div>
-                            <h4 className="text-white text-xl font-semibold mb-2">Demo Temporarily Unavailable</h4>
-                            <p className="text-white/70 mb-4 max-w-md">The contacts demo is currently offline. This may be due to maintenance or server updates.</p>
-                            <div className="space-y-2">
+                            <h4 className="text-white text-xl font-semibold mb-2">
+                              {loadTimeout ? 'Contacts Taking Longer Than Expected' : 'Demo Temporarily Unavailable'}
+                            </h4>
+                            <p className="text-white/70 mb-6 max-w-md">
+                              {loadTimeout
+                                ? 'The contacts demo is taking longer than expected to load. Please wait or try opening in a new tab.'
+                                : 'The contacts demo is currently offline. This may be due to maintenance or server updates.'}
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                              {retryCount < 3 && (
+                                <motion.button
+                                  onClick={handleRetry}
+                                  className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium"
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                >
+                                  {retryCount > 0 ? `Retry Again (${retryCount}/3)` : 'Retry Connection'}
+                                </motion.button>
+                              )}
                               <motion.button
-                                onClick={() => {
-                                  setIframeError(false);
-                                  setIsIframeLoaded(false);
-                                }}
-                                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+                                onClick={() => window.open('https://taupe-sprinkles-83c9ee.netlify.app', '_blank')}
+                                className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                               >
-                                Retry Connection
+                                Open in New Tab
                               </motion.button>
-                              <p className="text-white/60 text-sm mt-2">Or contact us for a personalized demo</p>
                             </div>
+                            {retryCount >= 3 && (
+                              <p className="text-white/60 text-sm mt-4">Maximum retries reached. Please try opening in a new tab or contact support.</p>
+                            )}
                           </div>
                         </div>
                       )}
