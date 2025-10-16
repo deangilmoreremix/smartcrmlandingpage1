@@ -818,20 +818,11 @@ const DashboardEmbedSection: React.FC = () => {
                         </button>
                       </div>
                     </div>
-                    <div style={{ position: 'relative', width: '100%', height: '0', paddingBottom: '60%' }}>
+                    <div className="relative w-full" style={{ height: '800px' }}>
                       {!iframeError ? (
                         <iframe
                           src="https://smartcrm-videoremix.replit.app/demo-dashboard"
-                          style={{
-                            position: 'absolute',
-                            top: '0',
-                            left: '0',
-                            width: '100%',
-                            height: '100%',
-                            border: 'none',
-                            borderRadius: '8px',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                          }}
+                          className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
                           onLoad={() => {
                             setIsIframeLoaded(true);
                             setIframeError(false);
@@ -839,7 +830,8 @@ const DashboardEmbedSection: React.FC = () => {
                           onError={() => setIframeError(true)}
                           title="Smart CRM Dashboard Analytics Demo"
                           allow="fullscreen"
-                          scrolling="yes"
+                          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                          loading="lazy"
                         />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg">

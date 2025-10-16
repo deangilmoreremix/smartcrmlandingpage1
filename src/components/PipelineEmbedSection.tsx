@@ -410,7 +410,8 @@ const PipelineEmbedSection: React.FC = () => {
                           onError={() => setIframeError(true)}
                           title="Smart CRM Pipeline Deals Management Demo"
                           allow="fullscreen"
-                          scrolling="yes"
+                          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                          loading="lazy"
                         />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg">
