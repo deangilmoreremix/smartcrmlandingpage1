@@ -24,15 +24,13 @@ import Footer from './components/Footer';
 import FloatingCta from './components/FloatingCta';
 import ParallaxSection from './components/ParallaxSection';
 import AiFeaturesCatalog from './components/AiFeaturesCatalog';
-import FEComparisonFull from './components/FEComparisonFull';
+import FeatureMatrix from './components/FeatureMatrix';
 import IntegrationEcosystem from './components/IntegrationEcosystem';
+import SecurityComplianceHub from './components/SecurityComplianceHub';
 import WorkflowShowcase from './components/WorkflowShowcase';
 import TrainingProgramSection from './components/TrainingProgramSection';
 import SignupFormSection from './components/SignupFormSection';
-import DashboardEmbedSection from './components/DashboardEmbedSection';
-import ContactsEmbedSection from './components/ContactsEmbedSection';
-import PipelineEmbedSection from './components/PipelineEmbedSection';
-import AICalendarSection from './components/AICalendarSection';
+import ExitIntentModal from './components/ExitIntentModal';
 
 // Lazy load pages for code splitting
 const WebinarRecapPage = lazy(() => import('./components/WebinarRecapPage'));
@@ -217,8 +215,8 @@ function App() {
               <main>
                 {/* Hero Section */}
                 <Hero
-                  title="Smart CRM Webinar: Revolutionize Your Customer Relationships"
-                  subtitle="Join us for a free live webinar on October 16th at 3:00 PM EST and discover how AI-powered automation can transform your sales process."
+                  title="The Smart CRM Revolution"
+                  subtitle="Transform how you connect with customers through AI-powered insights, seamless integrations, and intuitive workflow automation. Built for teams who want to focus on relationships, not data entry."
                   launchDate={launchDate}
                 />
 
@@ -230,18 +228,6 @@ function App() {
 
                 {/* How It Works */}
                 <HowItWorks />
-
-                {/* Dashboard Embed Section - NEW */}
-                <DashboardEmbedSection />
-
-                {/* Contacts Embed Section - NEW */}
-                <ContactsEmbedSection />
-
-                {/* Pipeline Embed Section - NEW */}
-                <PipelineEmbedSection />
-
-                {/* AI Calendar Section - NEW */}
-                <AICalendarSection />
 
                 {/* AI Features Catalog - NEW */}
                 <AiFeaturesCatalog />
@@ -257,23 +243,25 @@ function App() {
 
                 {/* Parallax Section */}
                 <ParallaxSection
-                  bgImage="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                  bgImage="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1600"
                   overlayColor="rgba(0, 0, 40, 0.75)"
                 >
                   <div className="max-w-4xl mx-auto text-center px-4">
                     <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Join 500+ Companies Revolutionizing Their Customer Relationships with AI</h2>
                     <p className="text-xl text-white/80 mb-8">
-                      From startups to Fortune 500 companies, businesses of all sizes are transforming how they connect with customers using Smart Smart CRM.
+                      From startups to Fortune 500 companies, businesses of all sizes are transforming how they connect with customers using Smart CRM.
                     </p>
                     <button
                       onClick={() => openSignupModal('early-access')}
                       className="px-8 py-4 bg-white text-blue-900 rounded-full text-lg font-bold hover:bg-blue-50 transition-colors shadow-lg"
                     >
-                      Register for Free Webinar
+                      Start Your Transformation
                     </button>
                   </div>
                 </ParallaxSection>
 
+                {/* Security & Compliance Hub - NEW */}
+                <SecurityComplianceHub />
 
                 {/* Features Section */}
                 <section id="features" className="py-20 px-4 relative">
@@ -282,7 +270,7 @@ function App() {
                       <h2 className="text-3xl md:text-4xl font-bold mb-4">Intelligent Features</h2>
                       <div className="w-24 h-1 bg-blue-500 mx-auto rounded-full mb-6" />
                       <p className="text-white/70 max-w-2xl mx-auto">
-                        Smart Smart CRM brings cutting-edge technology to your customer relationships with AI, helping you close more deals and build lasting connections with less effort and greater impact.
+                        Smart CRM brings cutting-edge technology to your customer relationships with AI, helping you close more deals and build lasting connections with less effort and greater impact.
                       </p>
                     </div>
 
@@ -291,7 +279,7 @@ function App() {
                 </section>
 
                 {/* Complete Feature Matrix - NEW */}
-                <FEComparisonFull />
+                <FeatureMatrix />
 
 
                 {/* Integration Ecosystem - NEW */}
@@ -318,15 +306,15 @@ function App() {
 
               <Footer />
               <FloatingCta />
-              
+
               {/* Signup Modal */}
-              <SignupModal 
+              <SignupModal
                 isOpen={signupModalOpen}
                 onClose={() => setSignupModalOpen(false)}
                 onSubmit={handleSignup}
                 variant={signupModalVariant}
               />
-              
+
               {/* Post-signup Celebration Banner */}
               {showCelebration && (
                 <CelebrationBanner
@@ -334,6 +322,9 @@ function App() {
                   showConfetti={true}
                 />
               )}
+
+              {/* Exit Intent Modal - only show if user hasn't signed up */}
+              {!hasSignedUp && <ExitIntentModal onClose={() => console.log('Exit intent modal closed')} />}
 
             </div>
           } />
