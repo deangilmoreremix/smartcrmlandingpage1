@@ -5,6 +5,7 @@ import AnimatedElement from './AnimatedElement';
 import { SignupContext } from '../App';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
+import { EMBED_URLS } from '../constants/embedUrls';
 
 const EnhancedContacts: React.FC = () => {
   const { openSignupModal } = useContext(SignupContext);
@@ -12,7 +13,7 @@ const EnhancedContacts: React.FC = () => {
   const [hoveredProblem, setHoveredProblem] = useState<number | null>(null);
 
   const openInNewTab = () => {
-    window.open('https://taupe-sprinkles-83c9ee.netlify.app', '_blank');
+    window.open(EMBED_URLS.contacts, '_blank');
   };
 
   const toggleStatCard = (cardId: string) => {

@@ -6,6 +6,7 @@ import InteractiveFloatingButton from './InteractiveFloatingButton';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
 import CollapsibleSection from './CollapsibleSection';
 import CRMGoalsAnimation from './CRMGoalsAnimation';
+import { EMBED_URLS } from '../constants/embedUrls';
 
 const PipelineEmbedSection: React.FC = () => {
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
@@ -453,7 +454,7 @@ const PipelineEmbedSection: React.FC = () => {
                       {!iframeError && !loadTimeout && (
                         <iframe
                           key={iframeKey}
-                          src="https://cheery-syrniki-b5b6ca.netlify.app"
+                          src={EMBED_URLS.pipeline}
                           className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
                           onLoad={handleIframeLoad}
                           onError={handleIframeError}
@@ -476,7 +477,7 @@ const PipelineEmbedSection: React.FC = () => {
                               <p className="text-green-400 text-sm mb-4">Retry attempt {retryCount} of 3</p>
                             )}
                             <motion.button
-                              onClick={() => window.open('https://cheery-syrniki-b5b6ca.netlify.app', '_blank')}
+                              onClick={() => window.open(EMBED_URLS.pipeline, '_blank')}
                               className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-medium"
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
@@ -513,7 +514,7 @@ const PipelineEmbedSection: React.FC = () => {
                                 </motion.button>
                               )}
                               <motion.button
-                                onClick={() => window.open('https://cheery-syrniki-b5b6ca.netlify.app', '_blank')}
+                                onClick={() => window.open(EMBED_URLS.pipeline, '_blank')}
                                 className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}

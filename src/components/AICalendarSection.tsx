@@ -5,6 +5,7 @@ import AnimatedElement from './AnimatedElement';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
 import CollapsibleSection from './CollapsibleSection';
+import { EMBED_URLS } from '../constants/embedUrls';
 
 const AICalendarSection: React.FC = () => {
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
@@ -311,7 +312,7 @@ const AICalendarSection: React.FC = () => {
                     </div>
                     <div className="iframe-responsive-container">
                       <iframe
-                        src="https://voluble-vacherin-add80d.netlify.app"
+                        src={EMBED_URLS.calendar}
                         className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
                         onLoad={() => setIsIframeLoaded(true)}
                         title="Smart CRM AI Calendar Intelligence Demo"

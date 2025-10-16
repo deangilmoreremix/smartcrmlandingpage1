@@ -6,6 +6,7 @@ import InteractiveFloatingButton from './InteractiveFloatingButton';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
 import CollapsibleSection from './CollapsibleSection';
 import CRMGoalsAnimation from './CRMGoalsAnimation';
+import { EMBED_URLS } from '../constants/embedUrls';
 
 const ContactsEmbedSection: React.FC = () => {
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
@@ -604,7 +605,7 @@ const ContactsEmbedSection: React.FC = () => {
                       {!iframeError && !loadTimeout && (
                         <iframe
                           key={iframeKey}
-                          src="https://taupe-sprinkles-83c9ee.netlify.app"
+                          src={EMBED_URLS.contacts}
                           className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
                           onLoad={handleIframeLoad}
                           onError={handleIframeError}
@@ -627,7 +628,7 @@ const ContactsEmbedSection: React.FC = () => {
                               <p className="text-purple-400 text-sm mb-4">Retry attempt {retryCount} of 3</p>
                             )}
                             <motion.button
-                              onClick={() => window.open('https://taupe-sprinkles-83c9ee.netlify.app', '_blank')}
+                              onClick={() => window.open(EMBED_URLS.contacts, '_blank')}
                               className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium"
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
@@ -664,7 +665,7 @@ const ContactsEmbedSection: React.FC = () => {
                                 </motion.button>
                               )}
                               <motion.button
-                                onClick={() => window.open('https://taupe-sprinkles-83c9ee.netlify.app', '_blank')}
+                                onClick={() => window.open(EMBED_URLS.contacts, '_blank')}
                                 className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}

@@ -6,6 +6,7 @@ import InteractiveFloatingButton from './InteractiveFloatingButton';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
 import CollapsibleSection from './CollapsibleSection';
 import CRMGoalsAnimation from './CRMGoalsAnimation';
+import { EMBED_URLS } from '../constants/embedUrls';
 
 const DashboardEmbedSection: React.FC = () => {
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
@@ -873,7 +874,7 @@ const DashboardEmbedSection: React.FC = () => {
                       {!iframeError && !loadTimeout && (
                         <iframe
                           key={iframeKey}
-                          src="https://smartcrm-videoremix.replit.app/demo-dashboard"
+                          src={EMBED_URLS.dashboard}
                           className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10 bg-gray-900"
                           onLoad={handleIframeLoad}
                           onError={handleIframeError}
@@ -896,7 +897,7 @@ const DashboardEmbedSection: React.FC = () => {
                               <p className="text-orange-400 text-sm mb-4">Retry attempt {retryCount} of 3</p>
                             )}
                             <motion.button
-                              onClick={() => window.open('https://smartcrm-videoremix.replit.app/demo-dashboard', '_blank')}
+                              onClick={() => window.open(EMBED_URLS.dashboard, '_blank')}
                               className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors font-medium"
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
@@ -934,7 +935,7 @@ const DashboardEmbedSection: React.FC = () => {
                                 </motion.button>
                               )}
                               <motion.button
-                                onClick={() => window.open('https://smartcrm-videoremix.replit.app/demo-dashboard', '_blank')}
+                                onClick={() => window.open(EMBED_URLS.dashboard, '_blank')}
                                 className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
