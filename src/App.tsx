@@ -30,7 +30,12 @@ import SecurityComplianceHub from './components/SecurityComplianceHub';
 import WorkflowShowcase from './components/WorkflowShowcase';
 import TrainingProgramSection from './components/TrainingProgramSection';
 import SignupFormSection from './components/SignupFormSection';
+import DashboardEmbedSection from './components/DashboardEmbedSection';
+import ContactsEmbedSection from './components/ContactsEmbedSection';
+import PipelineEmbedSection from './components/PipelineEmbedSection';
+import AICalendarSection from './components/AICalendarSection';
 import ExitIntentModal from './components/ExitIntentModal';
+import PricingSection from './components/PricingSection';
 
 // Lazy load pages for code splitting
 const WebinarRecapPage = lazy(() => import('./components/WebinarRecapPage'));
@@ -229,16 +234,28 @@ function App() {
                 {/* How It Works */}
                 <HowItWorks />
 
-                {/* AI Features Catalog - NEW */}
+                {/* Dashboard Embed Section */}
+                <DashboardEmbedSection />
+
+                {/* Contacts Embed Section */}
+                <ContactsEmbedSection />
+
+                {/* Pipeline Embed Section */}
+                <PipelineEmbedSection />
+
+                {/* AI Calendar Section */}
+                <AICalendarSection />
+
+                {/* AI Features Catalog */}
                 <AiFeaturesCatalog />
 
                 {/* Interactive Feature */}
                 <InteractiveFeature />
 
-                {/* Training Program Section - NEW */}
+                {/* Training Program Section */}
                 <TrainingProgramSection />
 
-                {/* Workflow Showcase - NEW */}
+                {/* Workflow Showcase */}
                 <WorkflowShowcase />
 
                 {/* Parallax Section */}
@@ -260,7 +277,7 @@ function App() {
                   </div>
                 </ParallaxSection>
 
-                {/* Security & Compliance Hub - NEW */}
+                {/* Security & Compliance Hub */}
                 <SecurityComplianceHub />
 
                 {/* Features Section */}
@@ -278,8 +295,11 @@ function App() {
                   </div>
                 </section>
 
-                {/* Complete Feature Matrix - NEW */}
+                {/* Complete Feature Matrix */}
                 <FeatureMatrix />
+
+                {/* Pricing Section */}
+                <PricingSection />
 
 
                 {/* Integration Ecosystem - NEW */}
