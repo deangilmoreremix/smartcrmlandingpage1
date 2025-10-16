@@ -12,6 +12,7 @@ const DashboardEmbedSection: React.FC = () => {
   const [showEmbed, setShowEmbed] = useState(true);
   const [iframeError, setIframeError] = useState(false);
   const [loadTimeout, setLoadTimeout] = useState(false);
+  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const dashboardFeatures = [
     {
@@ -820,67 +821,19 @@ const DashboardEmbedSection: React.FC = () => {
                       </div>
                     </div>
                     <div className="relative w-full" style={{ height: '800px' }}>
-                      {!iframeError && !loadTimeout ? (
-                        <>
-                          <iframe
-                            src="https://smartcrm-videoremix.replit.app/demo-dashboard"
-                            className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
-                            onLoad={() => {
-                              setIsIframeLoaded(true);
-                              setIframeError(false);
-                              setLoadTimeout(false);
-                            }}
-                            title="Smart CRM Dashboard Analytics Demo"
-                            allow="fullscreen"
-                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                            loading="eager"
-                            ref={(iframe) => {
-                              if (iframe && !isIframeLoaded) {
-                                setTimeout(() => {
-                                  if (!isIframeLoaded) {
-                                    setLoadTimeout(true);
-                                  }
-                                }, 45000);
-                              }
-                            }}
-                          />
-                          {!isIframeLoaded && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900/95 to-gray-800/95 rounded-lg backdrop-blur-sm">
-                              <div className="text-center p-8">
-                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-400 mx-auto mb-4"></div>
-                                <p className="text-white/70">Loading dashboard demo...</p>
-                                <p className="text-white/50 text-sm mt-2">Replit server may take 30-45 seconds to wake up</p>
-                              </div>
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg">
-                          <div className="text-center p-8">
-                            <div className="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                              <AlertTriangle className="text-orange-400" size={32} />
-                            </div>
-                            <h4 className="text-white text-xl font-semibold mb-2">Demo Connection Issue</h4>
-                            <p className="text-white/70 mb-4 max-w-md">The Replit demo server is sleeping or unavailable. It may take 30-60 seconds to wake up on first access.</p>
-                            <div className="space-y-2">
-                              <motion.button
-                                onClick={() => {
-                                  setIframeError(false);
-                                  setIsIframeLoaded(false);
-                                  setLoadTimeout(false);
-                                  window.open('https://smartcrm-videoremix.replit.app/demo-dashboard', '_blank');
-                                }}
-                                className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                              >
-                                Open in New Tab
-                              </motion.button>
-                              <p className="text-white/60 text-sm mt-2">Opening in a new tab often resolves connection issues</p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
+                      <iframe
+                        src="https://smartcrm-videoremix.replit.app/demo-dashboard"
+                        className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
+                        onLoad={() => {
+                          setIsIframeLoaded(true);
+                          if (timeoutRef.current) {
+                            clearTimeout(timeoutRef.current);
+                          }
+                        }}
+                        title="Smart CRM Dashboard Analytics Demo"
+                        allow="fullscreen"
+                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                      />
                     </div>
                   </div>
 
