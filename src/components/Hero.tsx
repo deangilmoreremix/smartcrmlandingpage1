@@ -27,9 +27,9 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
   const [showConfetti, setShowConfetti] = useState(false);
 
   const keyBenefits = [
-    { text: "AI-Powered Insights" },
-    { text: "Seamless Integrations" },
-    { text: "Intuitive Automation" }
+    { text: "40% More Revenue in 90 Days" },
+    { text: "AI Predicts Which Leads Will Buy" },
+    { text: "Automates 80% of Follow-Ups" }
   ];
 
   const scrollToContent = () => {
@@ -136,7 +136,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
             transition={{ duration: 0.2 }}
           >
             <Sparkles className="text-blue-400 mr-2" size={16} />
-            <span className="text-blue-400 font-medium text-sm">AI-Powered Customer Relationships</span>
+            <span className="text-blue-400 font-medium text-sm">Powered by GPT-5 AI • Trusted by 500+ Teams</span>
           </motion.div>
         </AnimatedElement>
 
@@ -194,11 +194,11 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
               className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-full text-lg font-bold shadow-lg flex items-center justify-center transition-all duration-300 hover:shadow-xl hover:scale-105"
             >
               <span className="flex items-center">
-                Get Started Free <ArrowRight className="ml-2" size={20} />
+                Start Your 14-Day Free Trial <ArrowRight className="ml-2" size={20} />
               </span>
             </button>
             <p className="text-white/60 text-sm mt-4">
-              No credit card required • Start in minutes
+              No credit card required • Setup in 5 minutes • Cancel anytime
             </p>
           </div>
         </AnimatedElement>

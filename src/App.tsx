@@ -220,8 +220,8 @@ function App() {
               <main>
                 {/* Hero Section */}
                 <Hero
-                  title="The Smart CRM Revolution"
-                  subtitle="Transform how you connect with customers through AI-powered insights, seamless integrations, and intuitive workflow automation. Built for teams who want to focus on relationships, not data entry."
+                  title="Close More Deals with AI-Powered Smart CRM"
+                  subtitle="The only CRM that uses GPT-5 AI to predict which leads will buy, automate your follow-ups, and tell you exactly what to say next. Join 500+ teams increasing revenue by 40% in just 90 days."
                   launchDate={launchDate}
                 />
 
