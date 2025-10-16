@@ -823,7 +823,7 @@ const DashboardEmbedSection: React.FC = () => {
                     <div className="relative w-full" style={{ height: '800px' }}>
                       <iframe
                         src="https://smartcrm-videoremix.replit.app/demo-dashboard"
-                        className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
+                        className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10 bg-gray-900"
                         onLoad={() => {
                           setIsIframeLoaded(true);
                           if (timeoutRef.current) {
@@ -831,9 +831,29 @@ const DashboardEmbedSection: React.FC = () => {
                           }
                         }}
                         title="Smart CRM Dashboard Analytics Demo"
-                        allow="fullscreen"
-                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                        allow="fullscreen; display-capture"
+                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
+                        referrerPolicy="no-referrer-when-downgrade"
                       />
+
+                      {!isIframeLoaded && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg">
+                          <div className="text-center p-8 max-w-lg">
+                            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-orange-500 mx-auto mb-6"></div>
+                            <h4 className="text-white text-xl font-semibold mb-3">Loading Dashboard Demo</h4>
+                            <p className="text-white/70 mb-6">The Replit server may take 30-60 seconds to wake up on first load...</p>
+                            <motion.button
+                              onClick={() => window.open('https://smartcrm-videoremix.replit.app/demo-dashboard', '_blank')}
+                              className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors font-medium"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              Open Dashboard in New Tab
+                            </motion.button>
+                            <p className="text-white/50 text-sm mt-4">If the dashboard doesn't load here, try opening it in a new tab</p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 
