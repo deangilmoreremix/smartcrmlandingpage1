@@ -1,13 +1,11 @@
 import React, { useState, useContext } from 'react';
-import CountdownTimer from './CountdownTimer';
-import { ChevronDown, CircleCheck as CheckCircle, ArrowRight, Calendar, Users, Tag, Gift, Zap } from 'lucide-react';
+import { ChevronDown, CircleCheck as CheckCircle, ArrowRight, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedElement from './AnimatedElement';
 import { SignupContext } from '../App';
 import { handleFormSubmission } from '../utils/formHelpers';
 import CanvasConfetti from './CanvasConfetti';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
-import { WEBINAR_DATE, EVENT_DESCRIPTIONS } from '../constants/dates';
 
 interface HeroProps {
   title: string;
@@ -28,16 +26,10 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
   const { openSignupModal, setHasSignedUp } = useContext(SignupContext);
   const [showConfetti, setShowConfetti] = useState(false);
 
-  const webinarBenefits = [
-    { text: "See Smart CRM in Action" },
-    { text: "Learn AI-Powered Automation" },
-    { text: "Get Your Questions Answered Live" }
-  ];
-
-  const webinarTopics = [
-    { text: "Live Demo: AI-Powered Lead Management", delay: 0 },
-    { text: "See Real-Time Sales Automation", delay: 0.1 },
-    { text: "Q&A with Smart CRM Experts", delay: 0.2 },
+  const keyBenefits = [
+    { text: "AI-Powered Insights" },
+    { text: "Seamless Integrations" },
+    { text: "Intuitive Automation" }
   ];
 
   const scrollToContent = () => {
@@ -134,67 +126,39 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
 
       <div className="relative z-10 text-center max-w-4xl mx-auto">
         <AnimatedElement animation="fadeIn" duration={0.8}>
-          <div className="flex justify-center items-center space-x-4 mb-6">
-            <motion.div
-              className="inline-flex items-center bg-blue-600/20 rounded-full px-4 py-2 backdrop-blur-md border border-blue-500/30"
-              whileHover={{
-                backgroundColor: "rgba(59, 130, 246, 0.3)",
-                borderColor: "rgba(59, 130, 246, 0.4)",
-                scale: 1.05
-              }}
-              transition={{ duration: 0.2 }}
-            >
-              <Calendar className="text-blue-400 mr-2" size={16} />
-              <span className="text-blue-400 font-medium text-sm">Live Webinar Event</span>
-            </motion.div>
-            <motion.div
-              className="inline-flex items-center bg-green-600/20 rounded-full px-4 py-2 backdrop-blur-md border border-green-500/30"
-              whileHover={{
-                backgroundColor: "rgba(34, 197, 94, 0.3)",
-                borderColor: "rgba(34, 197, 94, 0.4)",
-                scale: 1.05
-              }}
-              transition={{ duration: 0.2 }}
-            >
-              <Gift className="text-green-400 mr-2" size={16} />
-              <span className="text-green-400 font-medium text-sm">100% Free Registration</span>
-            </motion.div>
-          </div>
+          <motion.div
+            className="inline-flex items-center bg-blue-600/20 rounded-full px-6 py-2 backdrop-blur-md border border-blue-500/30 mb-6"
+            whileHover={{
+              backgroundColor: "rgba(59, 130, 246, 0.3)",
+              borderColor: "rgba(59, 130, 246, 0.4)",
+              scale: 1.05
+            }}
+            transition={{ duration: 0.2 }}
+          >
+            <Sparkles className="text-blue-400 mr-2" size={16} />
+            <span className="text-blue-400 font-medium text-sm">AI-Powered Customer Relationships</span>
+          </motion.div>
         </AnimatedElement>
 
         <AnimatedElement animation="slideUp" delay={0.2} duration={0.8}>
           <motion.h1
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-4 leading-tight"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6 leading-tight"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
-            Free Live Webinar:<br />
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Smart CRM Revolution</span>
+            {title}
           </motion.h1>
         </AnimatedElement>
 
         <AnimatedElement animation="slideUp" delay={0.4} duration={0.8}>
-          <p className="text-xl md:text-2xl text-white/80 mb-6 max-w-2xl mx-auto">
-            {EVENT_DESCRIPTIONS.WEBINAR_DESCRIPTION} Reserve your spot for {WEBINAR_DATE.FULL} and discover how to transform your business.
+          <p className="text-xl md:text-2xl text-white/80 mb-8 max-w-3xl mx-auto">
+            {subtitle}
           </p>
         </AnimatedElement>
 
-        <AnimatedElement animation="fadeIn" delay={0.5} duration={0.8}>
-          <div className="flex justify-center items-center space-x-4 mb-8">
-            <div className="flex items-center bg-white/10 backdrop-blur-md rounded-lg px-4 py-2">
-              <Calendar className="text-blue-400 mr-2" size={18} />
-              <span className="text-white/90">{WEBINAR_DATE.DAY_OF_WEEK}, {WEBINAR_DATE.SHORT}</span>
-            </div>
-            <div className="flex items-center bg-white/10 backdrop-blur-md rounded-lg px-4 py-2">
-              <Users className="text-green-400 mr-2" size={18} />
-              <span className="text-white/90">{WEBINAR_DATE.TIME}</span>
-            </div>
-          </div>
-        </AnimatedElement>
-
         <AnimatedElement animation="fadeIn" delay={0.6} duration={0.8}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 max-w-xl mx-auto">
-            {webinarBenefits.map((feature, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 max-w-2xl mx-auto">
+            {keyBenefits.map((feature, index) => (
               <motion.div
                 key={index}
                 className="flex items-center justify-center md:justify-start text-white/80"
@@ -223,62 +187,19 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
           </div>
         </AnimatedElement>
 
-        <AnimatedElement animation="scale" delay={0.8} duration={0.8}>
-          <div className="mb-8">
-            <div className="text-center mb-3">
-              <div className="inline-flex items-center bg-blue-600/30 rounded-full px-4 py-1 backdrop-blur-md border border-blue-500/30">
-                <Calendar className="text-blue-400 mr-2" size={14} />
-                <span className="text-white/90 text-sm">Webinar starts in:</span>
-              </div>
-            </div>
-            <CountdownTimer
-              targetDate={launchDate}
-              onComplete={() => console.log('Webinar started!')}
-            />
-          </div>
-        </AnimatedElement>
-
-        <AnimatedElement animation="slideUp" delay={1} duration={0.8}>
+        <AnimatedElement animation="slideUp" delay={0.8} duration={0.8}>
           <div className="max-w-md mx-auto mb-12">
             <button
               onClick={() => openSignupModal('early-access')}
-              className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-full font-bold shadow-lg flex items-center justify-center"
+              className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-full text-lg font-bold shadow-lg flex items-center justify-center transition-all duration-300 hover:shadow-xl hover:scale-105"
             >
               <span className="flex items-center">
-                Register for Free Webinar <ArrowRight className="ml-1" size={16} />
+                Get Started Free <ArrowRight className="ml-2" size={20} />
               </span>
             </button>
-            <p className="text-white/60 text-sm mt-3">
-              {WEBINAR_DATE.FULL} - Limited seats available
+            <p className="text-white/60 text-sm mt-4">
+              No credit card required • Start in minutes
             </p>
-          </div>
-        </AnimatedElement>
-
-        <AnimatedElement animation="fadeIn" delay={1.2} duration={0.8}>
-          <div className="bg-gradient-to-br from-blue-600/20 to-cyan-600/20 backdrop-blur-md rounded-lg p-6 max-w-2xl mx-auto border border-blue-500/30 mb-8">
-            <h3 className="text-white font-medium mb-4 flex items-center justify-center">
-              <Zap className="text-blue-400 mr-2" size={18} />
-              What You'll Learn in This Webinar:
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                "Live demonstration of AI-powered automation",
-                "See real-time lead scoring in action",
-                "Learn predictive sales forecasting techniques",
-                "Discover multi-model AI capabilities",
-                "Get personalized CRM implementation advice",
-                "Interactive Q&A with Smart CRM experts"
-              ].map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  className="flex items-start"
-                  whileHover={{ x: 5 }}
-                >
-                  <CheckCircle className="text-green-400 mr-2 flex-shrink-0 mt-1" size={14} />
-                  <span className="text-white/80 text-sm">{item}</span>
-                </motion.div>
-              ))}
-            </div>
           </div>
         </AnimatedElement>
 
