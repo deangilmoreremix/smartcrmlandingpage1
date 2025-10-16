@@ -830,18 +830,17 @@ const DashboardEmbedSection: React.FC = () => {
                               setIframeError(false);
                               setLoadTimeout(false);
                             }}
-                            onError={() => setIframeError(true)}
                             title="Smart CRM Dashboard Analytics Demo"
                             allow="fullscreen"
                             sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                            loading="lazy"
+                            loading="eager"
                             ref={(iframe) => {
                               if (iframe && !isIframeLoaded) {
                                 setTimeout(() => {
                                   if (!isIframeLoaded) {
                                     setLoadTimeout(true);
                                   }
-                                }, 10000);
+                                }, 45000);
                               }
                             }}
                           />
@@ -849,8 +848,8 @@ const DashboardEmbedSection: React.FC = () => {
                             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900/95 to-gray-800/95 rounded-lg backdrop-blur-sm">
                               <div className="text-center p-8">
                                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-400 mx-auto mb-4"></div>
-                                <p className="text-white/70">Waking up demo server...</p>
-                                <p className="text-white/50 text-sm mt-2">This may take 10-15 seconds</p>
+                                <p className="text-white/70">Loading dashboard demo...</p>
+                                <p className="text-white/50 text-sm mt-2">Replit server may take 30-45 seconds to wake up</p>
                               </div>
                             </div>
                           )}
