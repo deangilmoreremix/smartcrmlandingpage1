@@ -23,7 +23,6 @@ import SecurityComplianceHub from './components/SecurityComplianceHub';
 import WorkflowShowcase from './components/WorkflowShowcase';
 import TrainingProgramSection from './components/TrainingProgramSection';
 import SignupFormSection from './components/SignupFormSection';
-import ExitIntentModal from './components/ExitIntentModal';
 import ScrollingBanner from './components/ScrollingBanner';
 import WebinarRecapPage from './components/WebinarRecapPage';
 import InstructorProfilePage from './pages/InstructorProfilePage';
@@ -181,8 +180,6 @@ function App() {
               <Footer />
               <FloatingCta />
               
-              {/* Exit Intent Modal - only show if user hasn't signed up */}
-              {!hasSignedUp && <ExitIntentModal onClose={() => console.log('Exit intent modal closed')} />}
             </div>
           } />
         </Routes>

@@ -34,7 +34,6 @@ import DashboardEmbedSection from './components/DashboardEmbedSection';
 import ContactsEmbedSection from './components/ContactsEmbedSection';
 import PipelineEmbedSection from './components/PipelineEmbedSection';
 import AICalendarSection from './components/AICalendarSection';
-import ExitIntentModal from './components/ExitIntentModal';
 import PricingSection from './components/PricingSection';
 
 // Lazy load pages for code splitting
@@ -342,9 +341,6 @@ function App() {
                   showConfetti={true}
                 />
               )}
-
-              {/* Exit Intent Modal - only show if user hasn't signed up */}
-              {!hasSignedUp && <ExitIntentModal onClose={() => console.log('Exit intent modal closed')} />}
 
             </div>
           } />
