@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
 import { BarChart3, TrendingUp, Zap, CheckCircle, ArrowRight, Sparkles } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -10,7 +10,6 @@ import CollapsibleSection from '../components/CollapsibleSection';
 import { SignupContext } from '../App';
 
 const DemoPage: React.FC = () => {
-  const [demoLoaded, setDemoLoaded] = useState(false);
   const { openSignupModal } = useContext(SignupContext);
 
   const demoFeatures = [
@@ -108,24 +107,7 @@ const DemoPage: React.FC = () => {
           {/* Demo Embed Section */}
           <AnimatedElement animation="slideUp" delay={0.2}>
             <div className="mb-12">
-              <DemoEmbed
-                onLoad={() => setDemoLoaded(true)}
-                onError={(error) => console.error('Demo error:', error)}
-                className="shadow-2xl"
-              />
-
-              {demoLoaded && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mt-6 text-center"
-                >
-                  <div className="inline-flex items-center bg-green-500/20 rounded-full px-4 py-2 border border-green-500/30">
-                    <CheckCircle className="text-green-400 mr-2" size={18} />
-                    <span className="text-green-400 font-medium">Demo Loaded Successfully</span>
-                  </div>
-                </motion.div>
-              )}
+              <DemoEmbed className="shadow-2xl" />
             </div>
           </AnimatedElement>
 
