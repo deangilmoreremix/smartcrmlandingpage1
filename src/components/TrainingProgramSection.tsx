@@ -53,7 +53,7 @@ const trainingDays: TrainingDay[] = [
     highlights: [
       'Discover "The Client Engine System" and how to make sales predictable',
       "See real customer transformations and how to start your own",
-      "Get exclusive bonuses + a free trial (no credit card required!)"
+      "Get exclusive bonuses + special Smart CRM pricing for attendees"
     ],
     icon: <Lightning size={28} />,
     color: "green",
@@ -335,7 +335,7 @@ const TrainingProgramSection: React.FC = () => {
                               ? "Day 1 opened my eyes to how much time we were wasting with our old CRM. The data entry alone was eating 40% of our week!"
                               : day.day === 2
                               ? "The automation strategies from Day 2 saved my team 15+ hours per week. We're closing deals faster than ever with the AI tools Dean showed us."
-                              : "The Client Engine System is brilliant! I implemented it the very next day and saw results within a week. Plus the free trial made it risk-free to start."}"
+                              : "The Client Engine System is brilliant! I implemented it the very next day and saw results within a week. The special pricing made it a no-brainer investment."}"
                           </motion.p>
 
                           <div className="flex justify-between items-center">
@@ -426,7 +426,7 @@ const TrainingProgramSection: React.FC = () => {
                         { icon: <Star size={18} />, text: "Lead Scoring" },
                         { icon: <Check size={18} />, text: "32% Sales Boost Blueprint" }
                       ] : [
-                        { icon: <Gift size={18} />, text: "Free Trial Access" },
+                        { icon: <Gift size={18} />, text: "Special Pricing" },
                         { icon: <PlusCircle size={18} />, text: "Exclusive Bonuses" },
                         { icon: <Zap size={18} />, text: "Implementation Plan" },
                         { icon: <Lightbulb size={18} />, text: "Success Roadmap" }
@@ -602,7 +602,7 @@ const TrainingProgramSection: React.FC = () => {
                   </motion.div>
                   <h4 className="text-lg font-semibold text-white">Exclusive Bonuses</h4>
                 </div>
-                <p className="text-white/70 mb-4">Get a FREE 14-day trial plus bonus onboarding session for attendees, all with no credit card required to get started.</p>
+                <p className="text-white/70 mb-4">Get exclusive Smart CRM access with special attendee pricing, plus bonus onboarding session and priority support included.</p>
 
                 <motion.div
                   className="flex items-center text-purple-400 text-sm"

@@ -194,11 +194,11 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
               className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-full text-lg font-bold shadow-lg flex items-center justify-center transition-all duration-300 hover:shadow-xl hover:scale-105"
             >
               <span className="flex items-center">
-                Start Your 14-Day Free Trial <ArrowRight className="ml-2" size={20} />
+                Get Smart CRM Now <ArrowRight className="ml-2" size={20} />
               </span>
             </button>
             <p className="text-white/60 text-sm mt-4">
-              No credit card required • Setup in 5 minutes • Cancel anytime
+              Join 500+ teams • Close 40% more deals • Setup in 5 minutes
             </p>
           </div>
         </AnimatedElement>

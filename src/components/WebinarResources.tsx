@@ -469,7 +469,7 @@ function getSlideContentForDay(day: number) {
       },
       {
         title: "Smart CRM Special Offer",
-        content: "Limited time offer for webinar attendees:\n- 14-day free trial (no credit card required)\n- Implementation assistance\n- Dedicated account manager\n- 30% discount on annual plans\n- 90-day money-back guarantee"
+        content: "Limited time offer for webinar attendees:\n- Special attendee-only pricing\n- Implementation assistance\n- Dedicated account manager\n- Priority support access\n- 90-day money-back guarantee"
       }
     ];
   }
@@ -667,8 +667,8 @@ function getMockQAForDay(day: number): { question: string, answer: string }[] {
         answer: "Adding AI tools to legacy CRMs creates a patchwork solution with integration challenges, inconsistent user experiences, and limited capabilities. Smart CRM was built from the ground up with AI at its core – every feature and workflow is designed around intelligence. It's like the difference between retrofitting a house with smart devices versus building a smart home from the foundation up."
       },
       {
-        question: "If we start with the free trial, can we extend it if we need more time to evaluate?",
-        answer: "Yes, while our standard trial is 14 days, we understand that proper evaluation takes time, especially for larger teams. If you're actively using the system and need more time, just reach out to your account manager, and we can extend the trial. We want you to be completely confident in your decision before committing."
+        question: "What's included in the attendee-only pricing offer?",
+        answer: "As a webinar attendee, you get exclusive access to Smart CRM at a special rate not available to the general public. This includes the full platform, implementation assistance, dedicated account manager, and priority support. We also offer a 90-day money-back guarantee so you can be completely confident in your decision. Contact your account manager for specific pricing details."
       },
       {
         question: "What's included in the implementation assistance mentioned in the special offer?",
