@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iframe Test Page - Smart CRM</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
+      color: white;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 30px;
+    }
+
+    .test-section {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+    }
+
+    .test-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .test-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .test-url {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.6);
+      word-break: break-all;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-test {
+      background: #10b981;
+      color: white;
+    }
+
+    .btn-test:hover {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+
+    .btn-open {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .btn-open:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+
+    .btn-hide {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-hide:hover {
+      background: #dc2626;
+      transform: translateY(-2px);
+    }
+
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.3);
+      display: none;
+    }
+
+    .iframe-container.active {
+      display: block;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 0.875rem;
+    }
+
+    .status-loading {
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+
+    .status-success {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .status-error {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .status-hidden {
+      display: none;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .check-mark {
+      color: #10b981;
+    }
+
+    .error-mark {
+      color: #ef4444;
+    }
+
+    .instructions {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    .instructions h2 {
+      margin-bottom: 15px;
+      font-size: 1.25rem;
+    }
+
+    .instructions ol {
+      padding-left: 20px;
+    }
+
+    .instructions li {
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+    .console-log {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .log-entry {
+      margin-bottom: 5px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .log-time {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 Iframe Testing Suite</h1>
+    <p class="subtitle">Test all Smart CRM demo iframes for proper loading and interaction</p>
+
+    <div class="instructions">
+      <h2>📋 Testing Instructions</h2>
+      <ol>
+        <li><strong>Open DevTools:</strong> Press F12 to open browser developer tools</li>
+        <li><strong>Check Console Tab:</strong> Look for any errors related to X-Frame-Options or CORS</li>
+        <li><strong>Test Each Demo:</strong> Click "Test Iframe" for each demo below</li>
+        <li><strong>Verify Loading:</strong> Watch for "✅ Loaded Successfully" status</li>
+        <li><strong>Test Interaction:</strong> Try clicking, scrolling, and interacting within each iframe</li>
+        <li><strong>Check Network Tab:</strong> Verify 200 OK status and proper headers</li>
+      </ol>
+    </div>
+
+    <!-- Contacts Demo -->
+    <div class="test-section">
+      <div class="test-header">
+        <div>
+          <div class="test-title">1. Contacts Demo</div>
+          <div class="test-url">https://taupe-sprinkles-83c9ee.netlify.app</div>
+        </div>
+        <div class="button-group">
+          <button class="btn-test" onclick="testIframe('contacts')">Test Iframe</button>
+          <button class="btn-open" onclick="openInNewTab('https://taupe-sprinkles-83c9ee.netlify.app')">Open Direct</button>
+          <button class="btn-hide" onclick="hideIframe('contacts')">Hide</button>
+        </div>
+      </div>
+      <div id="contacts-status" class="status status-hidden"></div>
+      <div id="contacts-iframe" class="iframe-container"></div>
+    </div>
+
+    <!-- Pipeline Demo -->
+    <div class="test-section">
+      <div class="test-header">
+        <div>
+          <div class="test-title">2. Pipeline Demo</div>
+          <div class="test-url">https://cheery-syrniki-b5b6ca.netlify.app</div>
+        </div>
+        <div class="button-group">
+          <button class="btn-test" onclick="testIframe('pipeline')">Test Iframe</button>
+          <button class="btn-open" onclick="openInNewTab('https://cheery-syrniki-b5b6ca.netlify.app')">Open Direct</button>
+          <button class="btn-hide" onclick="hideIframe('pipeline')">Hide</button>
+        </div>
+      </div>
+      <div id="pipeline-status" class="status status-hidden"></div>
+      <div id="pipeline-iframe" class="iframe-container"></div>
+    </div>
+
+    <!-- Dashboard Demo -->
+    <div class="test-section">
+      <div class="test-header">
+        <div>
+          <div class="test-title">3. Dashboard Demo (Replit)</div>
+          <div class="test-url">https://smartcrm-videoremix.replit.app/demo-dashboard</div>
+          <div style="font-size: 0.75rem; color: #fbbf24; margin-top: 5px;">
+            ⚠️ Note: May take 30-60 seconds on first load (cold start)
+          </div>
+        </div>
+        <div class="button-group">
+          <button class="btn-test" onclick="testIframe('dashboard')">Test Iframe</button>
+          <button class="btn-open" onclick="openInNewTab('https://smartcrm-videoremix.replit.app/demo-dashboard')">Open Direct</button>
+          <button class="btn-hide" onclick="hideIframe('dashboard')">Hide</button>
+        </div>
+      </div>
+      <div id="dashboard-status" class="status status-hidden"></div>
+      <div id="dashboard-iframe" class="iframe-container"></div>
+    </div>
+
+    <!-- Calendar Demo -->
+    <div class="test-section">
+      <div class="test-header">
+        <div>
+          <div class="test-title">4. Calendar Demo</div>
+          <div class="test-url">https://voluble-vacherin-add80d.netlify.app</div>
+        </div>
+        <div class="button-group">
+          <button class="btn-test" onclick="testIframe('calendar')">Test Iframe</button>
+          <button class="btn-open" onclick="openInNewTab('https://voluble-vacherin-add80d.netlify.app')">Open Direct</button>
+          <button class="btn-hide" onclick="hideIframe('calendar')">Hide</button>
+        </div>
+      </div>
+      <div id="calendar-status" class="status status-hidden"></div>
+      <div id="calendar-iframe" class="iframe-container"></div>
+    </div>
+
+    <div class="console-log">
+      <strong>📝 Test Log:</strong>
+      <div id="log-container"></div>
+    </div>
+  </div>
+
+  <script>
+    const URLS = {
+      contacts: 'https://taupe-sprinkles-83c9ee.netlify.app',
+      pipeline: 'https://cheery-syrniki-b5b6ca.netlify.app',
+      dashboard: 'https://smartcrm-videoremix.replit.app/demo-dashboard',
+      calendar: 'https://voluble-vacherin-add80d.netlify.app'
+    };
+
+    const loadTimes = {};
+
+    function log(message, type = 'info') {
+      const logContainer = document.getElementById('log-container');
+      const time = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+
+      const typeColors = {
+        info: '#60a5fa',
+        success: '#10b981',
+        error: '#ef4444',
+        warn: '#fbbf24'
+      };
+
+      entry.innerHTML = `
+        <span class="log-time">[${time}]</span>
+        <span style="color: ${typeColors[type]}">${message}</span>
+      `;
+
+      logContainer.appendChild(entry);
+      logContainer.scrollTop = logContainer.scrollHeight;
+
+      console.log(`[Iframe Test] ${message}`);
+    }
+
+    function showStatus(id, type, message) {
+      const status = document.getElementById(`${id}-status`);
+      status.className = `status status-${type}`;
+
+      let icon = '';
+      if (type === 'loading') {
+        icon = '<div class="spinner"></div>';
+      } else if (type === 'success') {
+        icon = '<span class="check-mark">✅</span>';
+      } else if (type === 'error') {
+        icon = '<span class="error-mark">❌</span>';
+      }
+
+      status.innerHTML = `${icon}<span>${message}</span>`;
+    }
+
+    function testIframe(id) {
+      const container = document.getElementById(`${id}-iframe`);
+      const url = URLS[id];
+
+      log(`Testing ${id} iframe...`, 'info');
+      showStatus(id, 'loading', 'Loading iframe...');
+
+      container.innerHTML = '';
+      container.classList.add('active');
+
+      const iframe = document.createElement('iframe');
+      iframe.src = url;
+      iframe.sandbox = 'allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation allow-top-navigation-by-user-activation';
+      iframe.referrerPolicy = 'origin';
+      iframe.loading = 'lazy';
+
+      const startTime = Date.now();
+      loadTimes[id] = startTime;
+
+      const timeout = setTimeout(() => {
+        if (!iframe.dataset.loaded) {
+          log(`${id} iframe timeout after 30s`, 'warn');
+          showStatus(id, 'error', '⚠️ Loading timeout (30s). Server may be slow or down.');
+        }
+      }, 30000);
+
+      iframe.onload = () => {
+        clearTimeout(timeout);
+        iframe.dataset.loaded = 'true';
+        const loadTime = ((Date.now() - startTime) / 1000).toFixed(2);
+        log(`${id} iframe loaded successfully in ${loadTime}s`, 'success');
+        showStatus(id, 'success', `✅ Loaded successfully (${loadTime}s)`);
+      };
+
+      iframe.onerror = () => {
+        clearTimeout(timeout);
+        log(`${id} iframe failed to load`, 'error');
+        showStatus(id, 'error', '❌ Failed to load. Check console for errors.');
+      };
+
+      container.appendChild(iframe);
+    }
+
+    function hideIframe(id) {
+      const container = document.getElementById(`${id}-iframe`);
+      container.classList.remove('active');
+      container.innerHTML = '';
+      document.getElementById(`${id}-status`).className = 'status status-hidden';
+      log(`${id} iframe hidden`, 'info');
+    }
+
+    function openInNewTab(url) {
+      window.open(url, '_blank');
+      log(`Opened ${url} in new tab`, 'info');
+    }
+
+    // Log initialization
+    log('Iframe test suite initialized', 'success');
+    log('Open browser DevTools (F12) to monitor for errors', 'info');
+  </script>
+</body>
+</html>
