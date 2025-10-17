@@ -313,6 +313,10 @@ async function registerWithGoToWebinar(data: RegistrationData): Promise<GoToWebi
     throw new Error("GoToWebinar OAuth token not configured");
   }
 
+  if (!gtwWebinarKey) {
+    throw new Error("GoToWebinar webinar key not configured");
+  }
+
   const registrantData = {
     firstName: data.firstName,
     lastName: data.lastName,
@@ -323,6 +327,8 @@ async function registerWithGoToWebinar(data: RegistrationData): Promise<GoToWebi
     source: data.source || "Website",
     responses: [],
   };
+
+  console.log(`Registering with GoToWebinar: ${data.email}`);
 
   const response = await fetch(
     `https://api.getgo.com/G2W/rest/v2/organizers/me/webinars/${gtwWebinarKey}/registrants`,
@@ -339,8 +345,24 @@ async function registerWithGoToWebinar(data: RegistrationData): Promise<GoToWebi
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`GoToWebinar registration failed: ${errorText}`);
+    let errorDetails;
+    try {
+      errorDetails = JSON.parse(errorText);
+    } catch {
+      errorDetails = { message: errorText };
+    }
+
+    if (response.status === 409) {
+      throw new Error(`Duplicate registration: ${data.email} is already registered for this webinar`);
+    } else if (response.status === 401) {
+      throw new Error(`GoToWebinar OAuth token expired or invalid`);
+    }
+
+    throw new Error(`GoToWebinar registration failed (${response.status}): ${JSON.stringify(errorDetails)}`);
   }
 
-  return await response.json();
+  const responseData = await response.json();
+  console.log(`GoToWebinar registration successful: ${data.email}, registrantKey: ${responseData.registrantKey}`);
+
+  return responseData;
 }

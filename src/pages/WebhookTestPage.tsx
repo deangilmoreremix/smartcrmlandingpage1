@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Zap, Database } from 'lucide-react';
+import { ArrowLeft, Zap, Database, Video } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ZapierWebhookTester from '../components/ZapierWebhookTester';
+import GoToWebinarTester from '../components/GoToWebinarTester';
 
 const WebhookTestPage: React.FC = () => {
   return (
@@ -28,43 +29,64 @@ const WebhookTestPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-3xl font-bold text-white mb-6">Zapier Webhook Testing</h1>
-            
+            <h1 className="text-3xl font-bold text-white mb-6">Webhook Integration Testing</h1>
+
             <p className="text-xl text-white/80 max-w-3xl mb-8">
-              Test and troubleshoot your Zapier webhook connections for the Smart CRM masterclass registration forms.
+              Test and troubleshoot your webhook connections for the Smart CRM webinar registration forms.
             </p>
           </motion.div>
-          
+
           <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 mb-8">
             <h2 className="text-xl font-bold text-white mb-4 flex items-center">
               <Database className="mr-2 text-blue-400" size={20} />
-              Webhook Configuration
+              Integration Overview
             </h2>
-            
+
             <div className="space-y-4">
               <p className="text-white/80">
-                Smart CRM uses Zapier webhooks to capture registration data from various forms on the website. This page helps you:
+                Smart CRM uses multiple integrations to ensure your webinar registrations are captured everywhere:
               </p>
-              
-              <ul className="space-y-2 text-white/70 ml-6 list-disc">
-                <li>Test if your Zapier webhook is properly configured</li>
-                <li>Send test data to verify integration</li>
-                <li>Troubleshoot common connection issues</li>
-              </ul>
-              
-              <div className="bg-blue-900/30 border border-blue-500/30 rounded-lg p-4">
-                <div className="flex items-center">
-                  <Zap className="text-blue-400 mr-2 flex-shrink-0" size={18} />
-                  <p className="text-white/80">
-                    <span className="font-medium">Current webhook:</span> hooks.zapier.com/hooks/catch/642762/27d9hdf/
-                  </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-blue-900/30 border border-blue-500/30 rounded-lg p-4">
+                  <div className="flex items-center mb-2">
+                    <Video className="text-blue-400 mr-2 flex-shrink-0" size={18} />
+                    <p className="text-white font-medium">GoToWebinar</p>
+                  </div>
+                  <p className="text-white/70 text-sm">Primary webinar platform for hosting live events</p>
+                </div>
+
+                <div className="bg-purple-900/30 border border-purple-500/30 rounded-lg p-4">
+                  <div className="flex items-center mb-2">
+                    <Video className="text-purple-400 mr-2 flex-shrink-0" size={18} />
+                    <p className="text-white font-medium">Zoom</p>
+                  </div>
+                  <p className="text-white/70 text-sm">Backup webinar platform for redundancy</p>
+                </div>
+
+                <div className="bg-amber-900/30 border border-amber-500/30 rounded-lg p-4">
+                  <div className="flex items-center mb-2">
+                    <Zap className="text-amber-400 mr-2 flex-shrink-0" size={18} />
+                    <p className="text-white font-medium">MailerLite</p>
+                  </div>
+                  <p className="text-white/70 text-sm">Email marketing and automation platform</p>
+                </div>
+
+                <div className="bg-green-900/30 border border-green-500/30 rounded-lg p-4">
+                  <div className="flex items-center mb-2">
+                    <Zap className="text-green-400 mr-2 flex-shrink-0" size={18} />
+                    <p className="text-white font-medium">Zapier</p>
+                  </div>
+                  <p className="text-white/70 text-sm">Backup webhook for additional integrations</p>
                 </div>
               </div>
             </div>
           </div>
-          
-          {/* Webhook tester component */}
-          <ZapierWebhookTester />
+
+          <div className="space-y-6">
+            <GoToWebinarTester />
+            <ZapierWebhookTester />
+          </div>
           
           <div className="mt-8 bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10">
             <h3 className="text-xl font-bold text-white mb-4">How to Verify in Zapier</h3>

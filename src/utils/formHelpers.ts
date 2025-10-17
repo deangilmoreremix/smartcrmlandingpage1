@@ -26,14 +26,41 @@ export const handleFormSubmission = async (
     if (!response.ok && response.status !== 207) {
       const errorData = await response.json().catch(() => ({}));
 
-      if (response.status === 409 && errorData.code === 'DUPLICATE_EMAIL') {
-        throw new Error('You are already registered for this webinar');
+      if (response.status === 409) {
+        if (errorData.code === 'DUPLICATE_EMAIL') {
+          throw new Error('You are already registered for this webinar');
+        }
+        throw new Error('This email is already registered for the webinar');
+      }
+
+      if (response.status === 401) {
+        throw new Error('Authentication failed. Please try again.');
+      }
+
+      if (response.status === 500) {
+        throw new Error(errorData.error || 'Server error. Please try again later.');
       }
 
       throw new Error(errorData.error || `Registration failed with status: ${response.status}`);
     }
 
     const result = await response.json();
+
+    if (result.errors && result.errors.length > 0) {
+      console.warn('Registration completed with some errors:', result.errors);
+    }
+
+    if (result.gotowebinar?.registered) {
+      console.log('Successfully registered with GoToWebinar');
+    }
+
+    if (result.zoom?.registered) {
+      console.log('Successfully registered with Zoom');
+    }
+
+    if (result.mailerlite?.registered) {
+      console.log('Successfully added to email list');
+    }
 
     if (onSuccess) {
       onSuccess(result);
