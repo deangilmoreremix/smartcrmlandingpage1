@@ -317,6 +317,9 @@ const AICalendarSection: React.FC = () => {
                         onLoad={() => setIsIframeLoaded(true)}
                         title="Smart CRM AI Calendar Intelligence Demo"
                         allow="fullscreen"
+                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation allow-top-navigation-by-user-activation"
+                        referrerPolicy="origin"
+                        loading="lazy"
                         scrolling="yes"
                       />
                     </div>

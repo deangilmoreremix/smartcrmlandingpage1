@@ -460,8 +460,8 @@ const PipelineEmbedSection: React.FC = () => {
                           onError={handleIframeError}
                           title="Smart CRM Pipeline Deals Management Demo"
                           allow="fullscreen"
-                          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-downloads allow-presentation"
-                          referrerPolicy="no-referrer-when-downgrade"
+                          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation allow-top-navigation-by-user-activation"
+                          referrerPolicy="origin"
                           loading="lazy"
                           importance="high"
                         />
