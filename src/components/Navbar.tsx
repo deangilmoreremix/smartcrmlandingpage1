@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Menu, X, ChevronDown, Sparkles } from 'lucide-react';
+import { Menu, X, ChevronDown, Sparkles, Zap, TrendingUp, Award, Rocket, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import AnimatedLogo from './AnimatedLogo';
@@ -25,45 +25,110 @@ const Navbar: React.FC = React.memo(() => {
   }, []);
 
   return (
-    <motion.nav 
-      className={`fixed left-0 right-0 z-40 transition-all duration-500 top-[30px]`}
-      initial={{ backgroundColor: 'rgba(0,0,0,0)' }}
-      animate={{ 
-        backgroundColor: isScrolled ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0)',
-        backdropFilter: isScrolled ? 'blur(12px)' : 'blur(0px)',
-        boxShadow: isScrolled ? '0 4px 30px rgba(0, 0, 0, 0.1)' : 'none'
-      }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <motion.div
-            className="flex items-center relative"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="flex-shrink-0 relative">
-              <Link to="/" className="flex items-center text-white">
-                <AnimatedLogo />
-              </Link>
-              {/* JUST LAUNCHED badge */}
+    <>
+      {/* Top Announcement Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 border-b border-blue-700"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between py-2 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center gap-3 flex-nowrap">
               <motion.div
-                className="absolute -top-2 -right-20 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-lg flex items-center"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  rotate: [-2, 2, -2],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
+                className="flex items-center gap-1.5 bg-blue-800/50 px-2.5 py-1 rounded-full border border-blue-600/50 whitespace-nowrap"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
               >
-                <Sparkles size={10} className="mr-1" />
-                LIVE NOW
+                <TrendingUp size={14} className="text-blue-300" />
+                <span className="text-xs font-semibold text-white">500+ Companies</span>
+              </motion.div>
+
+              <motion.div
+                className="flex items-center gap-1.5 bg-yellow-500/20 px-2.5 py-1 rounded-full border border-yellow-400/50 whitespace-nowrap"
+                animate={{ rotate: [-2, 2, -2] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <Sparkles size={14} className="text-yellow-400" />
+                <span className="text-xs font-bold text-yellow-300">PROVEN</span>
+              </motion.div>
+
+              <span className="text-sm text-blue-200 hidden md:inline whitespace-nowrap">Transform Your Business Today</span>
+
+              <motion.div
+                className="flex items-center gap-1.5 bg-orange-500/20 px-2.5 py-1 rounded-full border border-orange-400/50 whitespace-nowrap"
+                animate={{ scale: [1, 1.08, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <Zap size={14} className="text-orange-400" />
+                <span className="text-xs font-bold text-orange-300">LIVE NOW</span>
               </motion.div>
             </div>
-          </motion.div>
+
+            <div className="flex items-center gap-3 flex-nowrap">
+              <motion.div
+                className="flex items-center gap-1.5 bg-cyan-500/20 px-2.5 py-1 rounded-full border border-cyan-400/50 whitespace-nowrap"
+                animate={{ y: [-2, 2, -2] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <Award size={14} className="text-cyan-400" />
+                <span className="text-xs font-bold text-cyan-300">AI-POWERED</span>
+              </motion.div>
+
+              <motion.div
+                className="flex items-center gap-1.5 bg-green-500/20 px-2.5 py-1 rounded-full border border-green-400/50 whitespace-nowrap"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+              >
+                <CheckCircle size={14} className="text-green-400" />
+                <span className="text-xs font-bold text-green-300">SMART CRM IS NOW LIVE</span>
+              </motion.div>
+
+              <motion.div
+                className="hidden lg:flex items-center gap-1.5 bg-yellow-500/20 px-2.5 py-1 rounded-full border border-yellow-400/50 whitespace-nowrap"
+                animate={{ rotate: [-3, 3, -3] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <Rocket size={14} className="text-yellow-400" />
+                <span className="text-xs font-bold text-yellow-300">JUST LAUNCHED</span>
+              </motion.div>
+
+              <span className="text-sm text-blue-200 hidden xl:inline whitespace-nowrap">Revolutionary GPT-5 AI Integration</span>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Main Navigation */}
+      <motion.nav
+        className={`fixed left-0 right-0 z-40 transition-all duration-500`}
+        style={{ top: '44px' }}
+        initial={{ backgroundColor: 'rgba(30, 58, 138, 0.95)' }}
+        animate={{
+          backgroundColor: isScrolled ? 'rgba(30, 58, 138, 0.98)' : 'rgba(30, 58, 138, 0.95)',
+          backdropFilter: 'blur(12px)',
+          boxShadow: isScrolled ? '0 4px 30px rgba(0, 0, 0, 0.3)' : '0 2px 10px rgba(0, 0, 0, 0.2)'
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <motion.div
+              className="flex items-center"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex-shrink-0">
+                <Link to="/" className="flex items-center gap-3">
+                  <AnimatedLogo />
+                  <div className="flex flex-col">
+                    <span className="text-white font-bold text-lg leading-tight">Smart CRM</span>
+                    <span className="text-blue-300 text-xs leading-tight">Powered by GPT-5</span>
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
           
           <div className="hidden md:block">
             <motion.div 
@@ -108,7 +173,7 @@ const Navbar: React.FC = React.memo(() => {
               <NavLink href="/webinar-recap">Webinar Recap</NavLink>
               <NavLink href="/#faq">FAQ</NavLink>
               <motion.button
-                className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold shadow-lg overflow-hidden"
+                className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold shadow-lg overflow-hidden"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => openSignupModal('early-access')}
@@ -127,7 +192,7 @@ const Navbar: React.FC = React.memo(() => {
                 />
                 {/* Pulsing border */}
                 <motion.div
-                  className="absolute inset-0 rounded-full border-2 border-yellow-400/50"
+                  className="absolute inset-0 rounded-full border-2 border-white/30"
                   animate={{
                     scale: [1, 1.05, 1],
                     opacity: [0.5, 0.8, 0.5],
@@ -139,13 +204,13 @@ const Navbar: React.FC = React.memo(() => {
                   }}
                 />
                 <span className="relative z-10 flex items-center">
-                  Register for Free Webinar
+                  Join the Revolution
                   <Sparkles size={16} className="ml-2" />
                 </span>
               </motion.button>
             </motion.div>
           </div>
-          
+
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -158,12 +223,14 @@ const Navbar: React.FC = React.memo(() => {
           </div>
         </div>
       </div>
+    </motion.nav>
 
       {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
-            className="md:hidden bg-black/90 backdrop-blur-lg"
+          <motion.div
+            className="md:hidden bg-blue-900/95 backdrop-blur-lg"
+            style={{ marginTop: '108px' }}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -183,20 +250,21 @@ const Navbar: React.FC = React.memo(() => {
               <MobileNavLink href="/#faq" onClick={() => setIsOpen(false)}>FAQ</MobileNavLink>
               <div className="pt-2">
                 <button
-                  className="w-full px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-medium hover:from-blue-500 hover:to-cyan-500 transition-colors"
+                  className="w-full px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold hover:from-blue-400 hover:to-cyan-400 transition-colors flex items-center justify-center gap-2"
                   onClick={() => {
                     setIsOpen(false);
                     openSignupModal('early-access');
                   }}
                 >
-                  Register for Free Webinar
+                  Join the Revolution
+                  <Sparkles size={16} />
                 </button>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </>
   );
 });
 
