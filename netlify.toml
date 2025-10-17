@@ -13,7 +13,6 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "no-referrer-when-downgrade"
-    Content-Security-Policy = "frame-ancestors 'self' https://*.netlify.app https://*.replit.app https://*.repl.co"
 
 [[headers]]
   for = "/assets/*"
