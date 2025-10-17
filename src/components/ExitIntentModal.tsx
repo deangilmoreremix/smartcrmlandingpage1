@@ -16,7 +16,7 @@ interface ExitIntentModalProps {
 
 const ExitIntentModal: React.FC<ExitIntentModalProps> = ({
   title = "Wait! Don't Miss This Opportunity",
-  subtitle = "Get Smart CRM during our 5-day sale (October 16-20, 2025) and transform your customer relationships with AI-powered automation",
+  subtitle = "Get Smart CRM during our 5-day sale (October 17-21, 2025) and transform your customer relationships with AI-powered automation",
   cta = "Sign Up for Masterclass",
   delay = 5,
   sessionTimeout = 30,
@@ -202,7 +202,7 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({
                   transition={{ delay: 0.6 }}
                 >
                   <Gift className="text-green-400 mr-2" size={16} />
-                  <span>Free masterclass on October 17-19, 2025 included</span>
+                  <span>Free masterclass on October 17-19, 2025 included with purchase</span>
                 </motion.div>
               </div>
             </div>

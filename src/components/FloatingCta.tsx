@@ -190,7 +190,7 @@ const FloatingCta: React.FC = () => {
               </AnimatePresence>
 
               <h3 className="text-xl font-bold mb-2">
-                Free Webinar: Oct 16th
+                Free Webinar: Oct 17th
               </h3>
               <p className="text-white/90 text-sm mb-3">
                 Join our live webinar and discover how AI can transform your CRM. Limited seats!
