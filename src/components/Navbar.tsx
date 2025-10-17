@@ -171,26 +171,38 @@ const Navbar: React.FC = React.memo(() => {
         style={{ scaleX: scrollProgress / 100 }}
       />
 
-      {/* Top Announcement Bar - Dynamic Rotating */}
+      {/* Top Announcement Bar - Enhanced Premium Design */}
       <motion.div
-        className="fixed left-0 right-0 z-50 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 border-b border-blue-700 overflow-hidden"
+        className="fixed left-0 right-0 z-50 overflow-hidden shadow-2xl"
         style={{ top: 0 }}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Animated background gradient */}
+        {/* Multi-layer background for depth */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900" />
+
+        {/* Animated mesh gradient overlay */}
         <motion.div
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0"
           style={{
-            background: 'radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.3), transparent)',
+            background: 'radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.25), transparent 60%)',
             '--mouse-x': `${mousePosition.x * 100}%`,
             '--mouse-y': `${mousePosition.y * 100}%`,
           } as any}
         />
 
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="flex items-center justify-between py-2">
+        {/* Subtle noise texture for premium feel */}
+        <div className="absolute inset-0 opacity-[0.015] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
+
+        {/* Top gradient border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
+
+        {/* Bottom gradient border */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="flex items-center justify-between py-3 gap-4">
             {/* Left side - Rotating announcement with dynamic colors */}
             <div className="flex items-center gap-3 flex-1">
               <AnimatePresence mode="wait">
@@ -202,31 +214,39 @@ const Navbar: React.FC = React.memo(() => {
                   exit={{ opacity: 0, y: -20, rotateX: 90 }}
                   transition={{ duration: 0.5 }}
                 >
-                  {/* Dynamic gradient badge */}
+                  {/* Premium gradient badge with glass effect */}
                   <motion.div
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${announcement.borderColor} whitespace-nowrap bg-gradient-to-r ${announcement.badgeColor} shadow-lg`}
+                    className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-full border-2 ${announcement.borderColor} whitespace-nowrap bg-gradient-to-r ${announcement.badgeColor} shadow-2xl backdrop-blur-sm`}
                     animate={{
                       scale: [1, 1.05, 1],
                       boxShadow: [
-                        '0 0 10px rgba(59, 130, 246, 0.3)',
-                        '0 0 20px rgba(59, 130, 246, 0.5)',
-                        '0 0 10px rgba(59, 130, 246, 0.3)'
+                        '0 4px 20px rgba(59, 130, 246, 0.4)',
+                        '0 8px 32px rgba(59, 130, 246, 0.6)',
+                        '0 4px 20px rgba(59, 130, 246, 0.4)'
                       ]
                     }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
-                    <AnnouncementIcon size={14} className="text-white" />
-                    <span className="text-xs font-bold text-white">{announcement.badge}</span>
+                    {/* Inner glass reflection */}
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/20 to-transparent" />
+
+                    <AnnouncementIcon size={15} className="text-white drop-shadow-lg relative z-10" />
+                    <span className="text-xs font-extrabold text-white tracking-wide drop-shadow-lg relative z-10">
+                      {announcement.badge}
+                    </span>
                   </motion.div>
 
-                  {/* Dynamic gradient text */}
+                  {/* Enhanced gradient text with better readability */}
                   <motion.span
-                    className={`text-sm font-bold hidden sm:inline bg-gradient-to-r ${announcement.textGradient} bg-clip-text text-transparent`}
+                    className={`text-sm font-bold hidden sm:inline bg-gradient-to-r ${announcement.textGradient} bg-clip-text text-transparent drop-shadow-sm tracking-wide`}
                     animate={{
                       backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                     }}
                     transition={{ duration: 3, repeat: Infinity }}
-                    style={{ backgroundSize: '200% 200%' }}
+                    style={{
+                      backgroundSize: '200% 200%',
+                      letterSpacing: '0.025em'
+                    }}
                   >
                     {announcement.text}
                   </motion.span>
@@ -234,89 +254,139 @@ const Navbar: React.FC = React.memo(() => {
               </AnimatePresence>
             </div>
 
-            {/* Center - Enhanced live stats */}
+            {/* Center - Premium live stats card */}
             <motion.div
-              className="hidden md:flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-full border border-green-400/50 backdrop-blur-sm cursor-pointer group"
+              className="hidden md:flex items-center gap-2.5 px-4 py-2 bg-gradient-to-br from-green-500/25 via-emerald-500/20 to-green-500/25 rounded-xl border-2 border-green-400/40 backdrop-blur-md cursor-pointer group shadow-xl relative overflow-hidden"
               animate={{
                 scale: [1, 1.02, 1],
-                borderColor: ['rgba(74, 222, 128, 0.5)', 'rgba(52, 211, 153, 0.7)', 'rgba(74, 222, 128, 0.5)']
+                borderColor: ['rgba(74, 222, 128, 0.4)', 'rgba(52, 211, 153, 0.6)', 'rgba(74, 222, 128, 0.4)']
               }}
               transition={{ duration: 3, repeat: Infinity }}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: '0 8px 32px rgba(74, 222, 128, 0.3)'
+              }}
             >
-              <Users size={14} className="text-green-300" />
-              <div className="flex flex-col">
-                <span className="text-xs font-bold bg-gradient-to-r from-green-300 via-emerald-300 to-green-200 bg-clip-text text-transparent">
-                  {userCount.toLocaleString()} Active Users
+              {/* Glass morphism overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+
+              <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-green-500/30 border border-green-400/40">
+                <Users size={16} className="text-green-200 drop-shadow-lg" />
+              </div>
+
+              <div className="flex flex-col gap-0.5 relative">
+                <span className="text-sm font-extrabold bg-gradient-to-r from-green-200 via-emerald-200 to-green-100 bg-clip-text text-transparent leading-tight tracking-wide">
+                  {userCount.toLocaleString()}
                 </span>
-                <span className="text-[10px] text-green-400/80 font-semibold">
-                  +{Math.floor(userCount * 0.12)} today
+                <span className="text-[10px] text-green-300/90 font-bold leading-tight tracking-wider">
+                  ACTIVE USERS
                 </span>
               </div>
+
               <motion.div
-                className="w-2 h-2 bg-green-400 rounded-full shadow-lg shadow-green-400/50"
+                className="w-2.5 h-2.5 bg-green-400 rounded-full shadow-lg shadow-green-400/60 relative"
                 animate={{
-                  opacity: [1, 0.3, 1],
-                  scale: [1, 1.2, 1]
+                  opacity: [1, 0.4, 1],
+                  scale: [1, 1.3, 1]
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
-              />
+              >
+                <motion.div
+                  className="absolute inset-0 bg-green-300 rounded-full"
+                  animate={{
+                    scale: [1, 1.8, 1],
+                    opacity: [0.8, 0, 0.8]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+              </motion.div>
             </motion.div>
 
-            {/* Right side - Enhanced stats with real-time data */}
-            <div className="flex items-center gap-2 flex-1 justify-end">
+            {/* Right side - Premium stat cards */}
+            <div className="flex items-center gap-2.5 flex-1 justify-end">
               {/* Deals closed today */}
               <motion.div
-                className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-blue-400/50 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-sm cursor-pointer"
+                className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-blue-400/40 bg-gradient-to-br from-blue-500/25 via-cyan-500/20 to-blue-500/25 backdrop-blur-md cursor-pointer shadow-lg relative overflow-hidden"
                 whileHover={{
                   scale: 1.05,
-                  boxShadow: '0 0 20px rgba(59, 130, 246, 0.4)'
+                  boxShadow: '0 8px 32px rgba(59, 130, 246, 0.3)'
                 }}
               >
-                <Target size={14} className="text-blue-300" />
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold bg-gradient-to-r from-blue-300 via-cyan-300 to-blue-200 bg-clip-text text-transparent">
-                    {dealsClosedToday} Deals
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+                <div className="relative flex items-center justify-center w-7 h-7 rounded-md bg-blue-500/30 border border-blue-400/40">
+                  <Target size={14} className="text-blue-200 drop-shadow" />
+                </div>
+                <div className="flex flex-col gap-0 relative">
+                  <span className="text-sm font-extrabold bg-gradient-to-r from-blue-200 via-cyan-200 to-blue-100 bg-clip-text text-transparent leading-tight">
+                    {dealsClosedToday}
                   </span>
-                  <span className="text-[10px] text-blue-400/80 font-semibold">closed today</span>
+                  <span className="text-[9px] text-blue-300/80 font-bold leading-tight tracking-wider uppercase">
+                    Deals Today
+                  </span>
                 </div>
               </motion.div>
 
               {/* Revenue generated */}
               <motion.div
-                className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-emerald-400/50 bg-gradient-to-r from-emerald-500/20 to-green-500/20 backdrop-blur-sm cursor-pointer"
+                className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-emerald-400/40 bg-gradient-to-br from-emerald-500/25 via-green-500/20 to-emerald-500/25 backdrop-blur-md cursor-pointer shadow-lg relative overflow-hidden"
                 whileHover={{
                   scale: 1.05,
-                  boxShadow: '0 0 20px rgba(16, 185, 129, 0.4)'
+                  boxShadow: '0 8px 32px rgba(16, 185, 129, 0.3)'
                 }}
               >
-                <DollarSign size={14} className="text-emerald-300" />
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold bg-gradient-to-r from-emerald-300 via-green-300 to-emerald-200 bg-clip-text text-transparent">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+                <div className="relative flex items-center justify-center w-7 h-7 rounded-md bg-emerald-500/30 border border-emerald-400/40">
+                  <DollarSign size={14} className="text-emerald-200 drop-shadow" />
+                </div>
+                <div className="flex flex-col gap-0 relative">
+                  <span className="text-sm font-extrabold bg-gradient-to-r from-emerald-200 via-green-200 to-emerald-100 bg-clip-text text-transparent leading-tight">
                     ${(revenueGenerated / 1000).toFixed(0)}K
                   </span>
-                  <span className="text-[10px] text-emerald-400/80 font-semibold">today's revenue</span>
+                  <span className="text-[9px] text-emerald-300/80 font-bold leading-tight tracking-wider uppercase">
+                    Revenue
+                  </span>
                 </div>
               </motion.div>
 
-              {/* Limited time offer */}
+              {/* Limited time offer - Urgency card */}
               <motion.div
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-orange-400/50 bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-sm cursor-pointer"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 bg-gradient-to-br from-orange-500/30 via-red-500/25 to-orange-500/30 backdrop-blur-md cursor-pointer shadow-xl relative overflow-hidden"
                 whileHover={{
                   scale: 1.05,
-                  boxShadow: '0 0 20px rgba(249, 115, 22, 0.4)'
+                  boxShadow: '0 8px 32px rgba(249, 115, 22, 0.4)'
                 }}
                 animate={{
-                  borderColor: ['rgba(251, 146, 60, 0.5)', 'rgba(239, 68, 68, 0.7)', 'rgba(251, 146, 60, 0.5)']
+                  borderColor: ['rgba(251, 146, 60, 0.6)', 'rgba(239, 68, 68, 0.8)', 'rgba(251, 146, 60, 0.6)']
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <Clock size={14} className="text-orange-300" />
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold bg-gradient-to-r from-orange-300 via-red-300 to-orange-200 bg-clip-text text-transparent">
+                {/* Pulsing background effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-red-400/20"
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+
+                <div className="relative flex items-center justify-center w-7 h-7 rounded-md bg-orange-500/40 border border-orange-400/50">
+                  <motion.div
+                    animate={{ rotate: [0, 5, -5, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <Clock size={14} className="text-orange-100 drop-shadow" />
+                  </motion.div>
+                </div>
+
+                <div className="flex flex-col gap-0 relative">
+                  <span className="text-sm font-extrabold bg-gradient-to-r from-orange-100 via-red-100 to-orange-50 bg-clip-text text-transparent leading-tight">
                     40% OFF
                   </span>
-                  <span className="text-[10px] text-orange-400/80 font-semibold hidden sm:inline">12 spots left</span>
+                  <span className="text-[9px] text-orange-200/90 font-bold leading-tight tracking-wider uppercase">
+                    12 Spots Left
+                  </span>
                 </div>
               </motion.div>
             </div>
@@ -324,27 +394,34 @@ const Navbar: React.FC = React.memo(() => {
         </div>
       </motion.div>
 
-      {/* Main Navigation */}
+      {/* Main Navigation - Premium Design */}
       <motion.nav
-        className={`fixed left-0 right-0 z-40 transition-all duration-500 overflow-hidden`}
-        style={{ top: '44px' }}
-        initial={{ backgroundColor: 'rgba(30, 58, 138, 0.95)' }}
+        className={`fixed left-0 right-0 z-40 transition-all duration-500 overflow-hidden shadow-2xl`}
+        style={{ top: '50px' }}
+        initial={{ backgroundColor: 'rgba(15, 23, 42, 0.95)' }}
         animate={{
-          backgroundColor: isScrolled ? 'rgba(30, 58, 138, 0.98)' : 'rgba(30, 58, 138, 0.95)',
-          backdropFilter: 'blur(12px)',
-          boxShadow: isScrolled ? '0 4px 30px rgba(0, 0, 0, 0.3)' : '0 2px 10px rgba(0, 0, 0, 0.2)'
+          backgroundColor: isScrolled ? 'rgba(15, 23, 42, 0.98)' : 'rgba(15, 23, 42, 0.95)',
+          backdropFilter: 'blur(16px)',
+          boxShadow: isScrolled ? '0 8px 40px rgba(0, 0, 0, 0.4)' : '0 4px 20px rgba(0, 0, 0, 0.3)'
         }}
         onMouseMove={handleMouseMove}
       >
-        {/* Dynamic background effect that follows mouse */}
+        {/* Layered gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/50 via-blue-900/30 to-slate-900/50 pointer-events-none" />
+
+        {/* Dynamic mouse-follow gradient */}
         <motion.div
-          className="absolute inset-0 opacity-20 pointer-events-none"
+          className="absolute inset-0 opacity-30 pointer-events-none"
           style={{
-            background: `radial-gradient(600px circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(96, 165, 250, 0.15), transparent 80%)`,
+            background: `radial-gradient(700px circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(59, 130, 246, 0.2), transparent 70%)`,
           }}
         />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+
+        {/* Top border gradient */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent" />
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="flex items-center justify-between h-20">
             <motion.div
               className="flex items-center"
               initial={{ opacity: 0, x: -20 }}
