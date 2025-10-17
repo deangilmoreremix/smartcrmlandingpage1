@@ -159,6 +159,7 @@ const Navbar: React.FC = React.memo(() => {
                       onMouseEnter={() => setIsDropdownOpen(true)}
                       onMouseLeave={() => setIsDropdownOpen(false)}
                     >
+                      <Link to="/demo" className="block px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors">Live Demo</Link>
                       <Link to="/dashboard" className="block px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors">Dashboard</Link>
                       <Link to="/contacts" className="block px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors">Contacts</Link>
                       <Link to="/pipeline" className="block px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors">Pipeline</Link>
@@ -239,12 +240,12 @@ const Navbar: React.FC = React.memo(() => {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <MobileNavLink href="/" onClick={() => setIsOpen(false)}>Home</MobileNavLink>
               <MobileNavLink href="/#features" onClick={() => setIsOpen(false)}>Features</MobileNavLink>
+              <MobileNavLink href="/demo" onClick={() => setIsOpen(false)}>Live Demo</MobileNavLink>
               <MobileNavLink href="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</MobileNavLink>
               <MobileNavLink href="/ai-calendar" onClick={() => setIsOpen(false)}>AI Calendar</MobileNavLink>
               <MobileNavLink href="/contacts" onClick={() => setIsOpen(false)}>Contacts</MobileNavLink>
               <MobileNavLink href="/pipeline" onClick={() => setIsOpen(false)}>Pipeline</MobileNavLink>
               <MobileNavLink href="/ai-features" onClick={() => setIsOpen(false)}>AI Features</MobileNavLink>
-              <MobileNavLink href="/#demo" onClick={() => setIsOpen(false)}>Demo</MobileNavLink>
               <MobileNavLink href="/#training" onClick={() => setIsOpen(false)}>Masterclass (Oct 17-19)</MobileNavLink>
               <MobileNavLink href="/webinar-recap" onClick={() => setIsOpen(false)}>Webinar Recap</MobileNavLink>
               <MobileNavLink href="/#faq" onClick={() => setIsOpen(false)}>FAQ</MobileNavLink>

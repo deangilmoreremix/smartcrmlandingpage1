@@ -47,6 +47,7 @@ const ContactsLandingPage = lazy(() => import('./pages/ContactsLandingPage'));
 const PipelineLandingPage = lazy(() => import('./pages/PipelineLandingPage'));
 const AIFeaturesCatalogLandingPage = lazy(() => import('./pages/AIFeaturesCatalogLandingPage'));
 const AdminUploadPage = lazy(() => import('./pages/AdminUploadPage'));
+const DemoPage = lazy(() => import('./pages/DemoPage'));
 
 import { SALE_END_DATE } from './constants/dates';
 
@@ -184,6 +185,11 @@ function App() {
           <Route path="/admin-upload" element={
             <Suspense fallback={<PageLoadingFallback />}>
               <AdminUploadPage />
+            </Suspense>
+          } />
+          <Route path="/demo" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <DemoPage />
             </Suspense>
           } />
           <Route path="/pricing" element={
