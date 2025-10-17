@@ -15,14 +15,18 @@ const DashboardEmbedSection: React.FC = () => {
   const [loadTimeout, setLoadTimeout] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const [iframeKey, setIframeKey] = useState(0);
+  const [serverStatus, setServerStatus] = useState<'checking' | 'online' | 'offline' | 'waking'>('checking');
+  const [wakingProgress, setWakingProgress] = useState(0);
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const progressIntervalRef = React.useRef<NodeJS.Timeout | null>(null);
 
   React.useEffect(() => {
     if (showEmbed && !isIframeLoaded && !iframeError) {
+      // Increased timeout to 60 seconds for Replit server
       timeoutRef.current = setTimeout(() => {
         setLoadTimeout(true);
-        console.warn('Dashboard iframe load timeout after 30 seconds');
-      }, 30000);
+        console.warn('Dashboard iframe load timeout after 60 seconds');
+      }, 60000);
     }
 
     return () => {
@@ -30,17 +34,94 @@ const DashboardEmbedSection: React.FC = () => {
         clearTimeout(timeoutRef.current);
         timeoutRef.current = null;
       }
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
     };
   }, [showEmbed, isIframeLoaded, iframeError, iframeKey]);
 
-  const handleRetry = () => {
+  const checkServerStatus = async () => {
+    try {
+      setServerStatus('checking');
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+      const response = await fetch(EMBED_URLS.dashboard, {
+        method: 'HEAD',
+        signal: controller.signal,
+        mode: 'no-cors'
+      });
+
+      clearTimeout(timeoutId);
+      setServerStatus('online');
+      return true;
+    } catch (error) {
+      console.error('Server check failed:', error);
+      setServerStatus('offline');
+      return false;
+    }
+  };
+
+  const wakeUpServer = async () => {
+    setServerStatus('waking');
+    setWakingProgress(0);
+
+    // Progress animation
+    progressIntervalRef.current = setInterval(() => {
+      setWakingProgress(prev => {
+        if (prev >= 90) return 90;
+        return prev + 2;
+      });
+    }, 600);
+
+    try {
+      // Ping the server to wake it up
+      await fetch(EMBED_URLS.dashboard, {
+        method: 'GET',
+        mode: 'no-cors'
+      });
+
+      // Wait a bit for server to fully wake
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
+      setWakingProgress(100);
+      setServerStatus('online');
+
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Failed to wake server:', error);
+      setServerStatus('offline');
+
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
+
+      return false;
+    }
+  };
+
+  const handleRetry = async () => {
     setIframeError(false);
     setLoadTimeout(false);
     setIsIframeLoaded(false);
     setRetryCount(prev => prev + 1);
-    setIframeKey(prev => prev + 1);
+
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
+    }
+
+    // Try to wake up the server before retrying
+    const serverAwake = await wakeUpServer();
+
+    if (serverAwake) {
+      setIframeKey(prev => prev + 1);
     }
   };
 
@@ -890,21 +971,77 @@ const DashboardEmbedSection: React.FC = () => {
                       {!isIframeLoaded && !iframeError && !loadTimeout && (
                         <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg">
                           <div className="text-center p-8 max-w-lg">
-                            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-orange-500 mx-auto mb-6"></div>
-                            <h4 className="text-white text-xl font-semibold mb-3">Loading Dashboard Demo</h4>
-                            <p className="text-white/70 mb-6">The Replit server may take 30-60 seconds to wake up on first load...</p>
+                            {serverStatus === 'waking' ? (
+                              <>
+                                <div className="relative w-32 h-32 mx-auto mb-6">
+                                  <svg className="transform -rotate-90 w-32 h-32">
+                                    <circle
+                                      cx="64"
+                                      cy="64"
+                                      r="60"
+                                      stroke="rgba(249, 115, 22, 0.2)"
+                                      strokeWidth="8"
+                                      fill="none"
+                                    />
+                                    <circle
+                                      cx="64"
+                                      cy="64"
+                                      r="60"
+                                      stroke="#f97316"
+                                      strokeWidth="8"
+                                      fill="none"
+                                      strokeDasharray={`${2 * Math.PI * 60}`}
+                                      strokeDashoffset={`${2 * Math.PI * 60 * (1 - wakingProgress / 100)}`}
+                                      className="transition-all duration-300"
+                                    />
+                                  </svg>
+                                  <div className="absolute inset-0 flex items-center justify-center">
+                                    <span className="text-orange-400 text-2xl font-bold">{Math.round(wakingProgress)}%</span>
+                                  </div>
+                                </div>
+                                <h4 className="text-white text-xl font-semibold mb-3">Waking Up Server...</h4>
+                                <p className="text-white/70 mb-6">Please wait while we start the Replit server. This usually takes 30-60 seconds.</p>
+                              </>
+                            ) : (
+                              <>
+                                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-orange-500 mx-auto mb-6"></div>
+                                <h4 className="text-white text-xl font-semibold mb-3">Loading Dashboard Demo</h4>
+                                <p className="text-white/70 mb-6">The Replit server may take up to 60 seconds to wake up on first load...</p>
+                              </>
+                            )}
                             {retryCount > 0 && (
                               <p className="text-orange-400 text-sm mb-4">Retry attempt {retryCount} of 3</p>
                             )}
-                            <motion.button
-                              onClick={() => window.open(EMBED_URLS.dashboard, '_blank')}
-                              className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors font-medium"
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                            >
-                              Open Dashboard in New Tab
-                            </motion.button>
-                            <p className="text-white/50 text-sm mt-4">If the dashboard doesn't load here, try opening it in a new tab</p>
+                            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                              <motion.button
+                                onClick={async () => {
+                                  const awake = await wakeUpServer();
+                                  if (awake) {
+                                    window.open(EMBED_URLS.dashboard, '_blank');
+                                  }
+                                }}
+                                className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors font-medium"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                {serverStatus === 'waking' ? 'Opening Soon...' : 'Open in New Tab'}
+                              </motion.button>
+                              {serverStatus !== 'waking' && (
+                                <motion.button
+                                  onClick={wakeUpServer}
+                                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                >
+                                  Wake Up Server
+                                </motion.button>
+                              )}
+                            </div>
+                            <p className="text-white/50 text-sm mt-4">
+                              {serverStatus === 'offline'
+                                ? 'Server appears to be offline. Click "Wake Up Server" first, then try opening.'
+                                : 'If the dashboard doesn\'t load, try the "Wake Up Server" button first.'}
+                            </p>
                           </div>
                         </div>
                       )}
@@ -916,35 +1053,76 @@ const DashboardEmbedSection: React.FC = () => {
                               <BarChart3 className="text-orange-400" size={32} />
                             </div>
                             <h4 className="text-white text-xl font-semibold mb-2">
-                              {loadTimeout ? 'Dashboard Taking Longer Than Expected' : 'Demo Temporarily Unavailable'}
+                              {loadTimeout ? 'Server Wake-Up Taking Longer Than Expected' : 'Connection Issue Detected'}
                             </h4>
                             <p className="text-white/70 mb-6 max-w-md">
                               {loadTimeout
-                                ? 'The Replit server is taking longer than expected to respond. This is normal on first load.'
-                                : 'The dashboard demo is currently offline. This may be due to maintenance or server updates.'}
+                                ? 'The Replit server is taking longer than 60 seconds to respond. It may be in a deep sleep state or experiencing high load.'
+                                : 'Unable to connect to the dashboard demo. The server may be offline or restarting.'}
                             </p>
+                            <div className="bg-blue-900/30 rounded-lg p-4 mb-6 text-left">
+                              <h5 className="text-blue-300 font-medium mb-2 flex items-center">
+                                <Info className="mr-2" size={16} />
+                                What's happening?
+                              </h5>
+                              <ul className="text-white/70 text-sm space-y-1">
+                                <li>• Replit servers sleep after 1 hour of inactivity</li>
+                                <li>• Cold starts can take 30-90 seconds</li>
+                                <li>• High traffic may cause additional delays</li>
+                                <li>• First wake-up attempt may timeout</li>
+                              </ul>
+                            </div>
                             <div className="flex flex-col sm:flex-row gap-3 justify-center">
                               {retryCount < 3 && (
                                 <motion.button
                                   onClick={handleRetry}
-                                  className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors font-medium"
+                                  className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors font-medium flex items-center justify-center"
                                   whileHover={{ scale: 1.05 }}
                                   whileTap={{ scale: 0.95 }}
                                 >
-                                  {retryCount > 0 ? `Retry Again (${retryCount}/3)` : 'Retry Connection'}
+                                  <Activity className="mr-2" size={18} />
+                                  {retryCount > 0 ? `Wake & Retry (${retryCount}/3)` : 'Wake Up & Retry'}
                                 </motion.button>
                               )}
                               <motion.button
-                                onClick={() => window.open(EMBED_URLS.dashboard, '_blank')}
-                                className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium"
+                                onClick={async () => {
+                                  await wakeUpServer();
+                                  setTimeout(() => {
+                                    window.open(EMBED_URLS.dashboard, '_blank');
+                                  }, 2000);
+                                }}
+                                className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium flex items-center justify-center"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                               >
-                                Open in New Tab
+                                <ExternalLink className="mr-2" size={18} />
+                                Wake & Open in Tab
                               </motion.button>
                             </div>
                             {retryCount >= 3 && (
-                              <p className="text-white/60 text-sm mt-4">Maximum retries reached. Please try opening in a new tab or contact support.</p>
+                              <div className="mt-4 p-4 bg-amber-900/30 rounded-lg border border-amber-500/30">
+                                <p className="text-amber-300 text-sm font-medium mb-2">Maximum automatic retries reached</p>
+                                <p className="text-white/70 text-sm mb-3">The server may need manual intervention. Try these options:</p>
+                                <div className="flex flex-col gap-2">
+                                  <motion.button
+                                    onClick={() => window.open(EMBED_URLS.dashboard, '_blank')}
+                                    className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded text-sm font-medium"
+                                    whileHover={{ scale: 1.02 }}
+                                  >
+                                    Try Direct Link (may take 60s to load)
+                                  </motion.button>
+                                  <motion.button
+                                    onClick={() => {
+                                      setRetryCount(0);
+                                      handleRetry();
+                                    }}
+                                    className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded text-sm font-medium"
+                                    whileHover={{ scale: 1.02 }}
+                                  >
+                                    Reset & Try Again
+                                  </motion.button>
+                                </div>
+                              </div>
                             )}
                           </div>
                         </div>

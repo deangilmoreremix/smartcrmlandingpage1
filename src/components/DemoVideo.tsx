@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Play, Maximize2, Volume2, VolumeX } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedElement from './AnimatedElement';
+import { openUrlWithWakeUp, needsWakeUp } from '../utils/serverStatus';
 
 interface DemoVideoProps {
   thumbnailUrl: string;
@@ -10,17 +11,35 @@ interface DemoVideoProps {
   description: string;
 }
 
-const DemoVideo: React.FC<DemoVideoProps> = ({ 
-  thumbnailUrl, 
-  videoUrl, 
-  title, 
-  description 
+const DemoVideo: React.FC<DemoVideoProps> = ({
+  thumbnailUrl,
+  videoUrl,
+  title,
+  description
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [isOpening, setIsOpening] = useState(false);
 
   const handlePlay = () => {
     setIsPlaying(true);
+  };
+
+  const handleOpenInTab = async () => {
+    setIsOpening(true);
+    try {
+      if (needsWakeUp(videoUrl)) {
+        // For Replit and similar servers, use wake-up logic
+        await openUrlWithWakeUp(videoUrl);
+      } else {
+        // For regular URLs, open directly
+        window.open(videoUrl, '_blank', 'noopener,noreferrer');
+      }
+    } catch (error) {
+      console.error('Failed to open video URL:', error);
+    } finally {
+      setIsOpening(false);
+    }
   };
 
   return (
@@ -67,11 +86,17 @@ const DemoVideo: React.FC<DemoVideoProps> = ({
               >
                 {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
               </button>
-              <button 
-                className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-                onClick={() => window.open(videoUrl, '_blank')}
+              <button
+                className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={handleOpenInTab}
+                disabled={isOpening}
+                title={isOpening ? 'Opening...' : 'Open in new tab'}
               >
-                <Maximize2 size={18} />
+                {isOpening ? (
+                  <div className="w-[18px] h-[18px] border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <Maximize2 size={18} />
+                )}
               </button>
             </div>
           )}
