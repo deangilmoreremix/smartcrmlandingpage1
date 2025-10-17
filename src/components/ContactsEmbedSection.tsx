@@ -610,10 +610,10 @@ const ContactsEmbedSection: React.FC = () => {
                           onLoad={handleIframeLoad}
                           onError={handleIframeError}
                           title="Smart CRM Contacts Management Demo"
-                          allow="fullscreen"
-                          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation allow-top-navigation-by-user-activation"
-                          referrerPolicy="origin"
-                          loading="lazy"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; geolocation; gyroscope; picture-in-picture"
+                          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"
+                          referrerPolicy="origin-when-cross-origin"
+                          loading="eager"
                           importance="high"
                         />
                       )}

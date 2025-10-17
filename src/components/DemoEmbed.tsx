@@ -53,9 +53,12 @@ export default function DemoEmbed({
       <iframe
         src={url}
         title={title}
-        allow="fullscreen; display-capture"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; geolocation; gyroscope; picture-in-picture"
         className="absolute inset-0 w-full h-full border-0"
-        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation"
+        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"
+        referrerPolicy="origin-when-cross-origin"
+        loading="eager"
+        importance="high"
       />
 
       {/* Controls Overlay */}

@@ -316,11 +316,11 @@ const AICalendarSection: React.FC = () => {
                         className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
                         onLoad={() => setIsIframeLoaded(true)}
                         title="Smart CRM AI Calendar Intelligence Demo"
-                        allow="fullscreen"
-                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation allow-top-navigation-by-user-activation"
-                        referrerPolicy="origin"
-                        loading="lazy"
-                        scrolling="yes"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; geolocation; gyroscope; picture-in-picture"
+                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"
+                        referrerPolicy="origin-when-cross-origin"
+                        loading="eager"
+                        importance="high"
                       />
                     </div>
                   </div>
