@@ -30,6 +30,12 @@ interface MailerLiteResponse {
   };
 }
 
+interface GoToWebinarResponse {
+  registrantKey: string;
+  joinUrl: string;
+  status: string;
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response(null, {
@@ -41,7 +47,6 @@ Deno.serve(async (req: Request) => {
   try {
     const registrationData: RegistrationData = await req.json();
 
-    // Validate required fields
     if (!registrationData.email || !registrationData.firstName || !registrationData.lastName) {
       return new Response(
         JSON.stringify({ error: "Missing required fields: firstName, lastName, email" }),
@@ -52,12 +57,10 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Initialize Supabase client
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Step 1: Save to Supabase database first
     const { data: dbRecord, error: dbError } = await supabase
       .from("webinar_registrations")
       .insert({
@@ -75,7 +78,6 @@ Deno.serve(async (req: Request) => {
       .single();
 
     if (dbError) {
-      // Handle duplicate email
       if (dbError.code === "23505") {
         return new Response(
           JSON.stringify({ 
@@ -95,10 +97,23 @@ Deno.serve(async (req: Request) => {
     const errors: any[] = [];
     let zoomSuccess = false;
     let mailerliteSuccess = false;
+    let gotowebinarSuccess = false;
     let zoomData: any = null;
     let mailerliteData: any = null;
+    let gotowebinarData: any = null;
 
-    // Step 2: Register with Zoom
+    try {
+      gotowebinarData = await registerWithGoToWebinar(registrationData);
+      gotowebinarSuccess = true;
+    } catch (error) {
+      console.error("GoToWebinar registration failed:", error);
+      errors.push({
+        service: "gotowebinar",
+        error: error.message,
+        timestamp: new Date().toISOString(),
+      });
+    }
+
     try {
       zoomData = await registerWithZoom(registrationData);
       zoomSuccess = true;
@@ -111,7 +126,6 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    // Step 3: Register with MailerLite
     try {
       mailerliteData = await registerWithMailerLite(registrationData);
       mailerliteSuccess = true;
@@ -124,11 +138,16 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    // Step 4: Update database with results
     const updateData: any = {
       error_log: errors,
       retry_count: 0,
     };
+
+    if (gotowebinarSuccess && gotowebinarData) {
+      updateData.gotowebinar_registrant_key = gotowebinarData.registrantKey;
+      updateData.gotowebinar_join_url = gotowebinarData.joinUrl;
+      updateData.gotowebinar_registered_at = new Date().toISOString();
+    }
 
     if (zoomSuccess && zoomData) {
       updateData.zoom_registrant_id = zoomData.registrant_id;
@@ -141,10 +160,9 @@ Deno.serve(async (req: Request) => {
       updateData.mailerlite_registered_at = new Date().toISOString();
     }
 
-    // Determine overall status
-    if (zoomSuccess && mailerliteSuccess) {
+    if (gotowebinarSuccess && mailerliteSuccess) {
       updateData.registration_status = "both_success";
-    } else if (zoomSuccess || mailerliteSuccess) {
+    } else if (gotowebinarSuccess || zoomSuccess || mailerliteSuccess) {
       updateData.registration_status = "partial_failure";
     } else {
       updateData.registration_status = "db_only";
@@ -155,18 +173,18 @@ Deno.serve(async (req: Request) => {
       .update(updateData)
       .eq("id", registrationId);
 
-    // Step 5: Return response
     const response = {
       success: true,
       registrationId,
       status: updateData.registration_status,
+      gotowebinar: gotowebinarSuccess ? { registered: true, join_url: gotowebinarData?.joinUrl, registrantKey: gotowebinarData?.registrantKey } : { registered: false },
       zoom: zoomSuccess ? { registered: true, join_url: zoomData?.join_url } : { registered: false },
       mailerlite: mailerliteSuccess ? { registered: true } : { registered: false },
       errors: errors.length > 0 ? errors : undefined,
     };
 
     return new Response(JSON.stringify(response), {
-      status: zoomSuccess && mailerliteSuccess ? 200 : 207, // 207 = Multi-Status for partial success
+      status: (gotowebinarSuccess || zoomSuccess) && mailerliteSuccess ? 200 : 207,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
@@ -194,7 +212,6 @@ async function registerWithZoom(data: RegistrationData): Promise<ZoomRegistrantR
     throw new Error("Zoom API credentials not configured");
   }
 
-  // Generate Zoom OAuth token
   const tokenResponse = await fetch(
     `https://zoom.us/oauth/token?grant_type=account_credentials&account_id=${zoomAccountId}`,
     {
@@ -213,7 +230,6 @@ async function registerWithZoom(data: RegistrationData): Promise<ZoomRegistrantR
 
   const { access_token } = await tokenResponse.json();
 
-  // Register user for webinar
   const registrantData = {
     email: data.email,
     first_name: data.firstName,
@@ -268,7 +284,7 @@ async function registerWithMailerLite(data: RegistrationData): Promise<MailerLit
       phone: data.phone || "",
     },
     groups: mailerliteGroupId ? [mailerliteGroupId] : [],
-    status: "active", // or "unconfirmed" if you want double opt-in
+    status: "active",
   };
 
   const response = await fetch("https://connect.mailerlite.com/api/subscribers", {
@@ -284,6 +300,46 @@ async function registerWithMailerLite(data: RegistrationData): Promise<MailerLit
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`MailerLite registration failed: ${errorText}`);
+  }
+
+  return await response.json();
+}
+
+async function registerWithGoToWebinar(data: RegistrationData): Promise<GoToWebinarResponse> {
+  const gtwOAuthToken = Deno.env.get("GOTOWEBINAR_OAUTH_TOKEN");
+  const gtwWebinarKey = Deno.env.get("GOTOWEBINAR_WEBINAR_KEY") || "3582347872503621721";
+
+  if (!gtwOAuthToken) {
+    throw new Error("GoToWebinar OAuth token not configured");
+  }
+
+  const registrantData = {
+    firstName: data.firstName,
+    lastName: data.lastName,
+    email: data.email,
+    phone: data.phone || "",
+    organization: data.company || "",
+    jobTitle: data.role || "",
+    source: data.source || "Website",
+    responses: [],
+  };
+
+  const response = await fetch(
+    `https://api.getgo.com/G2W/rest/v2/organizers/me/webinars/${gtwWebinarKey}/registrants`,
+    {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${gtwOAuthToken}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify(registrantData),
+    }
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`GoToWebinar registration failed: ${errorText}`);
   }
 
   return await response.json();
