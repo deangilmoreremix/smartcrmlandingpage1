@@ -6,11 +6,46 @@ import AnimatedLogo from './AnimatedLogo';
 import { SignupContext } from '../App';
 
 const ANNOUNCEMENTS = [
-  { icon: TrendingUp, text: '500+ Companies Transformed', badge: 'TRENDING', color: 'blue' },
-  { icon: Sparkles, text: 'GPT-5 AI Integration Live', badge: 'NEW', color: 'yellow' },
-  { icon: Award, text: '#1 CRM for AI Automation', badge: 'AWARD', color: 'cyan' },
-  { icon: Rocket, text: 'Launch Special: 40% OFF', badge: 'LIMITED', color: 'orange' },
-  { icon: CheckCircle, text: 'Trusted by Fortune 500s', badge: 'VERIFIED', color: 'green' },
+  {
+    icon: TrendingUp,
+    text: '500+ Companies Transformed',
+    badge: 'TRENDING',
+    badgeColor: 'from-blue-500 to-cyan-500',
+    textGradient: 'from-blue-400 via-cyan-400 to-blue-300',
+    borderColor: 'border-blue-500/50'
+  },
+  {
+    icon: Sparkles,
+    text: 'GPT-5 AI Integration Live',
+    badge: 'NEW',
+    badgeColor: 'from-yellow-500 to-orange-500',
+    textGradient: 'from-yellow-400 via-amber-400 to-yellow-300',
+    borderColor: 'border-yellow-500/50'
+  },
+  {
+    icon: Award,
+    text: '#1 CRM for AI Automation',
+    badge: 'AWARD',
+    badgeColor: 'from-cyan-500 to-blue-500',
+    textGradient: 'from-cyan-400 via-teal-400 to-cyan-300',
+    borderColor: 'border-cyan-500/50'
+  },
+  {
+    icon: Rocket,
+    text: 'Launch Special: 40% OFF',
+    badge: 'LIMITED',
+    badgeColor: 'from-orange-500 to-red-500',
+    textGradient: 'from-orange-400 via-red-400 to-orange-300',
+    borderColor: 'border-orange-500/50'
+  },
+  {
+    icon: CheckCircle,
+    text: 'Trusted by Fortune 500s',
+    badge: 'VERIFIED',
+    badgeColor: 'from-green-500 to-emerald-500',
+    textGradient: 'from-green-400 via-emerald-400 to-green-300',
+    borderColor: 'border-green-500/50'
+  },
 ];
 
 const Navbar: React.FC = React.memo(() => {
@@ -115,61 +150,98 @@ const Navbar: React.FC = React.memo(() => {
 
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <div className="flex items-center justify-between py-2">
-            {/* Left side - Rotating announcement */}
+            {/* Left side - Rotating announcement with dynamic colors */}
             <div className="flex items-center gap-3 flex-1">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentAnnouncement}
                   className="flex items-center gap-2"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
+                  initial={{ opacity: 0, y: 20, rotateX: -90 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                  exit={{ opacity: 0, y: -20, rotateX: 90 }}
                   transition={{ duration: 0.5 }}
                 >
+                  {/* Dynamic gradient badge */}
                   <motion.div
-                    className={`flex items-center gap-1.5 bg-${announcement.color}-500/20 px-2.5 py-1 rounded-full border border-${announcement.color}-400/50 whitespace-nowrap`}
-                    animate={{ scale: [1, 1.05, 1] }}
+                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${announcement.borderColor} whitespace-nowrap bg-gradient-to-r ${announcement.badgeColor} shadow-lg`}
+                    animate={{
+                      scale: [1, 1.05, 1],
+                      boxShadow: [
+                        '0 0 10px rgba(59, 130, 246, 0.3)',
+                        '0 0 20px rgba(59, 130, 246, 0.5)',
+                        '0 0 10px rgba(59, 130, 246, 0.3)'
+                      ]
+                    }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
-                    <AnnouncementIcon size={14} className={`text-${announcement.color}-400`} />
-                    <span className={`text-xs font-bold text-${announcement.color}-300`}>{announcement.badge}</span>
+                    <AnnouncementIcon size={14} className="text-white" />
+                    <span className="text-xs font-bold text-white">{announcement.badge}</span>
                   </motion.div>
-                  <span className="text-sm text-white font-medium hidden sm:inline">{announcement.text}</span>
+
+                  {/* Dynamic gradient text */}
+                  <motion.span
+                    className={`text-sm font-bold hidden sm:inline bg-gradient-to-r ${announcement.textGradient} bg-clip-text text-transparent`}
+                    animate={{
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                    style={{ backgroundSize: '200% 200%' }}
+                  >
+                    {announcement.text}
+                  </motion.span>
                 </motion.div>
               </AnimatePresence>
             </div>
 
-            {/* Center - Live user count */}
+            {/* Center - Live user count with gradient */}
             <motion.div
-              className="hidden md:flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full border border-white/20"
-              animate={{ scale: [1, 1.02, 1] }}
+              className="hidden md:flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-full border border-green-400/50 backdrop-blur-sm"
+              animate={{
+                scale: [1, 1.02, 1],
+                borderColor: ['rgba(74, 222, 128, 0.5)', 'rgba(52, 211, 153, 0.7)', 'rgba(74, 222, 128, 0.5)']
+              }}
               transition={{ duration: 3, repeat: Infinity }}
             >
-              <Users size={14} className="text-green-400" />
-              <span className="text-xs text-white font-semibold">{userCount} online now</span>
+              <Users size={14} className="text-green-300" />
+              <span className="text-xs font-bold bg-gradient-to-r from-green-300 via-emerald-300 to-green-200 bg-clip-text text-transparent">
+                {userCount} online now
+              </span>
               <motion.div
-                className="w-2 h-2 bg-green-400 rounded-full"
-                animate={{ opacity: [1, 0.3, 1] }}
+                className="w-2 h-2 bg-green-400 rounded-full shadow-lg shadow-green-400/50"
+                animate={{
+                  opacity: [1, 0.3, 1],
+                  scale: [1, 1.2, 1]
+                }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
             </motion.div>
 
-            {/* Right side - Additional info */}
+            {/* Right side - Additional info with gradients */}
             <div className="flex items-center gap-3 flex-1 justify-end">
               <motion.div
-                className="hidden lg:flex items-center gap-1.5 bg-purple-500/20 px-2.5 py-1 rounded-full border border-purple-400/50"
-                whileHover={{ scale: 1.05 }}
+                className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-purple-400/50 bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: '0 0 20px rgba(168, 85, 247, 0.4)'
+                }}
               >
-                <Clock size={14} className="text-purple-400" />
-                <span className="text-xs text-purple-300 font-semibold">40% OFF Ends Soon</span>
+                <Clock size={14} className="text-purple-300" />
+                <span className="text-xs font-bold bg-gradient-to-r from-purple-300 via-pink-300 to-purple-200 bg-clip-text text-transparent">
+                  40% OFF Ends Soon
+                </span>
               </motion.div>
 
               <motion.div
-                className="flex items-center gap-1.5 bg-cyan-500/20 px-2.5 py-1 rounded-full border border-cyan-400/50"
-                whileHover={{ scale: 1.05 }}
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-cyan-400/50 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: '0 0 20px rgba(34, 211, 238, 0.4)'
+                }}
               >
-                <Globe size={14} className="text-cyan-400" />
-                <span className="text-xs text-cyan-300 font-bold hidden sm:inline">60+ Countries</span>
+                <Globe size={14} className="text-cyan-300" />
+                <span className="text-xs font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-cyan-200 bg-clip-text text-transparent hidden sm:inline">
+                  60+ Countries
+                </span>
               </motion.div>
             </div>
           </div>
@@ -204,11 +276,29 @@ const Navbar: React.FC = React.memo(() => {
               transition={{ duration: 0.5 }}
             >
               <div className="flex-shrink-0">
-                <Link to="/" className="flex items-center gap-3">
+                <Link to="/" className="flex items-center gap-3 group">
                   <AnimatedLogo />
                   <div className="flex flex-col">
-                    <span className="text-white font-bold text-lg leading-tight">Smart CRM</span>
-                    <span className="text-blue-300 text-xs leading-tight">Powered by GPT-5</span>
+                    <motion.span
+                      className="font-bold text-lg leading-tight bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent"
+                      animate={{
+                        backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                      }}
+                      transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+                      style={{ backgroundSize: '200% 200%' }}
+                    >
+                      Smart CRM
+                    </motion.span>
+                    <motion.span
+                      className="text-xs leading-tight bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-300 bg-clip-text text-transparent font-semibold"
+                      animate={{
+                        backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                      }}
+                      transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                      style={{ backgroundSize: '200% 200%' }}
+                    >
+                      ⚡ Powered by GPT-5
+                    </motion.span>
                   </div>
                 </Link>
               </div>
@@ -286,29 +376,44 @@ const Navbar: React.FC = React.memo(() => {
               <NavLink href="/webinar-recap" isActive={location.pathname === '/webinar-recap'}>Webinar</NavLink>
               <NavLink href="/#faq" isActive={activeSection === 'faq'}>FAQ</NavLink>
               <motion.button
-                className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold shadow-lg overflow-hidden"
-                whileHover={{ scale: 1.05, y: -2 }}
+                className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-bold shadow-lg overflow-hidden"
+                whileHover={{
+                  scale: 1.05,
+                  y: -2,
+                  boxShadow: '0 20px 40px rgba(168, 85, 247, 0.4)'
+                }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => openSignupModal('early-access')}
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                }}
+                transition={{
+                  backgroundPosition: {
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'linear'
+                  }
+                }}
+                style={{ backgroundSize: '200% 200%' }}
               >
                 {/* Animated shine effect */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
                   animate={{
                     x: ['-200%', '200%'],
                   }}
                   transition={{
-                    duration: 3,
+                    duration: 2,
                     repeat: Infinity,
                     ease: 'linear',
                   }}
                 />
                 {/* Pulsing border */}
                 <motion.div
-                  className="absolute inset-0 rounded-full border-2 border-white/30"
+                  className="absolute inset-0 rounded-full border-2 border-white/40"
                   animate={{
-                    scale: [1, 1.05, 1],
-                    opacity: [0.5, 0.8, 0.5],
+                    scale: [1, 1.08, 1],
+                    opacity: [0.5, 1, 0.5],
                   }}
                   transition={{
                     duration: 2,
@@ -316,9 +421,35 @@ const Navbar: React.FC = React.memo(() => {
                     ease: 'easeInOut',
                   }}
                 />
+                {/* Inner glow */}
+                <motion.div
+                  className="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400/20 via-pink-400/20 to-purple-400/20"
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: 'easeInOut'
+                  }}
+                />
                 <span className="relative z-10 flex items-center">
-                  Join the Revolution
-                  <Sparkles size={16} className="ml-2" />
+                  <span className="bg-gradient-to-r from-white via-yellow-100 to-white bg-clip-text text-transparent font-extrabold">
+                    Join the Revolution
+                  </span>
+                  <motion.div
+                    animate={{
+                      rotate: [0, 360],
+                      scale: [1, 1.2, 1]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: 'linear'
+                    }}
+                  >
+                    <Sparkles size={16} className="ml-2 text-yellow-300" />
+                  </motion.div>
                 </span>
               </motion.button>
             </motion.div>
