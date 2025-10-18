@@ -20,26 +20,22 @@ const AnimatedApp = () => {
         localStorage.setItem('smartCRM_animationsEnabled', 'false');
       } else {
         // Only initialize animations if we're not reducing effects
-        // Defer to after page is interactive using requestIdleCallback
+        // Use requestIdleCallback or setTimeout to defer
         if ('requestIdleCallback' in window) {
           requestIdleCallback(() => {
             initScrollAnimations();
             initHoverEffects();
-          }, { timeout: 2000 });
+          });
         } else {
-          // Fallback: defer significantly to ensure page is loaded
           setTimeout(() => {
             initScrollAnimations();
             initHoverEffects();
-          }, 500);
+          }, 100);
         }
       }
     };
 
-    // Defer the entire initialization to avoid blocking initial render
-    requestAnimationFrame(() => {
-      initializeAnimations();
-    });
+    initializeAnimations();
 
     // Listen for network status changes
     const handleOnline = () => {

@@ -12,17 +12,9 @@
       scroll-behavior: auto;
     }
   }
-
+  
   body {
     @apply antialiased text-white bg-black;
-    /* Prevent flash of unstyled content */
-    opacity: 1;
-    transition: opacity 0.2s ease-in-out;
-  }
-
-  /* Prevent layout shift during hydration */
-  #root {
-    min-height: 100vh;
   }
   
   /* Reduced motion preferences */
