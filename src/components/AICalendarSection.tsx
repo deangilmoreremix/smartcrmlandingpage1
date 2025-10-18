@@ -10,7 +10,7 @@ import JVZooBuyButton from './JVZooBuyButton';
 
 const AICalendarSection: React.FC = () => {
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
-  const [showEmbed, setShowEmbed] = useState(true);
+  const [showEmbed, setShowEmbed] = useState(false);
 
   const calendarFeatures = [
     {

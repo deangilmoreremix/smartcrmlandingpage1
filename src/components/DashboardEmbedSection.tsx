@@ -11,7 +11,7 @@ import JVZooBuyButton from './JVZooBuyButton';
 
 const DashboardEmbedSection: React.FC = () => {
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
-  const [showEmbed, setShowEmbed] = useState(true);
+  const [showEmbed, setShowEmbed] = useState(false);
   const [iframeError, setIframeError] = useState(false);
   const [loadTimeout, setLoadTimeout] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
