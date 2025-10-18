@@ -92,13 +92,13 @@ export const WEBINAR_SPEAKERS: Speaker[] = [
   {
     name: 'Dr. Michael Rodriguez',
     title: 'Chief AI Officer & Co-Founder',
-    bio: 'Former AI Research Lead at Google, Michael has spent 15+ years developing machine learning systems for Fortune 500 companies. He holds a PhD in Computer Science from MIT and has published over 40 papers on AI and automation.',
-    imageUrl: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=300',
+    bio: 'AI technology expert with 15+ years developing intelligent systems for businesses. Specializes in practical AI applications that drive measurable results.',
+    imageUrl: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=300',
     credentials: [
-      'PhD Computer Science, MIT',
-      'Former AI Lead at Google',
+      'PhD Computer Science',
+      'AI Systems Architect',
       '15+ years in AI/ML',
-      '40+ published research papers'
+      'CRM Innovation Expert'
     ],
     experience: '15+ years',
     specialties: ['AI Integration', 'Machine Learning', 'Predictive Analytics', 'Business Intelligence']
@@ -106,13 +106,13 @@ export const WEBINAR_SPEAKERS: Speaker[] = [
   {
     name: 'Sarah Chen',
     title: 'VP of Sales & Customer Success',
-    bio: 'Sarah built and scaled sales teams at Salesforce and HubSpot before joining Smart CRM. She has trained over 5,000 sales professionals and helped hundreds of companies optimize their CRM strategies.',
+    bio: 'Sales and CRM expert with 10+ years building high-performing teams. Passionate about helping businesses leverage technology to close more deals and improve customer relationships.',
     imageUrl: 'https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=300',
     credentials: [
-      'Former Director at Salesforce',
+      'Sales Leadership Expert',
       'Certified Sales Trainer',
       '10+ years in CRM',
-      'Trained 5,000+ professionals'
+      'Process Optimization Specialist'
     ],
     experience: '10+ years',
     specialties: ['Sales Optimization', 'CRM Strategy', 'Team Training', 'Pipeline Management']
@@ -282,7 +282,7 @@ export const WHO_SHOULD_ATTEND = [
 ];
 
 export const REGISTRATION_STATS = {
-  totalAttendees: 2847,
+  totalAttendees: 87,
   averageRating: 4.9,
   completionRate: 92,
   recommendationRate: 97

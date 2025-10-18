@@ -702,11 +702,22 @@ const NavLink: React.FC<NavLinkProps> = ({ href, children, isActive: propIsActiv
   const isExternal = href.startsWith('http');
   const isCurrentPage = typeof window !== 'undefined' ? href === window.location.pathname : false;
   const isActive = propIsActive !== undefined ? propIsActive : isCurrentPage;
-  
+
   const baseClasses = `px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 relative`;
   const activeClasses = isActive
     ? 'text-white bg-white/10'
     : 'text-white/80 hover:text-white';
+
+  const handleHashClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const hash = href.split('#')[1];
+    if (hash) {
+      const element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   if (isExternal) {
     return (
@@ -714,6 +725,26 @@ const NavLink: React.FC<NavLinkProps> = ({ href, children, isActive: propIsActiv
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        className={`${baseClasses} ${activeClasses}`}
+        whileHover={{ y: -2 }}
+        whileTap={{ y: 0 }}
+      >
+        {children}
+        {isActive && (
+          <motion.div
+            className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 to-cyan-400"
+            layoutId="activeNav"
+          />
+        )}
+      </motion.a>
+    );
+  }
+
+  if (href.startsWith('/#')) {
+    return (
+      <motion.a
+        href={href}
+        onClick={handleHashClick}
         className={`${baseClasses} ${activeClasses}`}
         whileHover={{ y: -2 }}
         whileTap={{ y: 0 }}
@@ -752,6 +783,7 @@ const NavLink: React.FC<NavLinkProps> = ({ href, children, isActive: propIsActiv
   return (
     <motion.a
       href={href}
+      onClick={handleHashClick}
       className={`${baseClasses} ${activeClasses}`}
       whileHover={{ y: -2 }}
       whileTap={{ y: 0 }}
