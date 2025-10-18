@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
-import { BarChart3, TrendingUp, Zap, CheckCircle, ArrowRight, Sparkles } from 'lucide-react';
+import { ChartBar as BarChart3, TrendingUp, Zap, CircleCheck as CheckCircle, ArrowRight, Sparkles } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollProgress from '../components/ScrollProgress';
