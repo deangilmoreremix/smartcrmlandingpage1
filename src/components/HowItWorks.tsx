@@ -9,6 +9,7 @@ import StepCard from './HowItWorks/StepCard';
 import FeatureCategory from './HowItWorks/FeatureCategory';
 import SuccessMetrics from './HowItWorks/SuccessMetrics';
 import ImplementationSection from './HowItWorks/ImplementationSection';
+import WorkflowShowcase from './WorkflowShowcase';
 // Additional icon components
 const Palette = ({ size, className }: { size: number, className: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -621,7 +622,12 @@ const HowItWorks: React.FC = React.memo(() => {
             </motion.div>
           </div>
         </AnimatedElement>
-        
+
+        {/* Workflow Showcase Section - moved from standalone to nested within How It Works */}
+        <div className="mt-20">
+          <WorkflowShowcase />
+        </div>
+
         {/* Enhanced Implementation Support Section */}
         <ImplementationSection openSignupModal={openSignupModal} />
       </div>

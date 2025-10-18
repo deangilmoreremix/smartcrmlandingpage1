@@ -27,7 +27,6 @@ import ParallaxSection from './components/ParallaxSection';
 import AiFeaturesCatalog from './components/AiFeaturesCatalog';
 import FeatureMatrix from './components/FeatureMatrix';
 import IntegrationEcosystem from './components/IntegrationEcosystem';
-import WorkflowShowcase from './components/WorkflowShowcase';
 import UniversalComparison from './components/UniversalComparison';
 import PricingComparison from './components/PricingComparison';
 import FEComparisonFull from './components/FEComparisonFull';
@@ -291,9 +290,6 @@ function App() {
 
                 {/* Training Program Section */}
                 <TrainingProgramSection />
-
-                {/* Workflow Showcase */}
-                <WorkflowShowcase />
 
                 {/* Parallax Section */}
                 <ParallaxSection
