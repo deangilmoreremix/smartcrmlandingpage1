@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown, Sparkles, Zap, TrendingUp, Award, Rocket, CheckCircle, Users, Clock, Globe, Target, DollarSign, Brain, Shield, Lock, Star } from 'lucide-react';
+import { Menu, X, ChevronDown, Sparkles, Zap, TrendingUp, Award, Rocket, CircleCheck as CheckCircle, Users, Clock, Globe, Target, DollarSign, Brain, Shield, Lock, Star } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import AnimatedLogo from './AnimatedLogo';
