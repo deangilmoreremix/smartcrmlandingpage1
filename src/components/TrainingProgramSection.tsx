@@ -31,7 +31,7 @@ const trainingDays: TrainingDay[] = [
     ],
     icon: <AlertTriangle size={28} />,
     color: "blue",
-    date: "October 17, 2025"
+    date: "October 19, 2025"
   },
   {
     day: 2,
@@ -44,7 +44,7 @@ const trainingDays: TrainingDay[] = [
     ],
     icon: <BrainCircuit size={28} />,
     color: "purple",
-    date: "October 18, 2025"
+    date: "October 20, 2025"
   },
   {
     day: 3,
@@ -57,7 +57,7 @@ const trainingDays: TrainingDay[] = [
     ],
     icon: <Lightning size={28} />,
     color: "green",
-    date: "October 19, 2025"
+    date: "October 21, 2025"
   }
 ];
 
@@ -151,7 +151,7 @@ const TrainingProgramSection: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Join CRM expert Dean Gilmore for a transformative 3-day training on October 17-19, 2025 to revolutionize your sales process using Smart CRM technology
+              Join CRM expert Dean Gilmore for a transformative 3-day training on October 19-21, 2025 to revolutionize your sales process using Smart CRM technology
             </motion.p>
           </div>
         </AnimatedElement>
@@ -830,7 +830,7 @@ const TrainingProgramSection: React.FC = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
-            <span className="text-blue-400 font-medium">Limited time:</span> Register now for the October 17-19 masterclass and get the Smart CRM Implementation Guide ($197 value) for free
+            <span className="text-blue-400 font-medium">Limited time:</span> Register now for the October 19-21 masterclass and get the Smart CRM Implementation Guide ($197 value) for free
           </motion.p>
         </motion.div>
       </div>
