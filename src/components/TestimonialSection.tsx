@@ -760,7 +760,7 @@ const TestimonialSection: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
-                Join 200+ companies already on the waitlist
+                Join 50+ early access users already testing
               </motion.p>
             </motion.div>
             <p className="text-white/70">Be part of the Smart CRM revolution</p>

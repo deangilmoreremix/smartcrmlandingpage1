@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Menu, X, ChevronDown, Sparkles, Zap, TrendingUp, Award, Rocket, CheckCircle, Users, Clock, Globe, Target, DollarSign, Brain, Shield } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Menu, X, ChevronDown, Sparkles, Zap, TrendingUp, Award, Rocket, CheckCircle, Users, Clock, Globe, Target, DollarSign, Brain, Shield, Lock, Star } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import AnimatedLogo from './AnimatedLogo';
-import { SignupContext } from '../App';
+import JVZooBuyButton from './JVZooBuyButton';
 
 const ANNOUNCEMENTS = [
   {
     icon: TrendingUp,
-    text: '2,847+ Businesses Scaled with AI • Average 312% Revenue Growth',
-    badge: 'PROVEN',
+    text: 'Beta Testing Now • Early Access Available • Limited Spots',
+    badge: 'BETA',
     badgeColor: 'from-blue-500 to-cyan-500',
     textGradient: 'from-blue-400 via-cyan-400 to-blue-300',
     borderColor: 'border-blue-500/50',
-    action: 'See Success Stories'
+    action: 'Join Beta Program'
   },
   {
     icon: Brain,
@@ -26,21 +26,21 @@ const ANNOUNCEMENTS = [
   },
   {
     icon: Award,
-    text: 'Rated #1 AI CRM by 10,000+ Users • 4.9/5 Stars',
-    badge: 'TOP RATED',
+    text: 'Built with GPT-5 AI • Next-Gen CRM Technology',
+    badge: 'INNOVATIVE',
     badgeColor: 'from-yellow-500 to-orange-500',
     textGradient: 'from-yellow-400 via-amber-400 to-yellow-300',
     borderColor: 'border-yellow-500/50',
-    action: 'Read Reviews'
+    action: 'Learn More'
   },
   {
     icon: Target,
-    text: '87% Average Close Rate Increase • Proven in 60+ Industries',
-    badge: 'RESULTS',
+    text: 'Designed to Increase Close Rates • AI-Powered Predictions',
+    badge: 'POWERFUL',
     badgeColor: 'from-green-500 to-emerald-500',
     textGradient: 'from-green-400 via-emerald-400 to-green-300',
     borderColor: 'border-green-500/50',
-    action: 'View Case Studies'
+    action: 'See Features'
   },
   {
     icon: Rocket,
@@ -62,12 +62,12 @@ const ANNOUNCEMENTS = [
   },
   {
     icon: DollarSign,
-    text: '$4.2M+ Revenue Generated for Clients This Month',
-    badge: 'IMPACT',
+    text: 'Help Your Business Grow Revenue • Smart AI Insights',
+    badge: 'GROWTH',
     badgeColor: 'from-emerald-500 to-green-500',
     textGradient: 'from-emerald-400 via-green-400 to-emerald-300',
     borderColor: 'border-emerald-500/50',
-    action: 'See ROI Calculator'
+    action: 'Explore Benefits'
   },
 ];
 
@@ -78,12 +78,11 @@ const Navbar: React.FC = React.memo(() => {
   const [currentAnnouncement, setCurrentAnnouncement] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('');
-  const [userCount, setUserCount] = useState(1247);
+  const [userCount, setUserCount] = useState(127);
   const [dealsClosedToday, setDealsClosedToday] = useState(89);
   const [revenueGenerated, setRevenueGenerated] = useState(427000);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const location = useLocation();
-  const { openSignupModal } = useContext(SignupContext);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -509,15 +508,14 @@ const Navbar: React.FC = React.memo(() => {
                         </div>
                       </div>
                       <div className="bg-white/5 p-3 border-t border-white/10">
-                        <button
-                          onClick={() => {
-                            setIsDropdownOpen(false);
-                            openSignupModal('standard');
-                          }}
-                          className="w-full text-center text-sm text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
-                        >
-                          Get Started →
-                        </button>
+                        <JVZooBuyButton>
+                          <button
+                            onClick={() => setIsDropdownOpen(false)}
+                            className="w-full text-center text-sm text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
+                          >
+                            Get Smart CRM - $97 →
+                          </button>
+                        </JVZooBuyButton>
                       </div>
                     </motion.div>
                   )}
@@ -528,15 +526,15 @@ const Navbar: React.FC = React.memo(() => {
               <NavLink href="/#training" isActive={activeSection === 'training'}>Masterclass</NavLink>
               <NavLink href="/webinar-recap" isActive={location.pathname === '/webinar-recap'}>Webinar</NavLink>
               <NavLink href="/#faq" isActive={activeSection === 'faq'}>FAQ</NavLink>
-              <motion.button
-                className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-bold shadow-lg overflow-hidden"
-                whileHover={{
-                  scale: 1.05,
-                  y: -2,
-                  boxShadow: '0 20px 40px rgba(168, 85, 247, 0.4)'
-                }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => openSignupModal('early-access')}
+              <JVZooBuyButton>
+                <motion.button
+                  className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-bold shadow-lg overflow-hidden"
+                  whileHover={{
+                    scale: 1.05,
+                    y: -2,
+                    boxShadow: '0 20px 40px rgba(168, 85, 247, 0.4)'
+                  }}
+                  whileTap={{ scale: 0.95 }}
                 animate={{
                   backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                 }}
@@ -588,7 +586,7 @@ const Navbar: React.FC = React.memo(() => {
                 />
                 <span className="relative z-10 flex items-center">
                   <span className="bg-gradient-to-r from-white via-yellow-100 to-white bg-clip-text text-transparent font-extrabold">
-                    Join the Revolution
+                    Get Smart CRM - $97
                   </span>
                   <motion.div
                     animate={{
@@ -605,6 +603,7 @@ const Navbar: React.FC = React.memo(() => {
                   </motion.div>
                 </span>
               </motion.button>
+            </JVZooBuyButton>
             </motion.div>
           </div>
 
@@ -646,16 +645,15 @@ const Navbar: React.FC = React.memo(() => {
               <MobileNavLink href="/webinar-recap" onClick={() => setIsOpen(false)}>Webinar Recap</MobileNavLink>
               <MobileNavLink href="/#faq" onClick={() => setIsOpen(false)}>FAQ</MobileNavLink>
               <div className="pt-2">
-                <button
-                  className="w-full px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold hover:from-blue-400 hover:to-cyan-400 transition-colors flex items-center justify-center gap-2"
-                  onClick={() => {
-                    setIsOpen(false);
-                    openSignupModal('early-access');
-                  }}
-                >
-                  Join the Revolution
-                  <Sparkles size={16} />
-                </button>
+                <JVZooBuyButton>
+                  <button
+                    className="w-full px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold hover:from-blue-400 hover:to-cyan-400 transition-colors flex items-center justify-center gap-2"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Get Smart CRM - $97
+                    <Sparkles size={16} />
+                  </button>
+                </JVZooBuyButton>
               </div>
             </div>
           </motion.div>

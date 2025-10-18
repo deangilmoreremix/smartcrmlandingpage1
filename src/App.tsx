@@ -10,6 +10,8 @@ import { FeedbackContainer } from './components/Feedback';
 import PerformanceMonitor from './components/PerformanceMonitor';
 import SignupModal from './components/SignupModal';
 import CelebrationBanner from './components/CelebrationBanner';
+import JVZooBuyButton from './components/JVZooBuyButton';
+import ExitIntentOffer from './components/ExitIntentOffer';
 import ProblemStatement from './components/ProblemStatement';
 import SolutionIntro from './components/SolutionIntro';
 import HowItWorks from './components/HowItWorks';
@@ -21,7 +23,6 @@ import UrgencySection from './components/UrgencySection';
 import FinalCta from './components/FinalCta';
 import FaqSection from './components/FaqSection';
 import Footer from './components/Footer';
-import FloatingCta from './components/FloatingCta';
 import ParallaxSection from './components/ParallaxSection';
 import AiFeaturesCatalog from './components/AiFeaturesCatalog';
 import FeatureMatrix from './components/FeatureMatrix';
@@ -226,7 +227,7 @@ function App() {
                 {/* Hero Section */}
                 <Hero
                   title="Close More Deals with AI-Powered Smart CRM"
-                  subtitle="The only CRM that uses GPT-5 AI to predict which leads will buy, automate your follow-ups, and tell you exactly what to say next. Join 500+ teams increasing revenue by 40% in just 90 days."
+                  subtitle="The only CRM that uses GPT-5 AI to predict which leads will buy, automate your follow-ups, and tell you exactly what to say next. Get early access and be among the first to transform your sales process."
                   launchDate={launchDate}
                 />
 
@@ -269,16 +270,15 @@ function App() {
                   overlayColor="rgba(0, 0, 40, 0.75)"
                 >
                   <div className="max-w-4xl mx-auto text-center px-4">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Join 500+ Companies Revolutionizing Their Customer Relationships with AI</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Be Among the First to Revolutionize Your Customer Relationships with AI</h2>
                     <p className="text-xl text-white/80 mb-8">
-                      From startups to Fortune 500 companies, businesses of all sizes are transforming how they connect with customers using Smart CRM.
+                      Join our exclusive early access program and discover how businesses are preparing to transform customer connections with Smart CRM.
                     </p>
-                    <button
-                      onClick={() => openSignupModal('early-access')}
-                      className="px-8 py-4 bg-white text-blue-900 rounded-full text-lg font-bold hover:bg-blue-50 transition-colors shadow-lg"
-                    >
-                      Start Your Transformation
-                    </button>
+                    <JVZooBuyButton>
+                      <button className="px-8 py-4 bg-white text-blue-900 rounded-full text-lg font-bold hover:bg-blue-50 transition-colors shadow-lg">
+                        Get Smart CRM - $97 One-Time
+                      </button>
+                    </JVZooBuyButton>
                   </div>
                 </ParallaxSection>
 
@@ -330,7 +330,14 @@ function App() {
               </main>
 
               <Footer />
-              <FloatingCta />
+
+              {/* Exit Intent Offer - Only popup on exit */}
+              <ExitIntentOffer
+                couponCode="SMARTCRM VIP"
+                oncePerHours={24}
+                showOnMobile={true}
+                minTimeOnPage={10}
+              />
 
               {/* Signup Modal */}
               <SignupModal

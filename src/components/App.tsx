@@ -121,9 +121,9 @@ function App() {
                   overlayColor="rgba(0, 0, 40, 0.75)"
                 >
                   <div className="max-w-4xl mx-auto text-center px-4">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Join 500+ Companies Revolutionizing Their Customer Relationships with AI</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Be Among the First to Revolutionize Your Customer Relationships with AI</h2>
                     <p className="text-xl text-white/80 mb-8">
-                      From startups to Fortune 500 companies, businesses of all sizes are transforming how they connect with customers using Smart Smart CRM.
+                      Join our exclusive early access program and discover how businesses are preparing to transform customer connections with Smart CRM.
                     </p>
                     <button 
                       onClick={() => openSignupModal('early-access')}

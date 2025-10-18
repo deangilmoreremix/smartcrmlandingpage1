@@ -297,8 +297,8 @@ const ConversionOptimizer: React.FC<ConversionOptimizerProps> = ({
               <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
                 <Award className="w-8 h-8 text-green-600" />
               </div>
-              <h4 className="font-bold text-gray-800 mb-2">Proven Results</h4>
-              <p className="text-sm text-gray-600">Join 500+ companies seeing real growth</p>
+              <h4 className="font-bold text-gray-800 mb-2">Early Access</h4>
+              <p className="text-sm text-gray-600">Be among the first to experience real growth</p>
             </div>
 
             <div className="bg-white rounded-lg p-6 shadow-lg border-2 border-purple-200 text-center">

@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react';
-import { ChevronDown, CircleCheck as CheckCircle, ArrowRight, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronDown, CircleCheck as CheckCircle, ArrowRight, Sparkles, Lock, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedElement from './AnimatedElement';
-import { SignupContext } from '../App';
-import { handleFormSubmission } from '../utils/formHelpers';
 import CanvasConfetti from './CanvasConfetti';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
+import JVZooBuyButton from './JVZooBuyButton';
 
 interface HeroProps {
   title: string;
@@ -14,17 +13,7 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [isFirstNameFocused, setIsFirstNameFocused] = useState(false);
-  const [isLastNameFocused, setIsLastNameFocused] = useState(false);
-  const [isEmailFocused, setIsEmailFocused] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [highlightedFeature, setHighlightedFeature] = useState<number | null>(null);
-  const { openSignupModal, setHasSignedUp } = useContext(SignupContext);
-  const [showConfetti, setShowConfetti] = useState(false);
 
   const keyBenefits = [
     { text: "40% More Revenue in 90 Days" },
@@ -41,42 +30,8 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (isSubmitting) return;
-
-    if (!firstName || !lastName || !email.includes('@') || !email.includes('.')) {
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const formData = {
-        firstName,
-        lastName,
-        email,
-        source: 'Hero Form'
-      };
-
-      await handleFormSubmission(formData, () => {
-        setIsSubmitted(true);
-        setHasSignedUp(true);
-        localStorage.setItem('smartCRM_signedUp', 'true');
-        setShowConfetti(true);
-      });
-    } catch (error) {
-      console.error('Form submission failed:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center px-4 py-12 overflow-hidden mt-[108px]">
-      {showConfetti && <CanvasConfetti />}
-
       <AnimatedIconsGroup
         section="hero"
         iconCount={8}
@@ -136,7 +91,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
             transition={{ duration: 0.2 }}
           >
             <Sparkles className="text-blue-400 mr-2" size={16} />
-            <span className="text-blue-400 font-medium text-sm">Powered by GPT-5 AI • Trusted by 500+ Teams</span>
+            <span className="text-blue-400 font-medium text-sm">Powered by GPT-5 AI • Early Access Available</span>
           </motion.div>
         </AnimatedElement>
 
@@ -189,16 +144,31 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
 
         <AnimatedElement animation="slideUp" delay={0.8} duration={0.8}>
           <div className="max-w-md mx-auto mb-12">
-            <button
-              onClick={() => openSignupModal('early-access')}
-              className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-full text-lg font-bold shadow-lg flex items-center justify-center transition-all duration-300 hover:shadow-xl hover:scale-105"
-            >
-              <span className="flex items-center">
-                Get Smart CRM Now <ArrowRight className="ml-2" size={20} />
-              </span>
-            </button>
-            <p className="text-white/60 text-sm mt-4">
-              Join 500+ teams • Close 40% more deals • Setup in 5 minutes
+            <JVZooBuyButton>
+              <motion.button
+                className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-full text-lg font-bold shadow-lg flex items-center justify-center transition-all duration-300"
+                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px -10px rgba(59, 130, 246, 0.5)" }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="flex items-center">
+                  Get Smart CRM - $97 One-Time <ArrowRight className="ml-2" size={20} />
+                </span>
+              </motion.button>
+            </JVZooBuyButton>
+
+            <div className="flex items-center justify-center gap-6 text-sm text-white/70 mt-4">
+              <div className="flex items-center gap-2">
+                <Star className="text-yellow-400" size={16} />
+                <span>30-day guarantee</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Lock className="text-green-400" size={16} />
+                <span>Secure checkout</span>
+              </div>
+            </div>
+
+            <p className="text-white/60 text-sm mt-3">
+              Limited beta spots • Close 40% more deals • Setup in 5 minutes
             </p>
           </div>
         </AnimatedElement>
