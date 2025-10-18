@@ -246,8 +246,8 @@ function App() {
                     </div>
 
                     <DemoVideo
-                      thumbnailUrl="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                      videoUrl="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                      thumbnailUrl="https://img.youtube.com/vi/rejc9Q0X6LA/maxresdefault.jpg"
+                      videoUrl="https://www.youtube.com/embed/rejc9Q0X6LA"
                       title="Smart CRM Demo: Transform Your Sales Process"
                       description="Watch this 3-minute demo to see how Smart CRM uses GPT-5 AI to help you close 40% more deals with 80% less manual work."
                     />
