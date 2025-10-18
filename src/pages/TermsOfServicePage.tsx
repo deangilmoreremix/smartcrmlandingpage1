@@ -113,7 +113,7 @@ const TermsOfServicePage: React.FC = () => {
                   Smart CRM is offered as a one-time payment of $97 (regular price $999). All purchases are processed
                   through JVZoo, our authorized payment processor. We offer a 30-day money-back guarantee. If you are
                   not satisfied with the Service within 30 days of purchase, you may request a full refund by contacting
-                  our support team at support@smartcrm.com.
+                  our support team at support@smartcrm.vip.
                 </p>
               </section>
 
@@ -212,7 +212,7 @@ const TermsOfServicePage: React.FC = () => {
                 </p>
                 <div className="mt-4 p-4 bg-blue-500/10 rounded-lg border border-blue-400/30">
                   <p className="text-white/80">
-                    <strong>Email:</strong> support@smartcrm.com<br />
+                    <strong>Email:</strong> support@smartcrm.vip<br />
                     <strong>Support Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM EST
                   </p>
                 </div>

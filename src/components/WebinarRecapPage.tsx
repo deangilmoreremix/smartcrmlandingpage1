@@ -1113,7 +1113,7 @@ ${webinarDay.chapters.map(chapter => `• ${chapter.title} (${chapter.startTime}
                         Questions about the webinar content? Our support team is here to help.
                       </p>
                       <a
-                        href="mailto:support@smartcrm.com"
+                        href="mailto:support@smartcrm.vip"
                         className="inline-block px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm transition-colors"
                       >
                         Contact Support

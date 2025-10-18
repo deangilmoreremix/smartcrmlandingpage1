@@ -196,7 +196,7 @@ const PrivacyPolicyPage: React.FC = () => {
                 </p>
 
                 <p className="text-white/70 leading-relaxed mt-4">
-                  To exercise these rights, please contact us at support@smartcrm.com. We will respond to your request
+                  To exercise these rights, please contact us at support@smartcrm.vip. We will respond to your request
                   within 30 days.
                 </p>
               </section>
@@ -281,8 +281,8 @@ const PrivacyPolicyPage: React.FC = () => {
                 </p>
                 <div className="mt-4 p-4 bg-blue-500/10 rounded-lg border border-blue-400/30">
                   <p className="text-white/80">
-                    <strong>Email:</strong> support@smartcrm.com<br />
-                    <strong>Privacy Team:</strong> privacy@smartcrm.com<br />
+                    <strong>Email:</strong> support@smartcrm.vip<br />
+                    <strong>Privacy Team:</strong> privacy@smartcrm.vip<br />
                     <strong>Support Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM EST
                   </p>
                 </div>

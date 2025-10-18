@@ -278,7 +278,7 @@ const DisclaimerPage: React.FC = () => {
                 </p>
                 <div className="mt-4 p-4 bg-blue-500/10 rounded-lg border border-blue-400/30">
                   <p className="text-white/80">
-                    <strong>Email:</strong> support@smartcrm.com<br />
+                    <strong>Email:</strong> support@smartcrm.vip<br />
                     <strong>Support Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM EST
                   </p>
                 </div>

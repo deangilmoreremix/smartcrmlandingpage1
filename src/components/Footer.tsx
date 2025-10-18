@@ -69,9 +69,9 @@ const Footer: React.FC = () => {
             <h4 className="text-white font-semibold mb-4">Support</h4>
             <ul className="space-y-2">
               <li>
-                <a href="mailto:support@smartcrm.com" className="text-white/60 hover:text-white text-sm transition-colors inline-flex items-center">
+                <a href="mailto:support@smartcrm.vip" className="text-white/60 hover:text-white text-sm transition-colors inline-flex items-center">
                   <Mail size={14} className="mr-1.5" />
-                  support@smartcrm.com
+                  support@smartcrm.vip
                 </a>
               </li>
               <li>
@@ -98,10 +98,9 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-4 p-4 bg-blue-500/10 rounded-lg border border-blue-400/20">
+          <div className="mt-4 p-4 bg-yellow-500/10 rounded-lg border border-yellow-400/20">
             <p className="text-white/60 text-xs text-center leading-relaxed">
-              <strong className="text-white/80">Lifetime Access Notice:</strong> The term "lifetime access" refers to the lifetime of the product (approximately 5 years from purchase).
-              See our <Link to="/terms" className="text-blue-400 hover:underline">Terms of Service</Link> and <Link to="/disclaimer" className="text-blue-400 hover:underline">Disclaimer</Link> for full details.
+              <strong className="text-white/80">Disclaimer:</strong> Individual results may vary. Success depends on effort, market conditions, and execution. We make no guarantees of specific results or income. See our <Link to="/disclaimer" className="text-blue-400 hover:underline">full disclaimer</Link> for details.
             </p>
           </div>
         </div>

@@ -147,7 +147,7 @@ const PricingSection: React.FC = () => {
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-white/70 mb-3">Questions? Contact our team at support@smartcrm.com</p>
+          <p className="text-white/70 mb-3">Questions? Contact our team at support@smartcrm.vip</p>
           <p className="text-white font-medium mb-6">
             Need enterprise support? <a href="#contact" className="text-blue-400 hover:underline">Contact our sales team</a>
           </p>

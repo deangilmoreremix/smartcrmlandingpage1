@@ -117,7 +117,7 @@ const FaqSection: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Frequently Asked Questions</h2>
             <div className="w-24 h-1 bg-blue-500 mx-auto rounded-full mb-6" />
             <p className="text-white/70 max-w-2xl mx-auto">
-              Everything you need to know about Smart CRM. Can't find the answer you're looking for? Contact our team at support@smartcrm.com
+              Everything you need to know about Smart CRM. Can't find the answer you're looking for? Contact our team at support@smartcrm.vip
             </p>
           </div>
         </AnimatedElement>
