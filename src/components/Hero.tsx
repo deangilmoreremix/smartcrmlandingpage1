@@ -31,7 +31,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center px-4 py-12 overflow-hidden mt-[310px]">
+    <div className="relative min-h-screen flex flex-col items-center justify-center px-4 py-12 overflow-hidden mt-[108px]">
       <AnimatedIconsGroup
         section="hero"
         iconCount={8}
@@ -79,8 +79,135 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
         />
       </div>
 
-      <div className="relative z-10 text-center max-w-4xl mx-auto">
+      <div className="relative z-10 text-center max-w-5xl mx-auto">
+        {/* New Headline Section */}
         <AnimatedElement animation="fadeIn" duration={0.8}>
+          <motion.h1
+            className="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-3 leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+            }}
+            transition={{
+              opacity: { duration: 0.8, delay: 0.2 },
+              y: { duration: 0.8, delay: 0.2 },
+              backgroundPosition: {
+                duration: 8,
+                repeat: Infinity,
+                ease: 'linear'
+              }
+            }}
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #60a5fa, #22d3ee, #ffffff, #22d3ee, #60a5fa)',
+              backgroundSize: '200% 100%',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            The AI Sales Ecosystem
+          </motion.h1>
+        </AnimatedElement>
+
+        <AnimatedElement animation="slideUp" delay={0.3} duration={0.8}>
+          <motion.h2
+            className="text-2xl md:text-4xl lg:text-5xl font-bold mb-3 leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+            }}
+            transition={{
+              opacity: { duration: 0.8, delay: 0.4 },
+              y: { duration: 0.8, delay: 0.4 },
+              backgroundPosition: {
+                duration: 6,
+                repeat: Infinity,
+                ease: 'linear'
+              }
+            }}
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #60a5fa, #22d3ee, #f0f9ff, #22d3ee, #60a5fa)',
+              backgroundSize: '200% 100%',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            That Never Sleeps, Never Quits,
+          </motion.h2>
+        </AnimatedElement>
+
+        <AnimatedElement animation="slideUp" delay={0.4} duration={0.8}>
+          <motion.h2
+            className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: 1,
+              y: 0
+            }}
+            transition={{
+              opacity: { duration: 0.8, delay: 0.5 },
+              y: { duration: 0.8, delay: 0.5 }
+            }}
+          >
+            <motion.span
+              animate={{
+                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: 'linear'
+              }}
+              style={{
+                backgroundImage: 'linear-gradient(90deg, #fbbf24, #fb923c, #ffffff, #fb923c, #fbbf24)',
+                backgroundSize: '200% 100%',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                display: 'inline-block'
+              }}
+            >
+              Never Loses a Deal
+            </motion.span>
+          </motion.h2>
+        </AnimatedElement>
+
+        <AnimatedElement animation="fadeIn" delay={0.5} duration={0.8}>
+          <motion.p
+            className="text-lg md:text-2xl lg:text-3xl font-semibold mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+            }}
+            transition={{
+              opacity: { duration: 0.8, delay: 0.6 },
+              y: { duration: 0.8, delay: 0.6 },
+              backgroundPosition: {
+                duration: 7,
+                repeat: Infinity,
+                ease: 'linear'
+              }
+            }}
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #94a3b8, #60a5fa, #e0f2fe, #60a5fa, #94a3b8)',
+              backgroundSize: '200% 100%',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            While Your Competitors Chase Leads Manually, SmartCRM AI Closes
+          </motion.p>
+        </AnimatedElement>
+
+        <AnimatedElement animation="fadeIn" duration={0.8} delay={0.7}>
           <motion.div
             className="inline-flex items-center bg-blue-600/20 rounded-full px-6 py-2 backdrop-blur-md border border-blue-500/30 mb-6"
             whileHover={{
@@ -95,23 +222,23 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
           </motion.div>
         </AnimatedElement>
 
-        <AnimatedElement animation="slideUp" delay={0.2} duration={0.8}>
-          <motion.h1
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6 leading-tight"
+        <AnimatedElement animation="slideUp" delay={0.8} duration={0.8}>
+          <motion.h3
+            className="text-2xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-6 leading-tight"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
             {title}
-          </motion.h1>
+          </motion.h3>
         </AnimatedElement>
 
-        <AnimatedElement animation="slideUp" delay={0.4} duration={0.8}>
-          <p className="text-xl md:text-2xl text-white/80 mb-8 max-w-3xl mx-auto">
+        <AnimatedElement animation="slideUp" delay={0.9} duration={0.8}>
+          <p className="text-lg md:text-xl text-white/70 mb-8 max-w-3xl mx-auto">
             {subtitle}
           </p>
         </AnimatedElement>
 
-        <AnimatedElement animation="fadeIn" delay={0.6} duration={0.8}>
+        <AnimatedElement animation="fadeIn" delay={1.0} duration={0.8}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 max-w-2xl mx-auto">
             {keyBenefits.map((feature, index) => (
               <motion.div
@@ -142,7 +269,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
           </div>
         </AnimatedElement>
 
-        <AnimatedElement animation="slideUp" delay={0.8} duration={0.8}>
+        <AnimatedElement animation="slideUp" delay={1.1} duration={0.8}>
           <div className="max-w-md mx-auto mb-12">
             <JVZooBuyButton>
               <motion.button

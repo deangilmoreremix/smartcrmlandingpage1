@@ -393,164 +393,10 @@ const Navbar: React.FC = React.memo(() => {
         </div>
       </motion.div>
 
-      {/* Headline Section - Always Visible */}
-      <motion.div
-        className="fixed left-0 right-0 z-45 overflow-hidden"
-        style={{ top: '50px' }}
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        onMouseMove={handleMouseMove}
-      >
-        {/* Layered gradient background matching navbar */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900" />
-
-        {/* Animated mesh gradient overlay */}
-        <motion.div
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.15), transparent 60%)',
-            '--mouse-x': `${mousePosition.x * 100}%`,
-            '--mouse-y': `${mousePosition.y * 100}%`,
-          } as any}
-        />
-
-        {/* Subtle noise texture */}
-        <div className="absolute inset-0 opacity-[0.015] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
-
-        {/* Top gradient border */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent" />
-
-        {/* Bottom gradient border */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
-
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6 relative z-10 text-center">
-          {/* Main Headline */}
-          <motion.h1
-            className="text-xl md:text-4xl lg:text-5xl font-extrabold mb-1 md:mb-2 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-            }}
-            transition={{
-              opacity: { duration: 0.8, delay: 0.4 },
-              y: { duration: 0.8, delay: 0.4 },
-              backgroundPosition: {
-                duration: 8,
-                repeat: Infinity,
-                ease: 'linear'
-              }
-            }}
-            style={{
-              backgroundImage: 'linear-gradient(90deg, #60a5fa, #22d3ee, #ffffff, #22d3ee, #60a5fa)',
-              backgroundSize: '200% 100%',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            The AI Sales Ecosystem
-          </motion.h1>
-
-          <motion.h2
-            className="text-base md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-            }}
-            transition={{
-              opacity: { duration: 0.8, delay: 0.6 },
-              y: { duration: 0.8, delay: 0.6 },
-              backgroundPosition: {
-                duration: 6,
-                repeat: Infinity,
-                ease: 'linear'
-              }
-            }}
-            style={{
-              backgroundImage: 'linear-gradient(90deg, #60a5fa, #22d3ee, #f0f9ff, #22d3ee, #60a5fa)',
-              backgroundSize: '200% 100%',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            That Never Sleeps, Never Quits,
-          </motion.h2>
-
-          <motion.h2
-            className="text-base md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{
-              opacity: 1,
-              y: 0
-            }}
-            transition={{
-              opacity: { duration: 0.8, delay: 0.7 },
-              y: { duration: 0.8, delay: 0.7 }
-            }}
-          >
-            <motion.span
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: 'linear'
-              }}
-              style={{
-                backgroundImage: 'linear-gradient(90deg, #fbbf24, #fb923c, #ffffff, #fb923c, #fbbf24)',
-                backgroundSize: '200% 100%',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                display: 'inline-block'
-              }}
-            >
-              Never Loses a Deal
-            </motion.span>
-          </motion.h2>
-
-          {/* Subheading */}
-          <motion.p
-            className="text-sm md:text-xl lg:text-2xl font-semibold"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-            }}
-            transition={{
-              opacity: { duration: 0.8, delay: 0.9 },
-              y: { duration: 0.8, delay: 0.9 },
-              backgroundPosition: {
-                duration: 7,
-                repeat: Infinity,
-                ease: 'linear'
-              }
-            }}
-            style={{
-              backgroundImage: 'linear-gradient(90deg, #94a3b8, #60a5fa, #e0f2fe, #60a5fa, #94a3b8)',
-              backgroundSize: '200% 100%',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            While Your Competitors Chase Leads Manually, SmartCRM AI Closes
-          </motion.p>
-        </div>
-      </motion.div>
-
       {/* Main Navigation - Premium Design */}
       <motion.nav
         className={`fixed left-0 right-0 z-40 transition-all duration-500 overflow-hidden shadow-2xl`}
-        style={{ top: '230px' }}
+        style={{ top: '50px' }}
         initial={{ backgroundColor: 'rgba(15, 23, 42, 0.95)' }}
         animate={{
           backgroundColor: isScrolled ? 'rgba(15, 23, 42, 0.98)' : 'rgba(15, 23, 42, 0.95)',
@@ -780,7 +626,7 @@ const Navbar: React.FC = React.memo(() => {
         {isOpen && (
           <motion.div
             className="md:hidden bg-blue-900/95 backdrop-blur-lg"
-            style={{ marginTop: '310px' }}
+            style={{ marginTop: '108px' }}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
