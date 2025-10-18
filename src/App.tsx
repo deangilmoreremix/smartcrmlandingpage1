@@ -3,11 +3,13 @@ import { Routes, Route } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary';
 import Hero from './components/Hero';
 import Navbar from './components/Navbar';
-import ScrollProgress from './components/ScrollProgress';
-import ScrollingBanner from './components/ScrollingBanner';
-import AnimationToggle from './components/AnimationToggle';
 import { FeedbackContainer } from './components/Feedback';
-import PerformanceMonitor from './components/PerformanceMonitor';
+
+// Lazy load heavy components to improve initial load
+const ScrollProgress = lazy(() => import('./components/ScrollProgress'));
+const ScrollingBanner = lazy(() => import('./components/ScrollingBanner'));
+const AnimationToggle = lazy(() => import('./components/AnimationToggle'));
+const PerformanceMonitor = lazy(() => import('./components/PerformanceMonitor'));
 import SignupModal from './components/SignupModal';
 import CelebrationBanner from './components/CelebrationBanner';
 import JVZooBuyButton from './components/JVZooBuyButton';
@@ -84,20 +86,14 @@ function App() {
   const [signupModalVariant, setSignupModalVariant] = useState<'standard' | 'masterclass' | 'early-access'>('standard');
   const [hasSignedUp, setHasSignedUp] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [isDevMode, setIsDevMode] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  
+  const [isDevMode, setIsDevMode] = useState(process.env.NODE_ENV === 'development');
+
   // Check if user has previously signed up
   useEffect(() => {
-    setIsMounted(true);
-
     const signupStatus = localStorage.getItem('smartCRM_signedUp');
     if (signupStatus === 'true') {
       setHasSignedUp(true);
     }
-
-    // Check if in development mode
-    setIsDevMode(process.env.NODE_ENV === 'development');
   }, []);
   
   // Handle form submissions
@@ -120,23 +116,13 @@ function App() {
     setSignupModalOpen(true);
   };
 
-  // Show loading state until mounted
-  if (!isMounted) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-black via-blue-950 to-black flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <div className="text-white text-xl">Loading...</div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <SignupContext.Provider value={{ openSignupModal, setHasSignedUp, hasSignedUp }}>
       <FeedbackContainer />
-      {isDevMode && <PerformanceMonitor />}
-      <AnimationToggle />
+      <Suspense fallback={null}>
+        {isDevMode && <PerformanceMonitor />}
+        <AnimationToggle />
+      </Suspense>
 
       <ErrorBoundary>
         <Routes>
@@ -226,8 +212,10 @@ function App() {
           } />
           <Route path="/" element={
             <div className="min-h-screen bg-gradient-to-b from-black via-blue-950 to-black text-white">
-              <ScrollProgress />
-              <ScrollingBanner />
+              <Suspense fallback={null}>
+                <ScrollProgress />
+                <ScrollingBanner />
+              </Suspense>
               <Navbar />
               
               <main>
