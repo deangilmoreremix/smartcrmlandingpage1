@@ -31,7 +31,6 @@ import UniversalComparison from './components/UniversalComparison';
 import PricingComparison from './components/PricingComparison';
 import FEComparisonFull from './components/FEComparisonFull';
 import TrainingProgramSection from './components/TrainingProgramSection';
-import SignupFormSection from './components/SignupFormSection';
 import DashboardEmbedSection from './components/DashboardEmbedSection';
 import ContactsEmbedSection from './components/ContactsEmbedSection';
 import PipelineEmbedSection from './components/PipelineEmbedSection';
@@ -367,9 +366,6 @@ function App() {
 
                 {/* Testimonial Section */}
                 <TestimonialSection />
-
-                {/* Sign Up Form Section - NEW */}
-                <SignupFormSection />
 
                 {/* Urgency Section */}
                 <UrgencySection launchDate={launchDate} />
