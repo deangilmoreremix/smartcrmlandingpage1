@@ -656,7 +656,7 @@ function getMockQAForDay(day: number): { question: string, answer: string }[] {
       },
       {
         question: "What kind of support do you provide during and after implementation?",
-        answer: "During implementation, you get direct access to an implementation specialist via video calls and a dedicated Slack channel. After implementation, Professional plans include email and chat support with same-day response times. Enterprise plans include a dedicated customer success manager, priority support with 2-hour response times, and quarterly business reviews."
+        answer: "During implementation, you get direct access to an implementation specialist via video calls and a dedicated Slack channel. After implementation, all Smart CRM customers receive email and chat support with same-day response times, dedicated customer success assistance, and access to our comprehensive knowledge base and training resources."
       },
       {
         question: "Is there any guarantee if we're not seeing results?",
