@@ -3,10 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, CheckCircle, ArrowRight, Zap, Shield, BarChart, Users, Clock, Mail, BrainCircuit, Calendar, Workflow, Cloud, Check } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
-import { SignupContext } from '../App';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
-// import JVZooBuyButton from './JVZooBuyButton';
-// import JVZooNoThanksButton from './JVZooNoThanksButton';
+import JVZooBuyButton from './JVZooBuyButton';
 
 // Define detailed information for each CRM option
 interface CrmOptionDetail {
@@ -127,7 +125,6 @@ const SolutionIntro: React.FC = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [selectedLookingFor, setSelectedLookingFor] = useState<string[]>([]);
   const [showDetailedContent, setShowDetailedContent] = useState(false);
-  const { openSignupModal } = useContext(SignupContext);
 
   const lookingForOptions = [
     "Reduce manual data entry",
@@ -289,12 +286,11 @@ const SolutionIntro: React.FC = () => {
                   }}
                   transition={{ duration: 0.3 }}
                 >
-                  <button
-                    onClick={() => openSignupModal('early-access')}
-                    className="px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-lg w-full text-center font-medium"
-                  >
-                    Register for Webinar
-                  </button>
+                  <JVZooBuyButton className="w-full">
+                    <button className="px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-lg w-full text-center font-medium">
+                      Get Smart CRM - $97
+                    </button>
+                  </JVZooBuyButton>
                 </motion.div>
               </motion.div>
             </AnimatedElement>
@@ -569,21 +565,22 @@ const SolutionIntro: React.FC = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 1 }}
                     >
-                      <motion.button
-                        onClick={() => openSignupModal('early-access')}
-                        className="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-full transition-colors shadow-lg font-medium"
-                        whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
-                        whileTap={{ scale: 0.95 }}
-                        type="button"
-                      >
-                        Register for Free Webinar
-                      </motion.button>
+                      <JVZooBuyButton>
+                        <motion.button
+                          className="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-full transition-colors shadow-lg font-medium"
+                          whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
+                          whileTap={{ scale: 0.95 }}
+                          type="button"
+                        >
+                          Get Smart CRM Now - $97
+                        </motion.button>
+                      </JVZooBuyButton>
                       <p className="text-white/60 text-sm mt-3">
-                        See how Smart CRM addresses
+                        Start transforming
                         {selectedLookingFor.length > 1
                           ? ` all ${selectedLookingFor.length} of your priorities`
                           : ` your ${selectedLookingFor[0].toLowerCase()} need`}
-                        in our live demonstration
+                        today with Smart CRM
                       </p>
                     </motion.div>
                   </motion.div>

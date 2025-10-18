@@ -1,18 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Clock, Users, Tag, Gift, Check, X, TriangleAlert as AlertTriangle, Calendar, BookOpen, Star, User, Mail, Zap, ChartBar as BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedElement from './AnimatedElement';
-import { SignupContext } from '../App';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
-// import JVZooBuyButton from './JVZooBuyButton';
-// import JVZooNoThanksButton from './JVZooNoThanksButton';
+import JVZooBuyButton from './JVZooBuyButton';
 
 interface FinalCtaProps {}
 
 const FinalCta: React.FC<FinalCtaProps> = () => {
   const [spotsLeft, setSpotsLeft] = useState(50);
   const [timeElapsed, setTimeElapsed] = useState(0);
-  const { openSignupModal, setHasSignedUp } = useContext(SignupContext);
   
   return (
     <section className="py-20 px-4 relative">
@@ -154,12 +151,11 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.5 }}
                 >
-                  <button
-                    onClick={() => openSignupModal('early-access')}
-                    className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-lg transition-colors inline-block text-center font-medium"
-                  >
-                    Register for Free Webinar
-                  </button>
+                  <JVZooBuyButton className="w-full md:w-auto">
+                    <button className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-lg transition-colors inline-block text-center font-medium">
+                      Get Smart CRM - $97
+                    </button>
+                  </JVZooBuyButton>
                 </motion.div>
               </div>
             </div>
@@ -178,18 +174,19 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 </p>
               </motion.div>
 
-              <motion.button
-                onClick={() => openSignupModal('early-access')}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-full text-lg font-bold shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
-                }}
-                whileTap={{ scale: 0.95 }}
-                type="button"
-              >
-                Reserve My Spot - 100% Free
-              </motion.button>
+              <JVZooBuyButton>
+                <motion.button
+                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-full text-lg font-bold shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  type="button"
+                >
+                  Get Smart CRM Now - $97
+                </motion.button>
+              </JVZooBuyButton>
               <motion.p
                 className="text-white/60 text-sm mt-4"
                 animate={{

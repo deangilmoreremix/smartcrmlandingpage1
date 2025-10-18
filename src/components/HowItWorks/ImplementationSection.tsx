@@ -1,12 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check, UserCheck, Palette, Database, BookOpen } from 'lucide-react';
+import JVZooBuyButton from '../JVZooBuyButton';
 
-interface ImplementationSectionProps {
-  openSignupModal: (variant?: 'standard' | 'masterclass' | 'early-access') => void;
-}
-
-const ImplementationSection: React.FC<ImplementationSectionProps> = React.memo(({ openSignupModal }) => {
+const ImplementationSection: React.FC = React.memo(() => {
   return (
     <div className="mt-20 text-center max-w-4xl mx-auto">
       <motion.div
@@ -47,15 +44,16 @@ const ImplementationSection: React.FC<ImplementationSectionProps> = React.memo((
               </p>
 
               <div className="hidden md:block">
-                <motion.button
-                  className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors shadow-lg font-medium group"
-                  whileHover={{ scale: 1.05, y: -5, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => openSignupModal('early-access')}
-                >
-                  <span>Get Smart CRM</span>
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
-                </motion.button>
+                <JVZooBuyButton>
+                  <motion.button
+                    className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors shadow-lg font-medium group"
+                    whileHover={{ scale: 1.05, y: -5, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <span>Get Smart CRM - $97</span>
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+                  </motion.button>
+                </JVZooBuyButton>
               </div>
             </div>
 
@@ -131,15 +129,16 @@ const ImplementationSection: React.FC<ImplementationSectionProps> = React.memo((
           </div>
 
           <div className="md:hidden mt-6">
-            <motion.button
-              className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors shadow-lg font-medium group w-full justify-center"
-              whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => openSignupModal('early-access')}
-            >
-              <span>Register Now</span>
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
-            </motion.button>
+            <JVZooBuyButton className="w-full">
+              <motion.button
+                className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors shadow-lg font-medium group w-full justify-center"
+                whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span>Get Smart CRM - $97</span>
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+              </motion.button>
+            </JVZooBuyButton>
           </div>
         </div>
       </motion.div>
@@ -205,23 +204,24 @@ const ImplementationSection: React.FC<ImplementationSectionProps> = React.memo((
         viewport={{ once: true }}
         transition={{ delay: 0.9 }}
       >
-        <motion.button
-          className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-full shadow-lg font-bold text-lg group"
-          whileHover={{
-            scale: 1.05,
-            boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
-          }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => openSignupModal('early-access')}
-        >
-          <span>Transform Your Customer Relationships</span>
-          <motion.div
-            animate={{ x: [0, 5, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
+        <JVZooBuyButton>
+          <motion.button
+            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-full shadow-lg font-bold text-lg group"
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
+            }}
+            whileTap={{ scale: 0.95 }}
           >
-            <ArrowRight className="ml-2 group-hover:translate-x-1" size={20} />
-          </motion.div>
-        </motion.button>
+            <span>Get Smart CRM Now - $97</span>
+            <motion.div
+              animate={{ x: [0, 5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
+            >
+              <ArrowRight className="ml-2 group-hover:translate-x-1" size={20} />
+            </motion.div>
+          </motion.button>
+        </JVZooBuyButton>
       </motion.div>
     </div>
   );

@@ -8,7 +8,6 @@ import InteractiveFeature from './components/InteractiveFeature';
 import FeatureShowcase from './components/FeatureShowcase';
 import FeatureDemo from './components/FeatureDemo';
 import TestimonialSection from './components/TestimonialSection';
-import UrgencySection from './components/UrgencySection';
 import FinalCta from './components/FinalCta';
 import FaqSection from './components/FaqSection';
 import Footer from './components/Footer';
@@ -22,7 +21,6 @@ import IntegrationEcosystem from './components/IntegrationEcosystem';
 import SecurityComplianceHub from './components/SecurityComplianceHub';
 import WorkflowShowcase from './components/WorkflowShowcase';
 import TrainingProgramSection from './components/TrainingProgramSection';
-import SignupFormSection from './components/SignupFormSection';
 import ScrollingBanner from './components/ScrollingBanner';
 import WebinarRecapPage from './components/WebinarRecapPage';
 import InstructorProfilePage from './pages/InstructorProfilePage';
@@ -163,13 +161,7 @@ function App() {
                 
                 {/* Testimonial Section */}
                 <TestimonialSection />
-                
-                {/* Sign Up Form Section - NEW */}
-                <SignupFormSection />
-                
-                {/* Urgency Section */}
-                <UrgencySection launchDate={launchDate} />
-                
+
                 {/* Final CTA */}
                 <FinalCta />
                 

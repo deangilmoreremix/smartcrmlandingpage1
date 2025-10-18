@@ -1,14 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, ArrowRight, Contact, Database, Zap, CheckCircle, ExternalLink, Play, Search, Filter, Grid, User, Mail, Building, Phone, Tag, AlertTriangle, Clock, TrendingDown, UserMinus, X, Info, Activity, BarChart2, DollarSign, FileText, Shield, BrainCircuit, MessageSquare, BarChart3, Image } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
-import { SignupContext } from '../App';
 import InteractiveFloatingButton from './InteractiveFloatingButton';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
+import JVZooBuyButton from './JVZooBuyButton';
 import { EMBED_URLS } from '../constants/embedUrls';
 
 const EnhancedContacts: React.FC = () => {
-  const { openSignupModal } = useContext(SignupContext);
   const [expandedStatCard, setExpandedStatCard] = useState<string | null>(null);
   const [hoveredProblem, setHoveredProblem] = useState<number | null>(null);
 
@@ -667,15 +666,16 @@ const EnhancedContacts: React.FC = () => {
                     Launch Live Demo
                   </motion.button>
                   
-                  <motion.button
-                    className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg flex items-center font-medium"
-                    onClick={() => openSignupModal('early-access')}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <ArrowRight size={18} className="mr-2" />
-                    Get Smart CRM
-                  </motion.button>
+                  <JVZooBuyButton>
+                    <motion.button
+                      className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg flex items-center font-medium"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <ArrowRight size={18} className="mr-2" />
+                      Get Smart CRM - $97
+                    </motion.button>
+                  </JVZooBuyButton>
                 </div>
               </div>
             </div>
@@ -875,15 +875,16 @@ const EnhancedContacts: React.FC = () => {
                       Launch Interactive Demo
                     </motion.button>
                     
-                    <motion.button
-                      className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg flex items-center font-medium"
-                      onClick={() => openSignupModal('early-access')}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <ArrowRight size={18} className="mr-2" />
-                      Get Smart CRM
-                    </motion.button>
+                    <JVZooBuyButton>
+                      <motion.button
+                        className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg flex items-center font-medium"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <ArrowRight size={18} className="mr-2" />
+                        Get Smart CRM - $97
+                      </motion.button>
+                    </JVZooBuyButton>
                   </div>
                 </div>
               </motion.div>
@@ -929,13 +930,12 @@ const EnhancedContacts: React.FC = () => {
               whileHover={{ scale: 1.05, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
-              <button
-                onClick={() => openSignupModal('early-access')}
-                className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors shadow-lg font-medium group"
-              >
-                <span>Get Smart CRM Enhanced Contacts</span>
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
-              </button>
+              <JVZooBuyButton>
+                <button className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors shadow-lg font-medium group">
+                  <span>Get Smart CRM - $97</span>
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+                </button>
+              </JVZooBuyButton>
             </motion.div>
           </div>
         </AnimatedElement>

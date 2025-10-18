@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Clock, Star, Gift, Zap, TrendingUp, Users, ChevronDown, ChevronUp, Award, Shield, Sparkles } from 'lucide-react';
-import { SignupContext } from '../App';
-// import JVZooBuyButton from './JVZooBuyButton';
+import JVZooBuyButton from './JVZooBuyButton';
 import { LAUNCH_DATE, WEBINAR_DATE } from '../constants/dates';
 import { trackPopupInteraction, calculateTimeToConversion } from '../utils/popupAnalytics';
 
@@ -13,7 +12,6 @@ const FloatingCta: React.FC = () => {
   const [spotsLeft, setSpotsLeft] = useState(47);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [recentSignups, setRecentSignups] = useState(0);
-  const { openSignupModal } = useContext(SignupContext);
   
   useEffect(() => {
     // Countdown timer logic
@@ -113,7 +111,6 @@ const FloatingCta: React.FC = () => {
       spotsRemaining: spotsLeft,
       daysRemaining: timeLeft.days
     });
-    openSignupModal('early-access');
     setIsVisible(false);
   };
 
@@ -320,15 +317,16 @@ const FloatingCta: React.FC = () => {
                 </div>
               </div>
 
-              <motion.button
-                onClick={handleCtaClick}
-                className="w-full py-3 px-4 bg-white text-blue-600 font-bold rounded-lg hover:bg-blue-50 transition-colors shadow-lg text-sm"
-                whileHover={{ scale: 1.03, boxShadow: '0 10px 25px -5px rgba(255, 255, 255, 0.3)' }}
-                whileTap={{ scale: 0.97 }}
-                type="button"
-              >
-                Register for Free Webinar
-              </motion.button>
+              <JVZooBuyButton className="w-full" onClick={handleCtaClick}>
+                <motion.button
+                  className="w-full py-3 px-4 bg-white text-blue-600 font-bold rounded-lg hover:bg-blue-50 transition-colors shadow-lg text-sm"
+                  whileHover={{ scale: 1.03, boxShadow: '0 10px 25px -5px rgba(255, 255, 255, 0.3)' }}
+                  whileTap={{ scale: 0.97 }}
+                  type="button"
+                >
+                  Get Smart CRM - $97
+                </motion.button>
+              </JVZooBuyButton>
 
               {/* Learn more toggle */}
               <button

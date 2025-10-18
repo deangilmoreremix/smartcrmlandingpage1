@@ -1,9 +1,9 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { Search, Filter, X, ArrowRight, Check, Link, Grid, List, Zap, Lock, Clock, Star } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
-import { SignupContext } from '../App';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
+import JVZooBuyButton from './JVZooBuyButton';
 
 interface Integration {
   name: string;
@@ -333,7 +333,6 @@ const IntegrationEcosystem: React.FC = () => {
   const [popularOnly, setPopularOnly] = useState(false);
   const [selectedIntegration, setSelectedIntegration] = useState<Integration | null>(null);
   const [isGridView, setIsGridView] = useState(true);
-  const { openSignupModal } = useContext(SignupContext);
   
   const controls = useAnimation();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -775,15 +774,16 @@ const IntegrationEcosystem: React.FC = () => {
                   >
                     Close
                   </button>
-                  <motion.button
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => openSignupModal('early-access')}
-                  >
-                    <span>Get Smart CRM</span>
-                    <ArrowRight size={14} className="ml-2" />
-                  </motion.button>
+                  <JVZooBuyButton>
+                    <motion.button
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span>Get Smart CRM - $97</span>
+                      <ArrowRight size={14} className="ml-2" />
+                    </motion.button>
+                  </JVZooBuyButton>
                 </div>
               </motion.div>
             </motion.div>
@@ -805,18 +805,19 @@ const IntegrationEcosystem: React.FC = () => {
             </p>
           </motion.div>
           
-          <motion.button 
-            className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors shadow-lg font-medium group"
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
-            }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => openSignupModal('early-access')}
-          >
-            <span>Get Smart CRM</span>
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
-          </motion.button>
+          <JVZooBuyButton>
+            <motion.button
+              className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors shadow-lg font-medium group"
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span>Get Smart CRM - $97</span>
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+            </motion.button>
+          </JVZooBuyButton>
         </div>
       </div>
     </section>

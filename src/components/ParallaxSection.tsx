@@ -1,6 +1,6 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { SignupContext } from '../App';
+import JVZooBuyButton from './JVZooBuyButton';
 
 interface ParallaxSectionProps {
   children: React.ReactNode;
@@ -18,7 +18,6 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
-  const { openSignupModal } = useContext(SignupContext);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -73,21 +72,22 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({
         }}
       >
         {React.Children.map(children, child => {
-          if (React.isValidElement(child) && 
+          if (React.isValidElement(child) &&
               child.type === 'div' &&
-              child.props.children && 
-              React.isValidElement(child.props.children[2]) && 
+              child.props.children &&
+              React.isValidElement(child.props.children[2]) &&
               (child.props.children[2].props.children === "Start Your Transformation" ||
                child.props.children[2].props.children === "Schedule a Demo")) {
-            
-            // Create a clone of the child with modified button behavior
-            return React.cloneElement(child as React.ReactElement, {}, 
+
+            // Create a clone of the child with modified button to use JVZoo purchase link
+            return React.cloneElement(child as React.ReactElement, {},
               child.props.children[0], // title
               child.props.children[1], // description
-              React.cloneElement(child.props.children[2] as React.ReactElement, {
-                onClick: () => openSignupModal('early-access'),
-                children: "Join October 17-19 Masterclass"
-              })
+              <JVZooBuyButton>
+                {React.cloneElement(child.props.children[2] as React.ReactElement, {
+                  children: "Get Smart CRM - $97"
+                })}
+              </JVZooBuyButton>
             );
           }
           return child;
