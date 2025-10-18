@@ -36,6 +36,7 @@ import ContactsEmbedSection from './components/ContactsEmbedSection';
 import PipelineEmbedSection from './components/PipelineEmbedSection';
 import AICalendarSection from './components/AICalendarSection';
 import PricingSection from './components/PricingSection';
+import DemoVideo from './components/DemoVideo';
 
 // Lazy load pages for code splitting
 const WebinarRecapPage = lazy(() => import('./components/WebinarRecapPage'));
@@ -230,6 +231,28 @@ function App() {
                   subtitle="The only CRM that uses GPT-5 AI to predict which leads will buy, automate your follow-ups, and tell you exactly what to say next. Get early access and be among the first to transform your sales process."
                   launchDate={launchDate}
                 />
+
+                {/* Sales Video Section */}
+                <section className="py-20 px-4 bg-gradient-to-b from-black to-blue-950/30">
+                  <div className="max-w-5xl mx-auto">
+                    <div className="text-center mb-12">
+                      <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
+                        See Smart CRM in Action
+                      </h2>
+                      <div className="w-24 h-1 bg-blue-500 mx-auto rounded-full mb-6" />
+                      <p className="text-xl text-white/80 max-w-3xl mx-auto">
+                        Watch how Smart CRM transforms your sales process with AI-powered automation, intelligent insights, and seamless workflows.
+                      </p>
+                    </div>
+
+                    <DemoVideo
+                      thumbnailUrl="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                      videoUrl="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                      title="Smart CRM Demo: Transform Your Sales Process"
+                      description="Watch this 3-minute demo to see how Smart CRM uses GPT-5 AI to help you close 40% more deals with 80% less manual work."
+                    />
+                  </div>
+                </section>
 
                 {/* Problem Statement */}
                 <ProblemStatement />
