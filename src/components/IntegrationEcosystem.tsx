@@ -12,7 +12,6 @@ interface Integration {
   setupTime: 'Minutes' | 'Hours' | 'Days';
   complexity: 'Easy' | 'Medium' | 'Complex';
   isPopular?: boolean;
-  isEnterprise?: boolean;
   features?: string[];
   logoUrl?: string;
 }
@@ -60,7 +59,6 @@ const integrations: Integration[] = [
     description: "Connect with on-prem Microsoft Exchange for enterprise email integration.",
     setupTime: "Days",
     complexity: "Complex",
-    isEnterprise: true,
     features: ["Email sync", "Calendar integration", "Server-side processing"]
   },
   
@@ -141,7 +139,6 @@ const integrations: Integration[] = [
     description: "Enterprise-grade marketing automation integration for advanced campaigns.",
     setupTime: "Days",
     complexity: "Complex",
-    isEnterprise: true,
     features: ["Lead nurturing", "Campaign management", "Advanced segmentation"]
   },
   {
@@ -301,7 +298,6 @@ const integrations: Integration[] = [
     description: "Create advanced visualizations and reports from your CRM data.",
     setupTime: "Days",
     complexity: "Complex",
-    isEnterprise: true,
     features: ["Advanced visualizations", "Data blending", "Real-time dashboards"]
   },
   {
@@ -310,7 +306,6 @@ const integrations: Integration[] = [
     description: "Microsoft's business analytics service for advanced reporting.",
     setupTime: "Days",
     complexity: "Complex",
-    isEnterprise: true,
     features: ["Interactive reports", "Data transformation", "AI-powered insights"]
   },
   {
@@ -319,7 +314,6 @@ const integrations: Integration[] = [
     description: "Connect Looker's business intelligence platform to your CRM data.",
     setupTime: "Days",
     complexity: "Complex",
-    isEnterprise: true,
     features: ["Custom metrics", "Data modeling", "Embedded analytics"]
   }
 ];
@@ -559,12 +553,6 @@ const IntegrationEcosystem: React.FC = () => {
                     </motion.div>
                   )}
                   
-                  {integration.isEnterprise && (
-                    <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-0.5 rounded-full flex items-center">
-                      <Lock size={10} className="mr-1" />
-                      Enterprise
-                    </div>
-                  )}
                   
                   {isGridView ? (
                     <>
@@ -720,7 +708,7 @@ const IntegrationEcosystem: React.FC = () => {
                       <span className="text-white font-medium">Availability</span>
                     </div>
                     <p className="text-white/70">
-                      {selectedIntegration.isEnterprise ? 'Enterprise Plan Only' : 'All Plans'}
+                      Included in Smart CRM
                     </p>
                   </div>
                 </div>

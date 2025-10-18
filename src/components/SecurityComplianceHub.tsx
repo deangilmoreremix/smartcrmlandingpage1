@@ -18,7 +18,6 @@ interface SecurityFeature {
   description: string;
   icon: React.ReactNode;
   category: string;
-  plans?: ('Starter' | 'Professional' | 'Enterprise')[];
 }
 
 const securityFeatures: SecurityFeature[] = [
@@ -26,85 +25,73 @@ const securityFeatures: SecurityFeature[] = [
     name: "End-to-End Encryption",
     description: "All data is encrypted in transit and at rest using AES-256 bit encryption.",
     icon: <Lock size={24} />,
-    category: "Data Protection",
-    plans: ['Starter', 'Professional', 'Enterprise']
+    category: "Data Protection"
   },
   {
     name: "Role-Based Access Controls",
     description: "Granular permissions that ensure users can only access appropriate data and functions.",
     icon: <Shield size={24} />,
-    category: "Access Management",
-    plans: ['Starter', 'Professional', 'Enterprise']
+    category: "Access Management"
   },
   {
     name: "Two-Factor Authentication",
     description: "Add an extra layer of security with code-based verification on login.",
     icon: <Lock size={24} />,
-    category: "Access Management",
-    plans: ['Starter', 'Professional', 'Enterprise']
+    category: "Access Management"
   },
   {
     name: "Single Sign-On (SSO)",
     description: "Integrate with your identity provider using SAML or OAuth for secure authentication.",
     icon: <Lock size={24} />,
-    category: "Access Management",
-    plans: ['Enterprise']
+    category: "Access Management"
   },
   {
     name: "Audit Logs",
     description: "Comprehensive logs of all system activities for security monitoring and compliance.",
     icon: <FileCheck size={24} />,
-    category: "Monitoring & Auditing",
-    plans: ['Professional', 'Enterprise']
+    category: "Monitoring & Auditing"
   },
   {
     name: "IP Restrictions",
     description: "Limit system access to specified IP addresses for enhanced security.",
     icon: <Server size={24} />,
-    category: "Access Management",
-    plans: ['Enterprise']
+    category: "Access Management"
   },
   {
     name: "Data Residency Options",
     description: "Choose where your data is stored to meet regional compliance requirements.",
     icon: <Database size={24} />,
-    category: "Data Protection",
-    plans: ['Enterprise']
+    category: "Data Protection"
   },
   {
     name: "Automatic Session Timeout",
     description: "Automatically log out inactive users to prevent unauthorized access.",
     icon: <Clock size={24} />,
-    category: "Access Management",
-    plans: ['Starter', 'Professional', 'Enterprise']
+    category: "Access Management"
   },
   {
     name: "Regular Security Updates",
     description: "Continuous security patches and updates to protect against emerging threats.",
     icon: <Shield size={24} />,
-    category: "Infrastructure",
-    plans: ['Starter', 'Professional', 'Enterprise']
+    category: "Infrastructure"
   },
   {
     name: "Regular Penetration Testing",
     description: "Independent security testing to identify and address potential vulnerabilities.",
     icon: <AlertCircle size={24} />,
-    category: "Monitoring & Auditing",
-    plans: ['Professional', 'Enterprise']
+    category: "Monitoring & Auditing"
   },
   {
     name: "Data Loss Prevention",
     description: "Controls to prevent sensitive data from leaving the system inappropriately.",
     icon: <Database size={24} />,
-    category: "Data Protection",
-    plans: ['Professional', 'Enterprise']
+    category: "Data Protection"
   },
   {
     name: "Security Information & Event Management",
     description: "Real-time monitoring and alerts for security events and potential threats.",
     icon: <AlertCircle size={24} />,
-    category: "Monitoring & Auditing",
-    plans: ['Enterprise']
+    category: "Monitoring & Auditing"
   }
 ];
 
@@ -228,11 +215,6 @@ const SecurityComplianceHub: React.FC = () => {
     ? securityFeatures.filter(feature => feature.category === selectedCategory)
     : securityFeatures;
   
-  // Function to get security features for a specific plan
-  const getPlanFeatures = (plan: 'Starter' | 'Professional' | 'Enterprise') => {
-    return securityFeatures.filter(feature => feature.plans?.includes(plan));
-  };
-  
   // Function to open certification details
   const handleCertificationClick = (certification: ComplianceCertification) => {
     setSelectedCertification(certification);
@@ -332,41 +314,33 @@ const SecurityComplianceHub: React.FC = () => {
                       ))}
                     </div>
                   </div>
-                  
-                  {/* Security By Plan */}
-                  <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6">
-                    <h3 className="text-white font-semibold mb-4">Security By Plan</h3>
-                    
-                    {['Starter', 'Professional', 'Enterprise'].map((plan) => (
-                      <div key={plan} className="mb-4 last:mb-0">
-                        <h4 className="text-white font-medium text-sm mb-2">
-                          {plan} Plan
-                          {plan === 'Enterprise' && (
-                            <span className="ml-2 text-xs bg-purple-500/30 text-purple-200 px-2 py-0.5 rounded-full">
-                              Maximum Security
-                            </span>
-                          )}
-                        </h4>
-                        <div className="text-xs text-white/60 mb-2">
-                          {getPlanFeatures(plan as any).length} security features
-                        </div>
-                        <div className="relative h-1.5 bg-white/10 rounded-full overflow-hidden">
-                          <motion.div
-                            className={`absolute top-0 left-0 h-full rounded-full ${
-                              plan === 'Starter' ? 'bg-blue-500' : 
-                              plan === 'Professional' ? 'bg-purple-500' : 
-                              'bg-gradient-to-r from-blue-500 via-purple-500 to-blue-400'
-                            }`}
-                            initial={{ width: 0 }}
-                            animate={{ width: `${plan === 'Starter' ? 60 : plan === 'Professional' ? 80 : 100}%` }}
-                            transition={{ duration: 1, delay: 0.2 }}
-                          />
-                        </div>
+
+                  {/* All Features Included */}
+                  <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/20 backdrop-blur-md rounded-xl border border-blue-500/30 p-6">
+                    <h3 className="text-white font-semibold mb-4 flex items-center">
+                      <Shield size={18} className="text-blue-400 mr-2" />
+                      Complete Security Package
+                    </h3>
+
+                    <div className="mb-4">
+                      <div className="text-2xl font-bold text-white mb-2">
+                        {securityFeatures.length} Features
                       </div>
-                    ))}
-                    
-                    <p className="text-white/60 text-xs mt-4">
-                      All plans include essential security features, with additional protections in higher tiers.
+                      <p className="text-white/70 text-sm mb-3">
+                        All security features included in Smart CRM
+                      </p>
+                      <div className="relative h-2 bg-white/10 rounded-full overflow-hidden">
+                        <motion.div
+                          className="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-400"
+                          initial={{ width: 0 }}
+                          animate={{ width: '100%' }}
+                          transition={{ duration: 1.5, delay: 0.2 }}
+                        />
+                      </div>
+                    </div>
+
+                    <p className="text-white/80 text-sm">
+                      Every Smart CRM customer gets enterprise-grade security protection with no additional cost or upgrades needed.
                     </p>
                   </div>
                 </div>
@@ -395,22 +369,7 @@ const SecurityComplianceHub: React.FC = () => {
                         </motion.div>
                         
                         <h3 className="text-white font-medium mb-2">{feature.name}</h3>
-                        <p className="text-white/70 text-sm mb-4">{feature.description}</p>
-                        
-                        <div className="flex flex-wrap gap-1">
-                          {feature.plans?.map((plan) => (
-                            <span
-                              key={plan}
-                              className={`text-xs px-2 py-0.5 rounded-full ${
-                                plan === 'Starter' ? 'bg-blue-500/20 text-blue-400' :
-                                plan === 'Professional' ? 'bg-purple-500/20 text-purple-400' :
-                                'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-white'
-                              }`}
-                            >
-                              {plan}
-                            </span>
-                          ))}
-                        </div>
+                        <p className="text-white/70 text-sm">{feature.description}</p>
                       </motion.div>
                     ))}
                   </div>
@@ -583,7 +542,7 @@ const SecurityComplianceHub: React.FC = () => {
                   <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/20 backdrop-blur-md rounded-xl border border-blue-500/30 p-6">
                     <h3 className="text-white font-semibold mb-3">Need Custom Compliance?</h3>
                     <p className="text-white/70 text-sm mb-4">
-                      Our enterprise plan includes support for custom compliance requirements and documentation for your specific industry and location.
+                      Smart CRM includes support for custom compliance requirements and documentation for your specific industry and location.
                     </p>
                     <motion.button
                       className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center"

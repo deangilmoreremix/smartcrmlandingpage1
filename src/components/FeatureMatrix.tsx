@@ -634,7 +634,6 @@ const FeatureMatrix: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedPlan, setSelectedPlan] = useState<'starter'|'professional'|'enterprise'>('professional');
   const [isComparisonView, setIsComparisonView] = useState(true);
   const [popularOnly, setPopularOnly] = useState(false);
   const [newOnly, setNewOnly] = useState(false);
@@ -879,26 +878,16 @@ const FeatureMatrix: React.FC = () => {
               ))}
             </div>
             
-            {/* Plan selection */}
-            <div className="bg-white/5 rounded-lg p-4">
-              <p className="text-white/80 text-sm mb-3">Select a plan for comparison:</p>
-              <div className="flex justify-between md:justify-start gap-4">
-                {['starter', 'professional', 'enterprise'].map((plan) => (
-                  <motion.button
-                    key={plan}
-                    className={`px-4 py-2 rounded-lg text-sm ${
-                      selectedPlan === plan 
-                        ? 'bg-blue-600 text-white' 
-                        : 'bg-white/10 text-white/70 hover:bg-white/20'
-                    }`}
-                    onClick={() => setSelectedPlan(plan as any)}
-                    whileHover={{ scale: selectedPlan !== plan ? 1.05 : 1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {plan.charAt(0).toUpperCase() + plan.slice(1)}
-                    {plan === 'professional' && <span className="ml-1 text-xs text-blue-300">Popular</span>}
-                  </motion.button>
-                ))}
+            {/* All Features Included Notice */}
+            <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/20 rounded-lg p-4 border border-blue-500/30">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-500/20 rounded-lg">
+                  <Star className="text-blue-400" size={20} />
+                </div>
+                <div>
+                  <p className="text-white font-semibold text-sm mb-1">All Features Included</p>
+                  <p className="text-white/70 text-xs">Every feature below is included in Smart CRM at no extra cost</p>
+                </div>
               </div>
             </div>
           </div>
@@ -1177,17 +1166,17 @@ const FeatureMatrix: React.FC = () => {
         
         <div className="text-center mt-10">
           <p className="text-white/70 mb-4">
-            Need a custom solution? Our enterprise plan can be tailored to your specific requirements.
+            All {features.length} features included in Smart CRM. No upgrades, no hidden costs.
           </p>
-          <motion.button 
+          <motion.button
             className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors shadow-lg font-medium group"
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
               boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
             }}
             whileTap={{ scale: 0.95 }}
           >
-            Get Smart CRM to Learn More
+            Get Smart CRM for $97
             <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
           </motion.button>
         </div>
