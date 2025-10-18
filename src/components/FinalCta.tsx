@@ -50,7 +50,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 >
                   <Star className="text-yellow-400 mr-2" size={18} />
                 </motion.div>
-                <span className="text-white font-medium">Last Chance to Register</span>
+                <span className="text-white font-medium">Limited Time Offer</span>
               </motion.div>
               
               <motion.h2
@@ -58,10 +58,10 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                Reserve Your Spot for the Live Webinar
+                Start Using Smart CRM Today
               </motion.h2>
               <p className="text-xl text-white/80 max-w-2xl mx-auto">
-                Join us on October 17th at 3:00 PM EST for an exclusive live demonstration of Smart CRM. See how AI can transform your business.
+                Transform your sales process with AI-powered automation. Close more deals, save time, and grow your business with intelligent CRM software.
               </p>
             </div>
             
@@ -69,18 +69,18 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
               {[
                 {
                   icon: <Zap className="text-blue-400" size={24} />,
-                  title: "Live AI Demo",
-                  description: "Watch GPT-5 AI integration in action with real-time demonstrations of intelligent automation."
+                  title: "AI-Powered Automation",
+                  description: "Automate 70% of manual data entry with GPT-5 powered intelligence. Smart CRM handles scoring, follow-ups, and forecasting automatically."
                 },
                 {
                   icon: <Star className="text-green-400" size={24} />,
-                  title: "Expert Q&A Session",
-                  description: "Get your specific questions answered by Smart CRM implementation specialists."
+                  title: "Intelligent Deal Management",
+                  description: "Predictive analytics score every deal, identify risks early, and recommend next actions to maximize win rates."
                 },
                 {
                   icon: <Gift className="text-purple-400" size={24} />,
-                  title: "100% Free Access",
-                  description: "No cost to attend. Learn valuable strategies you can implement immediately in your business."
+                  title: "Free Masterclass Included",
+                  description: "Get instant access to our 3-day Smart CRM implementation masterclass with your purchase. Learn expert strategies to maximize results."
                 }
               ].map((benefit, index) => (
                 <motion.div
@@ -117,9 +117,9 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                     <div className="flex items-start space-x-1">
                       <Check size={14} className="text-green-400 mt-0.5" />
                       <p className="text-white/60 text-xs">
-                        {index === 0 ? "See predictive analytics and lead scoring live" :
-                         index === 1 ? "Interactive discussion - bring your questions" :
-                         "Recording available for all registrants"}
+                        {index === 0 ? "Eliminate repetitive data entry forever" :
+                         index === 1 ? "Close 40% more deals with AI insights" :
+                         "Oct 19-21 live training sessions"}
                       </p>
                     </div>
                   </motion.div>
@@ -139,10 +139,10 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                       }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
                     >
-                      Webinar seats filling fast - only 87 spots remaining!
+                      Limited licenses available - only 87 remaining at this price!
                     </motion.p>
                   </div>
-                  <p className="text-white/60 text-sm ml-7">October 17th at 3:00 PM EST - Register now to secure your spot.</p>
+                  <p className="text-white/60 text-sm ml-7">Special introductory pricing ends soon. Secure your license today.</p>
                 </div>
 
                 <motion.div
@@ -166,8 +166,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.08)" }}
               >
                 <p className="text-white/80 text-sm">
-                  "The Smart CRM webinar was incredibly insightful. The live demonstrations showed exactly how AI can streamline our sales process.
-                  I walked away with actionable strategies I implemented the very next day."
+                  "Smart CRM completely transformed our sales process. The AI automation eliminated hours of manual work, and our team closed 38% more deals in the first quarter. Best investment we made this year."
                 </p>
                 <p className="text-white font-medium mt-2">
                   — Sarah Johnson, VP of Sales at TechGrowth Inc.
@@ -194,7 +193,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
               >
-                October 17, 2025 at 3:00 PM EST - Limited seats available
+                Includes free 3-day masterclass (Oct 19-21, 2025) - Limited licenses available
               </motion.p>
             </div>
           </motion.div>
