@@ -84,15 +84,10 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
         <AnimatedElement animation="fadeIn" duration={0.8}>
           <motion.h1
             className="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-3 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
             animate={{
-              opacity: 1,
-              y: 0,
               backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
             }}
             transition={{
-              opacity: { duration: 0.8, delay: 0.2 },
-              y: { duration: 0.8, delay: 0.2 },
               backgroundPosition: {
                 duration: 8,
                 repeat: Infinity,
@@ -114,15 +109,10 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
         <AnimatedElement animation="slideUp" delay={0.3} duration={0.8}>
           <motion.h2
             className="text-2xl md:text-4xl lg:text-5xl font-bold mb-3 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
             animate={{
-              opacity: 1,
-              y: 0,
               backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
             }}
             transition={{
-              opacity: { duration: 0.8, delay: 0.4 },
-              y: { duration: 0.8, delay: 0.4 },
               backgroundPosition: {
                 duration: 6,
                 repeat: Infinity,
@@ -142,18 +132,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
         </AnimatedElement>
 
         <AnimatedElement animation="slideUp" delay={0.4} duration={0.8}>
-          <motion.h2
-            className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{
-              opacity: 1,
-              y: 0
-            }}
-            transition={{
-              opacity: { duration: 0.8, delay: 0.5 },
-              y: { duration: 0.8, delay: 0.5 }
-            }}
-          >
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
             <motion.span
               animate={{
                 backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
@@ -174,21 +153,16 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
             >
               Never Loses a Deal
             </motion.span>
-          </motion.h2>
+          </h2>
         </AnimatedElement>
 
         <AnimatedElement animation="fadeIn" delay={0.5} duration={0.8}>
           <motion.p
             className="text-lg md:text-2xl lg:text-3xl font-semibold mb-8"
-            initial={{ opacity: 0, y: 20 }}
             animate={{
-              opacity: 1,
-              y: 0,
               backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
             }}
             transition={{
-              opacity: { duration: 0.8, delay: 0.6 },
-              y: { duration: 0.8, delay: 0.6 },
               backgroundPosition: {
                 duration: 7,
                 repeat: Infinity,
