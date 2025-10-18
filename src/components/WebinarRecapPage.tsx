@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  ArrowRight, Upload, Film, Calendar, CheckCircle, AlertTriangle,
-  X, Download, Copy, MessageSquare, PlayCircle, Star, BookOpen,
-  CheckCircle as ClockCircle, List, BookMarked, ChevronRight
-} from 'lucide-react';
+import { ArrowRight, Upload, Film, Calendar, CircleCheck as CheckCircle, TriangleAlert as AlertTriangle, X, Download, Copy, MessageSquare, CirclePlay as PlayCircle, Star, BookOpen, CircleCheck as ClockCircle, List, BookMarked, ChevronRight } from 'lucide-react';
 import jsPDF from 'jspdf';
 import Navbar from './Navbar';
 import Footer from './Footer';
