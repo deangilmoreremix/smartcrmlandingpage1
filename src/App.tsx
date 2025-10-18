@@ -50,6 +50,7 @@ const PipelineLandingPage = lazy(() => import('./pages/PipelineLandingPage'));
 const AIFeaturesCatalogLandingPage = lazy(() => import('./pages/AIFeaturesCatalogLandingPage'));
 const AdminUploadPage = lazy(() => import('./pages/AdminUploadPage'));
 const DemoPage = lazy(() => import('./pages/DemoPage'));
+const StorageSetupPage = lazy(() => import('./pages/StorageSetupPage'));
 
 import { SALE_END_DATE } from './constants/dates';
 
@@ -192,6 +193,11 @@ function App() {
           <Route path="/demo" element={
             <Suspense fallback={<PageLoadingFallback />}>
               <DemoPage />
+            </Suspense>
+          } />
+          <Route path="/storage-setup" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <StorageSetupPage />
             </Suspense>
           } />
           <Route path="/pricing" element={
