@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Shield, FileText, AlertTriangle } from 'lucide-react';
+import { Mail, Shield, FileText, AlertTriangle, RefreshCcw, DollarSign, Users } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -57,9 +57,27 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/refund-policy" className="text-white/60 hover:text-white text-sm transition-colors inline-flex items-center">
+                  <RefreshCcw size={14} className="mr-1.5" />
+                  Refund Policy
+                </Link>
+              </li>
+              <li>
                 <Link to="/disclaimer" className="text-white/60 hover:text-white text-sm transition-colors inline-flex items-center">
                   <AlertTriangle size={14} className="mr-1.5" />
                   Disclaimer
+                </Link>
+              </li>
+              <li>
+                <Link to="/earnings-disclaimer" className="text-white/60 hover:text-white text-sm transition-colors inline-flex items-center">
+                  <DollarSign size={14} className="mr-1.5" />
+                  Earnings Disclaimer
+                </Link>
+              </li>
+              <li>
+                <Link to="/affiliate-disclosure" className="text-white/60 hover:text-white text-sm transition-colors inline-flex items-center">
+                  <Users size={14} className="mr-1.5" />
+                  Affiliate Disclosure
                 </Link>
               </li>
             </ul>
@@ -100,7 +118,19 @@ const Footer: React.FC = () => {
 
           <div className="mt-4 p-4 bg-yellow-500/10 rounded-lg border border-yellow-400/20">
             <p className="text-white/60 text-xs text-center leading-relaxed">
-              <strong className="text-white/80">Disclaimer:</strong> Individual results may vary. Success depends on effort, market conditions, and execution. We make no guarantees of specific results or income. See our <Link to="/disclaimer" className="text-blue-400 hover:underline">full disclaimer</Link> for details.
+              <strong className="text-white/80">Disclaimer:</strong> Individual results may vary. Success depends on effort, market conditions, and execution. We make no guarantees of specific results or income. See our <Link to="/disclaimer" className="text-blue-400 hover:underline">full disclaimer</Link> and <Link to="/earnings-disclaimer" className="text-blue-400 hover:underline">earnings disclaimer</Link> for details.
+            </p>
+          </div>
+
+          <div className="mt-3 p-3 bg-blue-500/10 rounded-lg border border-blue-400/20">
+            <p className="text-white/60 text-xs text-center leading-relaxed">
+              <strong className="text-white/80">FTC Disclosure:</strong> This website contains affiliate links. We may receive compensation when you purchase through our links. See our <Link to="/affiliate-disclosure" className="text-blue-400 hover:underline">affiliate disclosure</Link> for full details.
+            </p>
+          </div>
+
+          <div className="mt-3 text-center">
+            <p className="text-white/40 text-xs">
+              Sold via JVZoo | <Link to="/refund-policy" className="text-blue-400 hover:underline">30-Day Money-Back Guarantee</Link>
             </p>
           </div>
         </div>

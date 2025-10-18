@@ -54,6 +54,9 @@ const StorageSetupPage = lazy(() => import('./pages/StorageSetupPage'));
 const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const DisclaimerPage = lazy(() => import('./pages/DisclaimerPage'));
+const RefundPolicyPage = lazy(() => import('./pages/RefundPolicyPage'));
+const EarningsDisclaimerPage = lazy(() => import('./pages/EarningsDisclaimerPage'));
+const AffiliateDisclosurePage = lazy(() => import('./pages/AffiliateDisclosurePage'));
 
 import { SALE_END_DATE } from './constants/dates';
 
@@ -216,6 +219,21 @@ function App() {
           <Route path="/disclaimer" element={
             <Suspense fallback={<PageLoadingFallback />}>
               <DisclaimerPage />
+            </Suspense>
+          } />
+          <Route path="/refund-policy" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <RefundPolicyPage />
+            </Suspense>
+          } />
+          <Route path="/earnings-disclaimer" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <EarningsDisclaimerPage />
+            </Suspense>
+          } />
+          <Route path="/affiliate-disclosure" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <AffiliateDisclosurePage />
             </Suspense>
           } />
           <Route path="/pricing" element={

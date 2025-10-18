@@ -272,14 +272,61 @@ const DisclaimerPage: React.FC = () => {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold text-white mb-4">17. Contact Information</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">17. JVZoo Vendor Information</h2>
+                <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-400/30 mb-4">
+                  <p className="text-white/80 font-semibold mb-2">Payment Processor and Marketplace</p>
+                  <p className="text-white/70 leading-relaxed mb-3">
+                    Smart CRM is sold through JVZoo, a reputable affiliate marketplace and payment processor. JVZoo handles all payment processing, transaction security, and affiliate commission distribution.
+                  </p>
+                  <ul className="list-disc list-inside text-white/70 space-y-2 ml-4">
+                    <li>All purchases are processed securely through JVZoo's encrypted payment system</li>
+                    <li>JVZoo maintains PCI DSS compliance for payment security</li>
+                    <li>Transaction records and receipts are provided by JVZoo</li>
+                    <li>Refund requests are processed through JVZoo's system</li>
+                    <li>For payment-related questions, you may contact JVZoo support at support@jvzoo.com</li>
+                  </ul>
+                </div>
+                <p className="text-white/70 leading-relaxed">
+                  By purchasing Smart CRM through JVZoo, you agree to JVZoo's Terms of Service and Privacy Policy in addition to Smart CRM's terms. Smart CRM is not responsible for JVZoo's policies, practices, or service availability.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-bold text-white mb-4">18. Affiliate Program Disclosure</h2>
+                <p className="text-white/70 leading-relaxed mb-3">
+                  Smart CRM operates an affiliate program through JVZoo. This means:
+                </p>
+                <ul className="list-disc list-inside text-white/70 space-y-2 ml-4">
+                  <li>Affiliates receive commissions for referring customers to Smart CRM</li>
+                  <li>If you were referred by an affiliate, they receive compensation for your purchase</li>
+                  <li>Affiliate commissions do not increase your purchase price</li>
+                  <li>We cannot control affiliate marketing claims or representations</li>
+                  <li>You should verify all claims independently before purchasing</li>
+                  <li>See our <Link to="/affiliate-disclosure" className="text-blue-400 hover:underline">Affiliate Disclosure</Link> for complete information</li>
+                </ul>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-bold text-white mb-4">19. FTC Compliance Notice</h2>
+                <div className="p-4 bg-yellow-500/10 rounded-lg border border-yellow-400/30">
+                  <p className="text-white/80 font-semibold mb-2">Federal Trade Commission Requirements</p>
+                  <p className="text-white/70 leading-relaxed">
+                    In compliance with Federal Trade Commission (FTC) regulations, Smart CRM provides clear and conspicuous disclosures regarding earnings claims, affiliate relationships, and typical results. All testimonials, case studies, and success stories represent exceptional outcomes and are not typical. See our <Link to="/earnings-disclaimer" className="text-blue-400 hover:underline">Earnings Disclaimer</Link> for detailed information about expected results and FTC compliance.
+                  </p>
+                </div>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-bold text-white mb-4">20. Contact Information</h2>
                 <p className="text-white/70 leading-relaxed">
                   If you have any questions about this Disclaimer, please contact us:
                 </p>
                 <div className="mt-4 p-4 bg-blue-500/10 rounded-lg border border-blue-400/30">
                   <p className="text-white/80">
                     <strong>Email:</strong> support@smartcrm.vip<br />
-                    <strong>Support Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM EST
+                    <strong>Support Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM EST<br />
+                    <strong>Payment Processor:</strong> JVZoo (support@jvzoo.com)<br />
+                    <strong>Refund Policy:</strong> <Link to="/refund-policy" className="text-blue-400 hover:underline">30-Day Money-Back Guarantee</Link>
                   </p>
                 </div>
               </section>
