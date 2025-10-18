@@ -19,6 +19,8 @@ const InstructorImageUploader: React.FC<InstructorImageUploaderProps> = ({
   const [imageUrl, setImageUrl] = useState<string | null>(initialImageUrl || null);
   const [uploading, setUploading] = useState(false);
   const [supabase, setSupabase] = useState<any | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const { addSuccess, addError, addInfo } = useMessageQueue();
   
   // Initialize Supabase client
@@ -111,16 +113,29 @@ const InstructorImageUploader: React.FC<InstructorImageUploaderProps> = ({
       
       const publicUrl = data.publicUrl;
       console.log("Uploaded new instructor image:", publicUrl);
-      
+
       setImageUrl(publicUrl);
       setSuccess(true);
-      
+
+      if (showMessages) {
+        addSuccess('Upload Complete', 'Instructor image uploaded successfully!');
+      }
+
       if (onImageUploaded) {
         onImageUploaded(publicUrl);
       }
+
+      setTimeout(() => setSuccess(false), 3000);
     } catch (err: any) {
       console.error("Error uploading image:", err);
-      setError(err.message || 'Error uploading image');
+      const errorMessage = err.message || 'Error uploading image';
+      setError(errorMessage);
+
+      if (showMessages) {
+        addError('Upload Failed', errorMessage);
+      }
+
+      setTimeout(() => setError(null), 5000);
     } finally {
       setUploading(false);
     }
@@ -149,13 +164,24 @@ const InstructorImageUploader: React.FC<InstructorImageUploaderProps> = ({
       
       setImageUrl(null);
       setSuccess(false);
-      
+
+      if (showMessages) {
+        addInfo('Image Removed', 'Instructor image removed successfully');
+      }
+
       if (onImageUploaded) {
         onImageUploaded('');
       }
     } catch (err: any) {
       console.error("Error removing image:", err);
-      setError(err.message || 'Error removing image');
+      const errorMessage = err.message || 'Error removing image';
+      setError(errorMessage);
+
+      if (showMessages) {
+        addError('Removal Failed', errorMessage);
+      }
+
+      setTimeout(() => setError(null), 5000);
     } finally {
       setUploading(false);
     }
