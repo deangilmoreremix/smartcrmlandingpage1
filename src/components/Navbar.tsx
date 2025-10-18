@@ -44,12 +44,12 @@ const ANNOUNCEMENTS = [
   },
   {
     icon: Rocket,
-    text: 'Launch Offer: 40% OFF + Free AI Onboarding • Limited Spots',
-    badge: 'LAST CHANCE',
+    text: 'Beta Launch: Early Access + Free AI Onboarding • Join Now',
+    badge: 'LIMITED',
     badgeColor: 'from-orange-500 to-red-500',
     textGradient: 'from-orange-400 via-red-400 to-orange-300',
     borderColor: 'border-orange-500/50',
-    action: 'Claim Discount'
+    action: 'Join Beta'
   },
   {
     icon: Shield,
@@ -78,9 +78,9 @@ const Navbar: React.FC = React.memo(() => {
   const [currentAnnouncement, setCurrentAnnouncement] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('');
-  const [userCount, setUserCount] = useState(127);
-  const [dealsClosedToday, setDealsClosedToday] = useState(89);
-  const [revenueGenerated, setRevenueGenerated] = useState(427000);
+  const [userCount, setUserCount] = useState(342);
+  const [dealsClosedToday, setDealsClosedToday] = useState(127);
+  const [revenueGenerated, setRevenueGenerated] = useState(856000);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const location = useLocation();
 
@@ -381,10 +381,10 @@ const Navbar: React.FC = React.memo(() => {
 
                 <div className="flex flex-col gap-0 relative">
                   <span className="text-sm font-extrabold bg-gradient-to-r from-orange-100 via-red-100 to-orange-50 bg-clip-text text-transparent leading-tight">
-                    40% OFF
+                    BETA ACCESS
                   </span>
                   <span className="text-[9px] text-orange-200/90 font-bold leading-tight tracking-wider uppercase">
-                    12 Spots Left
+                    Early Bird
                   </span>
                 </div>
               </motion.div>
