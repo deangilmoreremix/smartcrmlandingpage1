@@ -51,6 +51,9 @@ const AIFeaturesCatalogLandingPage = lazy(() => import('./pages/AIFeaturesCatalo
 const AdminUploadPage = lazy(() => import('./pages/AdminUploadPage'));
 const DemoPage = lazy(() => import('./pages/DemoPage'));
 const StorageSetupPage = lazy(() => import('./pages/StorageSetupPage'));
+const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
+const DisclaimerPage = lazy(() => import('./pages/DisclaimerPage'));
 
 import { SALE_END_DATE } from './constants/dates';
 
@@ -198,6 +201,21 @@ function App() {
           <Route path="/storage-setup" element={
             <Suspense fallback={<PageLoadingFallback />}>
               <StorageSetupPage />
+            </Suspense>
+          } />
+          <Route path="/terms" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <TermsOfServicePage />
+            </Suspense>
+          } />
+          <Route path="/privacy" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <PrivacyPolicyPage />
+            </Suspense>
+          } />
+          <Route path="/disclaimer" element={
+            <Suspense fallback={<PageLoadingFallback />}>
+              <DisclaimerPage />
             </Suspense>
           } />
           <Route path="/pricing" element={

@@ -24,7 +24,7 @@ const faqs: FaqItem[] = [
   },
   {
     question: "What is the pricing for Smart CRM?",
-    answer: "Smart CRM is available for a one-time payment of $97 (regularly $999) with lifetime access to all features. There are no monthly subscription fees, no per-user charges, and no hidden costs. Use coupon 'SMARTCRM VIP' at checkout for this special pricing. This includes unlimited contacts, unlimited users, and all premium AI-powered features.",
+    answer: "Smart CRM is available for a one-time payment of $97 (regularly $999) with lifetime access to all features. There are no monthly subscription fees, no per-user charges, and no hidden costs. Use coupon 'SMARTCRM VIP' at checkout for this special pricing. This includes unlimited contacts, unlimited users, and all premium AI-powered features. Note: The word 'lifetime' applies to the lifetime of the product. The average lifetime of a product of this nature and price to be supported is approximately 5 years.",
     category: "Pricing"
   },
   {

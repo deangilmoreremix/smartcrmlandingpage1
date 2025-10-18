@@ -122,6 +122,21 @@ const PricingSection: React.FC = () => {
                 </div>
               </div>
 
+              <div className="mt-6 p-4 bg-blue-500/10 rounded-lg border border-blue-400/30">
+                <div className="flex items-start gap-3">
+                  <Shield className="text-blue-400 flex-shrink-0 mt-1" size={20} />
+                  <div>
+                    <h4 className="text-white font-semibold mb-2">Lifetime Access Terms</h4>
+                    <p className="text-white/70 text-sm">
+                      The word "lifetime" applies to the lifetime of the product. The average lifetime
+                      of a product of this nature and price to be supported is approximately 5 years.
+                      Your one-time payment ensures you receive all updates, support, and features during
+                      this period without any additional subscription fees.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div className="mt-6 text-center">
                 <JVZooBuyButton className="w-full py-4 rounded-lg bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all inline-block text-center">
                   Claim Your Lifetime Access Now
