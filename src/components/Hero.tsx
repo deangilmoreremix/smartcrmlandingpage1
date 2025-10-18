@@ -31,7 +31,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center px-4 py-12 overflow-hidden mt-[108px]">
+    <div className="relative min-h-screen flex flex-col items-center justify-center px-4 py-12 overflow-hidden mt-[310px]">
       <AnimatedIconsGroup
         section="hero"
         iconCount={8}
