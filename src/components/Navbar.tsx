@@ -80,7 +80,6 @@ const Navbar: React.FC = React.memo(() => {
   const [activeSection, setActiveSection] = useState('');
   const [userCount, setUserCount] = useState(185);
   const [dealsClosedToday, setDealsClosedToday] = useState(68);
-  const [revenueGenerated, setRevenueGenerated] = useState(425000);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const location = useLocation();
 
@@ -110,14 +109,6 @@ const Navbar: React.FC = React.memo(() => {
     const interval = setInterval(() => {
       setDealsClosedToday((prev) => prev + 1);
     }, 8000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Revenue counter
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRevenueGenerated((prev) => prev + Math.floor(Math.random() * 5000) + 2000);
-    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -325,27 +316,6 @@ const Navbar: React.FC = React.memo(() => {
                 </div>
               </motion.div>
 
-              {/* Revenue generated */}
-              <motion.div
-                className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-emerald-400/40 bg-gradient-to-br from-emerald-500/25 via-green-500/20 to-emerald-500/25 backdrop-blur-md cursor-pointer shadow-lg relative overflow-hidden"
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: '0 8px 32px rgba(16, 185, 129, 0.3)'
-                }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-                <div className="relative flex items-center justify-center w-7 h-7 rounded-md bg-emerald-500/30 border border-emerald-400/40">
-                  <DollarSign size={14} className="text-emerald-200 drop-shadow" />
-                </div>
-                <div className="flex flex-col gap-0 relative">
-                  <span className="text-sm font-extrabold bg-gradient-to-r from-emerald-200 via-green-200 to-emerald-100 bg-clip-text text-transparent leading-tight">
-                    ${(revenueGenerated / 1000).toFixed(0)}K
-                  </span>
-                  <span className="text-[9px] text-emerald-300/80 font-bold leading-tight tracking-wider uppercase">
-                    Revenue
-                  </span>
-                </div>
-              </motion.div>
 
               {/* Limited time offer - Urgency card */}
               <motion.div
