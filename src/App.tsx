@@ -27,8 +27,10 @@ import ParallaxSection from './components/ParallaxSection';
 import AiFeaturesCatalog from './components/AiFeaturesCatalog';
 import FeatureMatrix from './components/FeatureMatrix';
 import IntegrationEcosystem from './components/IntegrationEcosystem';
-import SecurityComplianceHub from './components/SecurityComplianceHub';
 import WorkflowShowcase from './components/WorkflowShowcase';
+import UniversalComparison from './components/UniversalComparison';
+import PricingComparison from './components/PricingComparison';
+import FEComparisonFull from './components/FEComparisonFull';
 import TrainingProgramSection from './components/TrainingProgramSection';
 import SignupFormSection from './components/SignupFormSection';
 import DashboardEmbedSection from './components/DashboardEmbedSection';
@@ -311,9 +313,6 @@ function App() {
                   </div>
                 </ParallaxSection>
 
-                {/* Security & Compliance Hub */}
-                <SecurityComplianceHub />
-
                 {/* Features Section */}
                 <section id="features" className="py-20 px-4 relative">
                   <div className="max-w-7xl mx-auto">
@@ -331,6 +330,34 @@ function App() {
 
                 {/* Complete Feature Matrix */}
                 <FeatureMatrix />
+
+                {/* Competitor Comparisons */}
+                <section id="comparisons" className="py-20 px-4 bg-gradient-to-b from-slate-900 to-black">
+                  <div className="max-w-7xl mx-auto">
+                    <div className="text-center mb-12">
+                      <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Compare Smart CRM</h2>
+                      <div className="w-24 h-1 bg-blue-500 mx-auto rounded-full mb-6" />
+                      <p className="text-white/70 max-w-2xl mx-auto">
+                        See how Smart CRM stacks up against the competition with comprehensive feature comparisons
+                      </p>
+                    </div>
+
+                    {/* Universal Comparison */}
+                    <div className="mb-16">
+                      <UniversalComparison layout="table" showFilters={true} />
+                    </div>
+
+                    {/* Pricing Comparison */}
+                    <div className="mb-16">
+                      <PricingComparison />
+                    </div>
+
+                    {/* Full Feature Comparison */}
+                    <div>
+                      <FEComparisonFull />
+                    </div>
+                  </div>
+                </section>
 
                 {/* Pricing Section */}
                 <PricingSection />
