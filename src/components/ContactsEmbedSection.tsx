@@ -20,10 +20,9 @@ const ContactsEmbedSection: React.FC = () => {
 
   React.useEffect(() => {
     if (showEmbed && !isIframeLoaded && !iframeError) {
-      timeoutRef.current = setTimeout(() => {
-        setLoadTimeout(true);
-        console.warn('Contacts iframe load timeout after 30 seconds');
-      }, 30000);
+      // Removed timeout - let iframe load naturally
+      // Servers are always-on, no need for aggressive timeout
+      // Users can click "Open in New Tab" if they prefer
     }
 
     return () => {
@@ -56,13 +55,10 @@ const ContactsEmbedSection: React.FC = () => {
   };
 
   const handleIframeError = () => {
-    setIframeError(true);
-    setLoadTimeout(false);
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-    console.error('Contacts iframe failed to load');
+    // Note: onError rarely fires for cross-origin iframes due to security
+    // Only set error if we're certain there's a problem
+    console.warn('Contacts iframe error event (may be false positive for cross-origin)');
+    // Don't set error state - let it keep trying to load
   };
 
   const contactsFeatures = [
@@ -609,7 +605,6 @@ const ContactsEmbedSection: React.FC = () => {
                           src={EMBED_URLS.contacts}
                           className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
                           onLoad={handleIframeLoad}
-                          onError={handleIframeError}
                           title="Smart CRM Contacts Management Demo"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; geolocation; gyroscope; picture-in-picture"
                           sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"

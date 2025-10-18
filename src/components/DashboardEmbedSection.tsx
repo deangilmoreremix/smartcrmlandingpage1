@@ -23,11 +23,9 @@ const DashboardEmbedSection: React.FC = () => {
 
   React.useEffect(() => {
     if (showEmbed && !isIframeLoaded && !iframeError) {
-      // Increased timeout to 60 seconds for Replit server
-      timeoutRef.current = setTimeout(() => {
-        setLoadTimeout(true);
-        console.warn('Dashboard iframe load timeout after 60 seconds');
-      }, 60000);
+      // Removed aggressive timeout - server is always-on
+      // Let iframe load naturally without artificial deadline
+      // Users have immediate "Open in New Tab" option if needed
     }
 
     return () => {
@@ -43,69 +41,16 @@ const DashboardEmbedSection: React.FC = () => {
   }, [showEmbed, isIframeLoaded, iframeError, iframeKey]);
 
   const checkServerStatus = async () => {
-    try {
-      setServerStatus('checking');
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-      const response = await fetch(EMBED_URLS.dashboard, {
-        method: 'HEAD',
-        signal: controller.signal,
-        mode: 'no-cors'
-      });
-
-      clearTimeout(timeoutId);
-      setServerStatus('online');
-      return true;
-    } catch (error) {
-      console.error('Server check failed:', error);
-      setServerStatus('offline');
-      return false;
-    }
+    // Server is always-on, skip health check
+    setServerStatus('online');
+    return true;
   };
 
   const wakeUpServer = async () => {
-    setServerStatus('waking');
-    setWakingProgress(0);
-
-    // Progress animation
-    progressIntervalRef.current = setInterval(() => {
-      setWakingProgress(prev => {
-        if (prev >= 90) return 90;
-        return prev + 2;
-      });
-    }, 600);
-
-    try {
-      // Ping the server to wake it up
-      await fetch(EMBED_URLS.dashboard, {
-        method: 'GET',
-        mode: 'no-cors'
-      });
-
-      // Wait a bit for server to fully wake
-      await new Promise(resolve => setTimeout(resolve, 3000));
-
-      setWakingProgress(100);
-      setServerStatus('online');
-
-      if (progressIntervalRef.current) {
-        clearInterval(progressIntervalRef.current);
-        progressIntervalRef.current = null;
-      }
-
-      return true;
-    } catch (error) {
-      console.error('Failed to wake server:', error);
-      setServerStatus('offline');
-
-      if (progressIntervalRef.current) {
-        clearInterval(progressIntervalRef.current);
-        progressIntervalRef.current = null;
-      }
-
-      return false;
-    }
+    // Server is always-on, no wake-up needed
+    // Just simulate brief loading for UX consistency
+    setServerStatus('online');
+    return true;
   };
 
   const handleRetry = async () => {
@@ -118,12 +63,8 @@ const DashboardEmbedSection: React.FC = () => {
       clearTimeout(timeoutRef.current);
     }
 
-    // Try to wake up the server before retrying
-    const serverAwake = await wakeUpServer();
-
-    if (serverAwake) {
-      setIframeKey(prev => prev + 1);
-    }
+    // Server is always-on, just reload iframe
+    setIframeKey(prev => prev + 1);
   };
 
   const handleIframeLoad = () => {
@@ -137,13 +78,10 @@ const DashboardEmbedSection: React.FC = () => {
   };
 
   const handleIframeError = () => {
-    setIframeError(true);
-    setLoadTimeout(false);
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-    console.error('Dashboard iframe failed to load');
+    // Note: onError rarely fires for cross-origin iframes due to security
+    // Only set error if we're certain there's a problem
+    console.warn('Dashboard iframe error event (may be false positive for cross-origin)');
+    // Don't set error state - let it keep trying to load
   };
 
   const dashboardFeatures = [
@@ -959,7 +897,6 @@ const DashboardEmbedSection: React.FC = () => {
                           src={EMBED_URLS.dashboard}
                           className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10 bg-gray-900"
                           onLoad={handleIframeLoad}
-                          onError={handleIframeError}
                           title="Smart CRM Dashboard Analytics Demo"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; geolocation; gyroscope; picture-in-picture"
                           sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"

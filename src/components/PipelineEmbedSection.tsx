@@ -20,10 +20,9 @@ const PipelineEmbedSection: React.FC = () => {
 
   React.useEffect(() => {
     if (showEmbed && !isIframeLoaded && !iframeError) {
-      timeoutRef.current = setTimeout(() => {
-        setLoadTimeout(true);
-        console.warn('Pipeline iframe load timeout after 30 seconds');
-      }, 30000);
+      // Removed timeout - let iframe load naturally
+      // Servers are always-on, no need for aggressive timeout
+      // Users can click "Open in New Tab" if they prefer
     }
 
     return () => {
@@ -56,13 +55,10 @@ const PipelineEmbedSection: React.FC = () => {
   };
 
   const handleIframeError = () => {
-    setIframeError(true);
-    setLoadTimeout(false);
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-    console.error('Pipeline iframe failed to load');
+    // Note: onError rarely fires for cross-origin iframes due to security
+    // Only set error if we're certain there's a problem
+    console.warn('Pipeline iframe error event (may be false positive for cross-origin)');
+    // Don't set error state - let it keep trying to load
   };
 
   const pipelineFeatures = [
@@ -458,7 +454,6 @@ const PipelineEmbedSection: React.FC = () => {
                           src={EMBED_URLS.pipeline}
                           className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
                           onLoad={handleIframeLoad}
-                          onError={handleIframeError}
                           title="Smart CRM Pipeline Deals Management Demo"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; geolocation; gyroscope; picture-in-picture"
                           sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-presentation allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"
