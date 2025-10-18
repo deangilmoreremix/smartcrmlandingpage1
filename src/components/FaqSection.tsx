@@ -19,7 +19,7 @@ const faqs: FaqItem[] = [
   },
   {
     question: "How is Smart CRM different from other CRM solutions?",
-    answer: "Smart CRM stands out with its AI-powered automation that reduces manual data entry by up to 70%. Our system learns from your team's activities to provide actionable insights and predictive recommendations, unlike traditional CRMs that function primarily as databases. We've built Smart CRM from the ground up to focus on relationship intelligence rather than just contact management.",
+    answer: "Smart CRM stands out with its AI-powered automation that reduces manual data entry by up to 60%. Our system learns from your team's activities to provide actionable insights and predictive recommendations, unlike traditional CRMs that function primarily as databases. We've built Smart CRM from the ground up to focus on relationship intelligence rather than just contact management.",
     category: "Features"
   },
   {

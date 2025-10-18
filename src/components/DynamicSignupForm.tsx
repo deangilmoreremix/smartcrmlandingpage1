@@ -25,8 +25,8 @@ interface DynamicSignupFormProps {
 }
 
 const DynamicSignupForm: React.FC<DynamicSignupFormProps> = ({
-  title = "Register for Early Access",
-  subtitle = "Join our waitlist to be among the first to experience Smart CRM.",
+  title = "Get Smart CRM Today",
+  subtitle = "Join thousands transforming their sales process with AI.",
   buttonText = "Secure Your Spot",
   successMessage = "You're in! Thanks for registering.",
   fields = defaultFields,

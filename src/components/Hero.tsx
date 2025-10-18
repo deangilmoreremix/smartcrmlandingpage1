@@ -16,9 +16,9 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
   const [highlightedFeature, setHighlightedFeature] = useState<number | null>(null);
 
   const keyBenefits = [
-    { text: "40% More Revenue in 90 Days" },
+    { text: "25% More Revenue in 90 Days" },
     { text: "AI Predicts Which Leads Will Buy" },
-    { text: "Automates 80% of Follow-Ups" }
+    { text: "Automates 65% of Follow-Ups" }
   ];
 
   const scrollToContent = () => {
@@ -192,7 +192,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
             transition={{ duration: 0.2 }}
           >
             <Sparkles className="text-blue-400 mr-2" size={16} />
-            <span className="text-blue-400 font-medium text-sm">Powered by GPT-5 AI • Early Access Available</span>
+            <span className="text-blue-400 font-medium text-sm">Powered by GPT-5 AI • Now Available</span>
           </motion.div>
         </AnimatedElement>
 
@@ -269,7 +269,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, launchDate }) => {
             </div>
 
             <p className="text-white/60 text-sm mt-3">
-              Limited beta spots • Close 40% more deals • Setup in 5 minutes
+              Launch special pricing • Close more deals • Setup in 5 minutes
             </p>
           </div>
         </AnimatedElement>

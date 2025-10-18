@@ -234,7 +234,7 @@ function App() {
                 {/* Hero Section */}
                 <Hero
                   title="Close More Deals with AI-Powered Smart CRM"
-                  subtitle="The only CRM that uses GPT-5 AI to predict which leads will buy, automate your follow-ups, and tell you exactly what to say next. Get early access and be among the first to transform your sales process."
+                  subtitle="The only CRM that uses GPT-5 AI to predict which leads will buy, automate your follow-ups, and tell you exactly what to say next. Transform your sales process today."
                   launchDate={launchDate}
                 />
 
@@ -255,7 +255,7 @@ function App() {
                       thumbnailUrl="https://img.youtube.com/vi/rejc9Q0X6LA/maxresdefault.jpg"
                       videoUrl="https://www.youtube.com/embed/rejc9Q0X6LA"
                       title="Smart CRM Demo: Transform Your Sales Process"
-                      description="Watch this 3-minute demo to see how Smart CRM uses GPT-5 AI to help you close 40% more deals with 80% less manual work."
+                      description="Watch this 3-minute demo to see how Smart CRM uses GPT-5 AI to help you close more deals with less manual work."
                     />
                   </div>
                 </section>
@@ -296,9 +296,9 @@ function App() {
                   overlayColor="rgba(0, 0, 40, 0.75)"
                 >
                   <div className="max-w-4xl mx-auto text-center px-4">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Be Among the First to Revolutionize Your Customer Relationships with AI</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Revolutionize Your Customer Relationships with AI</h2>
                     <p className="text-xl text-white/80 mb-8">
-                      Join our exclusive early access program and discover how businesses are preparing to transform customer connections with Smart CRM.
+                      Join thousands of businesses transforming customer connections with Smart CRM.
                     </p>
                     <JVZooBuyButton>
                       <button className="px-8 py-4 bg-white text-blue-900 rounded-full text-lg font-bold hover:bg-blue-50 transition-colors shadow-lg">

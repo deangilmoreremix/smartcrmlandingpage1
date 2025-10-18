@@ -171,8 +171,8 @@ export const WEBINAR_BENEFITS: WebinarBenefit[] = [
   },
   {
     icon: 'Zap',
-    title: 'Early Access Opportunity',
-    description: 'Webinar attendees get priority access to Smart CRM with special launch pricing',
+    title: 'Launch Special Pricing',
+    description: 'Webinar attendees get exclusive Smart CRM launch pricing',
     category: 'access'
   }
 ];

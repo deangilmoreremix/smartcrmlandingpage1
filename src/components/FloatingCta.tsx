@@ -223,7 +223,7 @@ const FloatingCta: React.FC = () => {
               <div className="space-y-2 mb-4">
                 <div className="flex items-start text-xs">
                   <Zap size={14} className="mr-2 mt-0.5 text-yellow-300 flex-shrink-0" />
-                  <span className="text-white/90">Automate 70% of manual data entry</span>
+                  <span className="text-white/90">Automate 60% of manual data entry</span>
                 </div>
                 <div className="flex items-start text-xs">
                   <TrendingUp size={14} className="mr-2 mt-0.5 text-green-300 flex-shrink-0" />

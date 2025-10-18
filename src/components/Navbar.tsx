@@ -8,20 +8,20 @@ import JVZooBuyButton from './JVZooBuyButton';
 const ANNOUNCEMENTS = [
   {
     icon: TrendingUp,
-    text: 'Beta Testing Now • Early Access Available • Limited Spots',
-    badge: 'BETA',
+    text: 'Now Live • Transform Your Sales Process Today',
+    badge: 'LIVE',
     badgeColor: 'from-blue-500 to-cyan-500',
     textGradient: 'from-blue-400 via-cyan-400 to-blue-300',
     borderColor: 'border-blue-500/50',
-    action: 'Join Beta Program'
+    action: 'Get Started'
   },
   {
     icon: Brain,
-    text: 'GPT-5 AI Now Live • 94.6% Accuracy • 40+ Expert Capabilities',
-    badge: 'BREAKTHROUGH',
-    badgeColor: 'from-purple-500 to-pink-500',
-    textGradient: 'from-purple-400 via-pink-400 to-purple-300',
-    borderColor: 'border-purple-500/50',
+    text: 'GPT-5 AI Powered • 90%+ Accuracy • 25+ Expert Capabilities',
+    badge: 'INTELLIGENT',
+    badgeColor: 'from-blue-500 to-cyan-500',
+    textGradient: 'from-blue-400 via-cyan-400 to-blue-300',
+    borderColor: 'border-blue-500/50',
     action: 'Explore AI Features'
   },
   {
@@ -44,12 +44,12 @@ const ANNOUNCEMENTS = [
   },
   {
     icon: Rocket,
-    text: 'Beta Launch: Early Access + Free AI Onboarding • Join Now',
-    badge: 'LIMITED',
+    text: 'Launch Special: Get Started + Free AI Onboarding • Available Now',
+    badge: 'SPECIAL',
     badgeColor: 'from-orange-500 to-red-500',
     textGradient: 'from-orange-400 via-red-400 to-orange-300',
     borderColor: 'border-orange-500/50',
-    action: 'Join Beta'
+    action: 'Get Started'
   },
   {
     icon: Shield,
@@ -78,9 +78,9 @@ const Navbar: React.FC = React.memo(() => {
   const [currentAnnouncement, setCurrentAnnouncement] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('');
-  const [userCount, setUserCount] = useState(342);
-  const [dealsClosedToday, setDealsClosedToday] = useState(127);
-  const [revenueGenerated, setRevenueGenerated] = useState(856000);
+  const [userCount, setUserCount] = useState(185);
+  const [dealsClosedToday, setDealsClosedToday] = useState(68);
+  const [revenueGenerated, setRevenueGenerated] = useState(425000);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const location = useLocation();
 
@@ -381,10 +381,10 @@ const Navbar: React.FC = React.memo(() => {
 
                 <div className="flex flex-col gap-0 relative">
                   <span className="text-sm font-extrabold bg-gradient-to-r from-orange-100 via-red-100 to-orange-50 bg-clip-text text-transparent leading-tight">
-                    BETA ACCESS
+                    LAUNCH OFFER
                   </span>
                   <span className="text-[9px] text-orange-200/90 font-bold leading-tight tracking-wider uppercase">
-                    Early Bird
+                    Limited Time
                   </span>
                 </div>
               </motion.div>

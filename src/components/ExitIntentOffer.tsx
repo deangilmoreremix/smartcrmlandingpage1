@@ -345,7 +345,7 @@ const ExitIntentOffer: React.FC<ExitIntentOfferProps> = ({
                 <div className="text-center">
                   <h3 className="text-xl font-bold text-white mb-2">⏰ Limited Time Offer</h3>
                   <p className="text-white/80 mb-4">
-                    <strong className="text-red-400">Warning:</strong> This VIP deal is only available for the first 100 early access users.
+                    <strong className="text-red-400">Warning:</strong> This VIP deal is only available for the first 100 launch customers.
                   </p>
                   <p className="text-white/60 text-sm">
                     After that, SmartCRM reverts to the regular $999 one-time license.

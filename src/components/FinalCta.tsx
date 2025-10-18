@@ -70,7 +70,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 {
                   icon: <Zap className="text-blue-400" size={24} />,
                   title: "AI-Powered Automation",
-                  description: "Automate 70% of manual data entry with GPT-5 powered intelligence. Smart CRM handles scoring, follow-ups, and forecasting automatically."
+                  description: "Automate 60% of manual data entry with GPT-5 powered intelligence. Smart CRM handles scoring, follow-ups, and forecasting automatically."
                 },
                 {
                   icon: <Star className="text-green-400" size={24} />,
@@ -118,7 +118,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                       <Check size={14} className="text-green-400 mt-0.5" />
                       <p className="text-white/60 text-xs">
                         {index === 0 ? "Eliminate repetitive data entry forever" :
-                         index === 1 ? "Close 40% more deals with AI insights" :
+                         index === 1 ? "Close more deals with AI insights" :
                          "Oct 19-21 live training sessions"}
                       </p>
                     </div>

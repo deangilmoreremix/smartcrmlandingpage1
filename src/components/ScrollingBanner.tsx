@@ -6,7 +6,7 @@ const ScrollingBanner: React.FC = () => {
   const messages = [
     { icon: Rocket, text: "FREE WEBINAR - OCTOBER 13TH", badge: "REGISTER NOW", color: "text-blue-300" },
     { icon: Sparkles, text: "See GPT-5 AI Integration Live", badge: "EXCLUSIVE DEMO", color: "text-cyan-300" },
-    { icon: TrendingUp, text: "Learn to Boost Revenue by 40%", badge: "PROVEN TACTICS", color: "text-green-300" },
+    { icon: TrendingUp, text: "Learn to Boost Revenue", badge: "PROVEN TACTICS", color: "text-green-300" },
     { icon: Zap, text: "Live Q&A with CRM Experts", badge: "ASK ANYTHING", color: "text-yellow-300" },
     { icon: Award, text: "Limited Seats Available", badge: "FILLING FAST", color: "text-blue-300" },
     { icon: Star, text: "3:00 PM EST - Don't Miss Out!", badge: "FREE EVENT", color: "text-cyan-300" },

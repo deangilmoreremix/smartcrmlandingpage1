@@ -28,7 +28,7 @@ const crmOptionDetails: Record<string, CrmOptionDetail> = {
       "Automated contact enrichment"
     ],
     stats: [
-      { value: "70%", label: "Reduction in manual data entry" },
+      { value: "60%", label: "Reduction in manual data entry" },
       { value: "15hrs", label: "Saved per rep each week" },
       { value: "99.8%", label: "Data accuracy rate" }
     ],

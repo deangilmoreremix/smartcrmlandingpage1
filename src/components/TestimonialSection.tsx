@@ -338,10 +338,10 @@ const TestimonialSection: React.FC = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-8">
           <AnimatedElement animation="fadeIn">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">What Our Beta Users Say</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">What Our Users Say</h2>
             <div className="w-24 h-1 bg-blue-500 mx-auto rounded-full mb-6" />
             <p className="text-white/70 max-w-2xl mx-auto text-lg mb-8">
-              Smart CRM is already making a difference for businesses in our early access program.
+              Smart CRM is already making a difference for businesses worldwide.
             </p>
           </AnimatedElement>
         </div>
@@ -760,7 +760,7 @@ const TestimonialSection: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
-                Join 50+ early access users already testing
+                Join 200+ users already using Smart CRM
               </motion.p>
             </motion.div>
             <p className="text-white/70">Be part of the Smart CRM revolution</p>
