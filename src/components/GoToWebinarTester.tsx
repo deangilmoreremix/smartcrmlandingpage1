@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, AlertCircle, RefreshCw, Video, Mail, Database } from 'lucide-react';
+import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, RefreshCw, Video, Mail, Database } from 'lucide-react';
 import { env } from '../config/env';
 import { ApiClient } from '../utils/apiClient';
 import { logError, ErrorSeverity } from '../utils/errorLogger';
