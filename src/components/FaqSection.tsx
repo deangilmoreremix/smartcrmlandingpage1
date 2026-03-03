@@ -14,7 +14,7 @@ interface FaqItem {
 const faqs: FaqItem[] = [
   {
     question: "When is the Smart CRM masterclass?",
-    answer: "Our 3-day Smart CRM masterclass is scheduled for October 19-21, 2025 at 3:00 PM EST each day. This interactive online training will teach you how to transform your customer relationships using AI-powered CRM strategies.",
+    answer: "Our 3-day Smart CRM masterclass is scheduled for March 10-13, 2026 at 3:00 PM EST each day. This interactive online training will teach you how to transform your customer relationships using AI-powered CRM strategies.",
     category: "Masterclass"
   },
   {
@@ -64,7 +64,7 @@ const faqs: FaqItem[] = [
   },
   {
     question: "What's included in the free masterclass that comes with Smart CRM?",
-    answer: "Day 1 (October 19): Advanced Smart CRM AI Features - Master all AI-powered automation, lead scoring, and predictive analytics. Day 2 (October 20): Implementation & Optimization - Learn advanced setup strategies and how to maximize your Smart CRM ROI. Day 3 (October 21): Advanced Workflows - Master automation and optimization strategies.",
+    answer: "Day 1 (March 10): Advanced Smart CRM AI Features - Master all AI-powered automation, lead scoring, and predictive analytics. Day 2 (March 11): Implementation & Optimization - Learn advanced setup strategies and how to maximize your Smart CRM ROI. Day 3 (March 12): Advanced Workflows - Master automation and optimization strategies.",
     category: "Masterclass"
   },
   {
@@ -74,7 +74,7 @@ const faqs: FaqItem[] = [
   },
   {
     question: "Is the masterclass really free with Smart CRM purchase?",
-    answer: "Yes! The 3-day masterclass is completely included with your Smart CRM purchase during our special sale. This training normally costs $697, but it's free for all Smart CRM customers who purchase during October 19-23, 2025.",
+    answer: "Yes! The 3-day masterclass is completely included with your Smart CRM purchase during our special sale. This training normally costs $697, but it's free for all Smart CRM customers who purchase during March 4-9, 2026.",
     category: "Masterclass"
   }
 ];

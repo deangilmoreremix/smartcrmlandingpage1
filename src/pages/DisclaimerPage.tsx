@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, TriangleAlert as AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -27,7 +27,7 @@ const DisclaimerPage: React.FC = () => {
             </div>
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-white">Disclaimer</h1>
-              <p className="text-white/60 mt-2">Last Updated: October 18, 2025</p>
+              <p className="text-white/60 mt-2">Last Updated: March 3, 2026</p>
             </div>
           </div>
 
@@ -326,7 +326,7 @@ const DisclaimerPage: React.FC = () => {
                     <strong>Email:</strong> support@smartcrm.vip<br />
                     <strong>Support Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM EST<br />
                     <strong>Payment Processor:</strong> JVZoo (support@jvzoo.com)<br />
-                    <strong>Refund Policy:</strong> <Link to="/refund-policy" className="text-blue-400 hover:underline">30-Day Money-Back Guarantee</Link>
+                    <strong>Refund Policy:</strong> <Link to="/refund-policy" className=\"text-blue-400 hover:underline">30-Day Money-Back Guarantee</Link>
                   </p>
                 </div>
               </section>

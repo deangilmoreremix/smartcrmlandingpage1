@@ -611,7 +611,7 @@ const Navbar: React.FC = React.memo(() => {
               <MobileNavLink href="/contacts" onClick={() => setIsOpen(false)}>Contacts</MobileNavLink>
               <MobileNavLink href="/pipeline" onClick={() => setIsOpen(false)}>Pipeline</MobileNavLink>
               <MobileNavLink href="/ai-features" onClick={() => setIsOpen(false)}>AI Features</MobileNavLink>
-              <MobileNavLink href="/#training" onClick={() => setIsOpen(false)}>Masterclass (Oct 17-19)</MobileNavLink>
+              <MobileNavLink href="/#training" onClick={() => setIsOpen(false)}>Masterclass (Mar 10-13)</MobileNavLink>
               <MobileNavLink href="/webinar-recap" onClick={() => setIsOpen(false)}>Webinar Recap</MobileNavLink>
               <MobileNavLink href="/#faq" onClick={() => setIsOpen(false)}>FAQ</MobileNavLink>
               <div className="pt-2">

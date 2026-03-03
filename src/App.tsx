@@ -82,7 +82,7 @@ const PageLoadingFallback = () => (
 );
 
 function App() {
-  // Set sale end date - October 20, 2025 at 11:59 PM EST
+  // Set sale end date - March 9, 2026 at 11:59 PM EST
   const launchDate = SALE_END_DATE;
 
   // Modal state management

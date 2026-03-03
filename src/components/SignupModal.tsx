@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Gift, Star, Zap, ArrowRight, User, Mail, Building, Calendar as CalendarIcon, Clock, Video, CheckCircle, Phone, Briefcase, MessageSquare, ChevronDown } from 'lucide-react';
+import { X, Gift, Star, Zap, ArrowRight, User, Mail, Building, Calendar as CalendarIcon, Clock, Video, CircleCheck as CheckCircle, Phone, Briefcase, MessageSquare, ChevronDown } from 'lucide-react';
 import DynamicSignupForm from './DynamicSignupForm';
 import { handleFormSubmission } from '../utils/formHelpers';
 import CanvasConfetti from './CanvasConfetti';
@@ -44,7 +44,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
       case 'masterclass':
         return {
           title: "Get Smart CRM + Free Masterclass",
-          subtitle: "Get Smart CRM during our special 5-day sale (Oct 19-23) and receive free access to our exclusive 3-day training on October 19-21, 2025",
+          subtitle: "Get Smart CRM during our special sale (Mar 4-9) and receive free access to our exclusive 3-day training on March 10-13, 2026",
           cta: "Get Smart CRM Now"
         };
       case 'early-access':
@@ -280,7 +280,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
                         </div>
                       </div>
 
-                      <CountdownTimer targetDate={new Date('2025-10-16T15:00:00-05:00')} variant="compact" />
+                      <CountdownTimer targetDate={new Date('2026-03-10T15:00:00-05:00')} variant="compact" />
 
                       <RegistrationProgress
                         spotsTotal={WEBINAR_INFO.capacity}
@@ -510,7 +510,7 @@ const SignupModal: React.FC<SignupModalProps> = ({
                         transition={{ delay: 0.7 }}
                       >
                         <Calendar className="text-blue-400" size={16} />
-                        <span className="ml-2">Masterclass: October 19-21, 2025 at 3:00 PM EST</span>
+                        <span className="ml-2">Masterclass: March 10-13, 2026 at 3:00 PM EST</span>
                       </motion.div>
                     </div>
                   </div>

@@ -5,9 +5,7 @@ import AnimatedElement from './AnimatedElement';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
 import JVZooBuyButton from './JVZooBuyButton';
 
-interface FinalCtaProps {}
-
-const FinalCta: React.FC<FinalCtaProps> = () => {
+const FinalCta: React.FC = () => {
   const [spotsLeft, setSpotsLeft] = useState(50);
   const [timeElapsed, setTimeElapsed] = useState(0);
   
@@ -119,7 +117,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                       <p className="text-white/60 text-xs">
                         {index === 0 ? "Eliminate repetitive data entry forever" :
                          index === 1 ? "Close more deals with AI insights" :
-                         "Oct 19-21 live training sessions"}
+                         "Mar 10-13 live training sessions"}
                       </p>
                     </div>
                   </motion.div>
@@ -193,7 +191,7 @@ const FinalCta: React.FC<FinalCtaProps> = () => {
                 }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
               >
-                Includes free 3-day masterclass (Oct 19-21, 2025) - Limited licenses available
+                Includes free 3-day masterclass (Mar 10-13, 2026) - Limited licenses available
               </motion.p>
             </div>
           </motion.div>

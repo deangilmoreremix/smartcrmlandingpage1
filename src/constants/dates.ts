@@ -1,14 +1,14 @@
 export const WEBINAR_DATE = {
-  DATE: 'November 15, 2025',
+  DATE: 'March 10, 2026',
   TIME: '3:00 PM EST',
-  FULL: 'November 15, 2025 at 3:00 PM EST',
-  SHORT: 'Nov 15, 2025',
-  SHORT_WITH_TIME: 'Nov 15, 2025 at 3:00 PM EST',
-  DAY_OF_WEEK: 'Friday',
+  FULL: 'March 10, 2026 at 3:00 PM EST',
+  SHORT: 'Mar 10, 2026',
+  SHORT_WITH_TIME: 'Mar 10, 2026 at 3:00 PM EST',
+  DAY_OF_WEEK: 'Tuesday',
 } as const;
 
-export const SALE_END_DATE = new Date('2025-11-19T23:59:59-05:00');
-export const LAUNCH_DATE = new Date('2025-11-15T15:00:00-05:00');
+export const SALE_END_DATE = new Date('2026-03-09T23:59:59-05:00');
+export const LAUNCH_DATE = new Date('2026-03-10T15:00:00-05:00');
 
 export const EVENT_DESCRIPTIONS = {
   WEBINAR_FULL: `Live webinar on ${WEBINAR_DATE.FULL}`,

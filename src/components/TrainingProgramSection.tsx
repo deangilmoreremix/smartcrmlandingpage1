@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, BookOpen, Star, Check, CheckCircle, Gift, Zap, PlusCircle, ArrowRight, Users, Award, CloudLightning as Lightning, BrainCircuit, Sparkles, Lightbulb, BadgeCheck, User, Mail, AlertTriangle, Clock, TrendingDown } from 'lucide-react';
+import { Calendar, BookOpen, Star, Check, CircleCheck as CheckCircle, Gift, Zap, CirclePlus as PlusCircle, ArrowRight, Users, Award, CloudLightning as Lightning, BrainCircuit, Sparkles, Lightbulb, BadgeCheck, User, Mail, TriangleAlert as AlertTriangle, Clock, TrendingDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AnimatedElement from './AnimatedElement';
 import EmailSubscribe from './EmailSubscribe';
@@ -31,7 +31,7 @@ const trainingDays: TrainingDay[] = [
     ],
     icon: <AlertTriangle size={28} />,
     color: "blue",
-    date: "October 19, 2025"
+    date: "March 10, 2026"
   },
   {
     day: 2,
@@ -44,7 +44,7 @@ const trainingDays: TrainingDay[] = [
     ],
     icon: <BrainCircuit size={28} />,
     color: "purple",
-    date: "October 20, 2025"
+    date: "March 11, 2026"
   },
   {
     day: 3,
@@ -57,7 +57,7 @@ const trainingDays: TrainingDay[] = [
     ],
     icon: <Lightning size={28} />,
     color: "green",
-    date: "October 21, 2025"
+    date: "March 12, 2026"
   }
 ];
 
@@ -151,7 +151,7 @@ const TrainingProgramSection: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Join CRM expert Dean Gilmore for a transformative 3-day training on October 19-21, 2025 to revolutionize your sales process using Smart CRM technology
+              Join CRM expert Dean Gilmore for a transformative 3-day training on March 10-13, 2026 to revolutionize your sales process using Smart CRM technology
             </motion.p>
           </div>
         </AnimatedElement>
@@ -830,7 +830,7 @@ const TrainingProgramSection: React.FC = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
-            <span className="text-blue-400 font-medium">Limited time:</span> Register now for the October 19-21 masterclass and get the Smart CRM Implementation Guide ($197 value) for free
+            <span className="text-blue-400 font-medium">Limited time:</span> Register now for the March 10-13 masterclass and get the Smart CRM Implementation Guide ($197 value) for free
           </motion.p>
         </motion.div>
       </div>

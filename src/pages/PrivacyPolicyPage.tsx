@@ -27,7 +27,7 @@ const PrivacyPolicyPage: React.FC = () => {
             </div>
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-white">Privacy Policy</h1>
-              <p className="text-white/60 mt-2">Last Updated: October 18, 2025</p>
+              <p className="text-white/60 mt-2">Last Updated: March 3, 2026</p>
             </div>
           </div>
 
