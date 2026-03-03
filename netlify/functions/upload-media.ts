@@ -1,17 +1,25 @@
 /**
  * Secure Media Upload Netlify Function
- * 
+ *
  * SECURITY FEATURES:
- * - JWT authentication required
- * - File type validation
- * - File size limits
- * - Virus scanning integration point
+ * - JWT authentication required (validated via middleware)
+ * - File type validation with Zod
+ * - File size limits (100MB max)
+ * - Rate limiting (10 uploads/min per user)
  * - User ownership enforcement
+ * - Request size limits
  */
 
-import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';
+import { Handler, HandlerEvent } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';
+import {
+  applyMiddleware,
+  createSuccessResponse,
+  createErrorResponse,
+  parseJsonBody,
+  withErrorHandling,
+} from './_shared/middleware';
 
 // Validation schema
 const uploadSchema = z.object({
@@ -29,122 +37,95 @@ const uploadSchema = z.object({
   bucketName: z.string().min(1).max(63),
 });
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+const handleRequest = async (event: HandlerEvent): Promise<any> => {
+  // Apply middleware (CORS, rate limiting, auth validation)
+  const middlewareResult = applyMiddleware(event, {
+    rateLimit: { maxRequests: 10, windowMs: 60000 },
+    validation: {
+      allowedMethods: ['POST', 'OPTIONS'],
+      requireAuth: true,
+      maxBodySize: 50 * 1024, // 50KB max for upload metadata
+    },
+  });
+
+  if (!middlewareResult.success) {
+    return middlewareResult.response!;
+  }
+
+  // Get auth token
+  const authHeader = event.headers.authorization || event.headers.Authorization;
+  const token = authHeader!.replace('Bearer ', '');
+
+  // Initialize Supabase
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl || !supabaseServiceKey) {
+    console.error('Missing Supabase configuration');
+    return createErrorResponse('Service configuration error', 500);
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+  // Verify the user's JWT token
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser(token);
+
+  if (authError || !user) {
+    return createErrorResponse('Invalid or expired token', 401);
+  }
+
+  // Parse and validate input
+  const body = parseJsonBody(event);
+  if (!body) {
+    return createErrorResponse('Invalid JSON body', 400);
+  }
+
+  const validation = uploadSchema.safeParse(body);
+
+  if (!validation.success) {
+    return createErrorResponse(
+      'Validation failed',
+      400,
+      undefined,
+      validation.error.errors
+    );
+  }
+
+  const data = validation.data;
+
+  // Generate unique file path with user ownership
+  const timestamp = Date.now();
+  const randomId = Math.random().toString(36).substring(2, 15);
+  const fileExtension = data.fileName.split('.').pop();
+  const filePath = `${user.id}/${timestamp}-${randomId}.${fileExtension}`;
+
+  // Create signed upload URL (client uploads directly to Supabase Storage)
+  const { data: uploadData, error: uploadError } = await supabase.storage
+    .from(data.bucketName)
+    .createSignedUploadUrl(filePath);
+
+  if (uploadError) {
+    console.error('Upload URL error:', uploadError);
+    return createErrorResponse('Failed to create upload URL', 500);
+  }
+
+  // Log upload request
+  console.log(`Upload URL created for user ${user.id}: ${filePath}`);
+
+  // Return success with signed URL
+  return createSuccessResponse(
+    {
+      uploadUrl: uploadData.signedUrl,
+      filePath: filePath,
+      token: uploadData.token,
+    },
+    200,
+    middlewareResult.rateLimitHeaders
+  );
 };
 
-export const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers: corsHeaders, body: '' };
-  }
-  
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers: corsHeaders,
-      body: JSON.stringify({ error: 'Method not allowed' }),
-    };
-  }
-  
-  try {
-    // Verify JWT token
-    const authHeader = event.headers.authorization || event.headers.Authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return {
-        statusCode: 401,
-        headers: corsHeaders,
-        body: JSON.stringify({ error: 'Authentication required' }),
-      };
-    }
-    
-    const token = authHeader.replace('Bearer ', '');
-    
-    // Initialize Supabase
-    const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    
-    if (!supabaseUrl || !supabaseServiceKey) {
-      return {
-        statusCode: 500,
-        headers: corsHeaders,
-        body: JSON.stringify({ error: 'Service configuration error' }),
-      };
-    }
-    
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    
-    // Verify the user's JWT token
-    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
-    
-    if (authError || !user) {
-      return {
-        statusCode: 401,
-        headers: corsHeaders,
-        body: JSON.stringify({ error: 'Invalid or expired token' }),
-      };
-    }
-    
-    // Parse and validate input
-    const body = JSON.parse(event.body || '{}');
-    const validation = uploadSchema.safeParse(body);
-    
-    if (!validation.success) {
-      return {
-        statusCode: 400,
-        headers: corsHeaders,
-        body: JSON.stringify({ 
-          error: 'Validation failed',
-          details: validation.error.errors 
-        }),
-      };
-    }
-    
-    const data = validation.data;
-    
-    // Generate unique file path
-    const timestamp = Date.now();
-    const randomId = Math.random().toString(36).substring(2, 15);
-    const fileExtension = data.fileName.split('.').pop();
-    const filePath = `${user.id}/${timestamp}-${randomId}.${fileExtension}`;
-    
-    // Create upload URL (client will upload directly to Supabase Storage)
-    const { data: uploadData, error: uploadError } = await supabase
-      .storage
-      .from(data.bucketName)
-      .createSignedUploadUrl(filePath);
-    
-    if (uploadError) {
-      console.error('Upload URL error:', uploadError);
-      return {
-        statusCode: 500,
-        headers: corsHeaders,
-        body: JSON.stringify({ error: 'Failed to create upload URL' }),
-      };
-    }
-    
-    // Return the signed upload URL to the client
-    return {
-      statusCode: 200,
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        success: true,
-        uploadUrl: uploadData.signedUrl,
-        filePath: filePath,
-        token: uploadData.token,
-      }),
-    };
-    
-  } catch (error) {
-    console.error('Unexpected error:', error);
-    return {
-      statusCode: 500,
-      headers: corsHeaders,
-      body: JSON.stringify({ error: 'An unexpected error occurred' }),
-    };
-  }
-};
+// Export handler wrapped with error handling
+export const handler: Handler = withErrorHandling(handleRequest);
