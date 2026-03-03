@@ -1,6 +1,17 @@
 /**
  * Environment Variable Validation and Configuration
- * Provides type-safe access to environment variables with validation
+ *
+ * SECURITY RULES:
+ * 1. ONLY VITE_* prefixed variables are accessible in frontend code
+ * 2. NEVER expose service_role keys to the frontend
+ * 3. All required variables must be validated at startup
+ * 4. Invalid configuration causes immediate failure (fail fast)
+ *
+ * USAGE:
+ * import { env } from '../config/env';
+ * const { url, anonKey } = env.supabase;
+ *
+ * For server-side (Netlify/Edge Functions), use process.env or Deno.env
  */
 
 interface EnvironmentConfig {
@@ -28,14 +39,37 @@ class EnvironmentError extends Error {
  */
 function validateEnvironmentVariables(): void {
   const errors: string[] = [];
+  const warnings: string[] = [];
 
-  // Check Supabase configuration
+  // CRITICAL: Check for service_role key exposure in frontend
+  const allEnvKeys = Object.keys(import.meta.env);
+  const dangerousKeys = allEnvKeys.filter(key =>
+    key.includes('SERVICE_ROLE') ||
+    key.includes('service_role') ||
+    key.includes('PRIVATE') ||
+    key.includes('SECRET')
+  );
+
+  if (dangerousKeys.length > 0) {
+    errors.push(
+      `SECURITY VIOLATION: Potentially sensitive keys exposed in frontend: ${dangerousKeys.join(', ')}. ` +
+      'Service role keys, secrets, and private keys must NEVER be prefixed with VITE_!'
+    );
+  }
+
+  // Check required Supabase configuration
   if (!import.meta.env.VITE_SUPABASE_URL) {
-    errors.push('VITE_SUPABASE_URL is not defined');
+    errors.push(
+      'VITE_SUPABASE_URL is not defined. ' +
+      'Add it to your .env file or Netlify environment variables.'
+    );
   }
 
   if (!import.meta.env.VITE_SUPABASE_ANON_KEY) {
-    errors.push('VITE_SUPABASE_ANON_KEY is not defined');
+    errors.push(
+      'VITE_SUPABASE_ANON_KEY is not defined. ' +
+      'Add it to your .env file or Netlify environment variables.'
+    );
   }
 
   // Validate Supabase URL format
@@ -74,12 +108,29 @@ function validateEnvironmentVariables(): void {
     }
   }
 
+  // Display warnings in development
+  if (warnings.length > 0 && import.meta.env.DEV) {
+    console.warn('='.repeat(80));
+    console.warn('⚠️  ENVIRONMENT CONFIGURATION WARNINGS');
+    console.warn('='.repeat(80));
+    warnings.forEach(w => console.warn(`  - ${w}`));
+    console.warn('='.repeat(80));
+  }
+
+  // Fail fast on errors
   if (errors.length > 0) {
     const errorMessage = [
-      'Environment configuration errors detected:',
-      ...errors.map(e => `  - ${e}`),
       '',
-      'Please check your .env file and ensure all required variables are set correctly.',
+      'Environment configuration errors detected:',
+      '',
+      ...errors.map(e => `  ❌ ${e}`),
+      '',
+      'RESOLUTION:',
+      '  1. Check your .env file exists and has all required VITE_* variables',
+      '  2. Restart the dev server after editing .env',
+      '  3. For production, ensure Netlify environment variables are set',
+      '  4. See .env.example for full setup instructions',
+      '',
     ].join('\n');
 
     throw new EnvironmentError(errorMessage);

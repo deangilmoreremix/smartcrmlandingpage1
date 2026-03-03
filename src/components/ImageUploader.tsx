@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import { Upload, Image, X, Check, AlertTriangle, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { getSupabaseClient } from '../utils/supabaseClient';
 
 interface ImageUploaderProps {
   onImageUploaded?: (url: string) => void;
@@ -26,34 +26,38 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  
-  // Initialize Supabase client
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+  // Get centralized Supabase client
+  const supabase = getSupabaseClient();
   
   // Handle file upload
   const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    
+
     if (!file) return;
-    
+
+    // Check if Supabase client is available
+    if (!supabase) {
+      setError('Storage service is not available');
+      return;
+    }
+
     // Check file size
     if (file.size > maxSizeMB * 1024 * 1024) {
       setError(`File size exceeds ${maxSizeMB}MB limit`);
       return;
     }
-    
+
     // Validate file type
     if (!file.type.startsWith('image/')) {
       setError('Only image files are allowed');
       return;
     }
-    
+
     setUploading(true);
     setError(null);
     setSuccess(false);
-    
+
     try {
       // Generate unique file name
       const fileExt = file.name.split('.').pop();
