@@ -11,7 +11,7 @@
  * - Request size limits
  */
 
-import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';
+import { Handler, HandlerEvent, HandlerResponse } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';
 import {
@@ -37,7 +37,7 @@ const registrationSchema = z.object({
 type RegistrationInput = z.infer<typeof registrationSchema>;
 
 // Handler
-const handleRequest = async (event: HandlerEvent): Promise<any> => {
+const handleRequest = async (event: HandlerEvent): Promise<HandlerResponse> => {
   // Apply middleware (CORS, rate limiting, validation)
   const middlewareResult = applyMiddleware(event, {
     rateLimit: { maxRequests: 5, windowMs: 60000 },

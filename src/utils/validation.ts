@@ -110,7 +110,7 @@ export function validate<T extends z.ZodType>(
   } catch (error) {
     if (error instanceof z.ZodError) {
       const errors: Record<string, string> = {};
-      error.errors.forEach(err => {
+      error.issues.forEach(err => {
         const path = err.path.join('.');
         errors[path] = err.message;
       });
@@ -139,7 +139,7 @@ export function validateOrThrow<T extends z.ZodType>(
     return schema.parse(data);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const errors = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+      const errors = error.issues.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
       throw new Error(`Validation failed${context ? ` in ${context}` : ''}: ${errors}`);
     }
     throw error;

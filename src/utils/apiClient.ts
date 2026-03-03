@@ -75,11 +75,11 @@ export class ApiClient {
   private defaultHeaders: Record<string, string>;
 
   constructor(config: ApiClientConfig = {}) {
-    this.baseUrl = config.baseUrl || '';
-    this.timeout = config.timeout || 30000; // 30 seconds default
-    this.maxRetries = config.maxRetries || 3;
-    this.retryDelay = config.retryDelay || 1000; // 1 second default
-    this.defaultHeaders = config.headers || {
+    this.baseUrl = config.baseUrl ?? '';
+    this.timeout = config.timeout ?? 30000;
+    this.maxRetries = config.maxRetries ?? 3;
+    this.retryDelay = config.retryDelay ?? 1000;
+    this.defaultHeaders = config.headers ?? {
       'Content-Type': 'application/json',
     };
   }

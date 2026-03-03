@@ -165,7 +165,7 @@ function determineOverallStatus(checks: HealthCheckResult['checks']): HealthChec
 /**
  * Main handler
  */
-export const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
+export const handler: Handler = async (event: HandlerEvent, _context: HandlerContext) => {
   // Apply middleware (CORS, rate limiting)
   const middlewareResult = applyMiddleware(event, {
     rateLimit: { maxRequests: 20, windowMs: 60000 }, // Allow more requests for health checks
