@@ -1,6 +1,6 @@
 /**
  * API Client with Retry Logic, Timeouts, and Error Handling
- * Production-grade HTTP client for reliable API communication
+ * Production-grade HTTP client for reliable API communication with Result<T> pattern
  */
 
 import { logError, logWarning, ErrorSeverity } from './errorLogger';
@@ -37,6 +37,34 @@ export class TimeoutError extends Error {
     super(message);
     this.name = 'TimeoutError';
   }
+}
+
+export interface AppError {
+  code: string;
+  message: string;
+  status?: number;
+  details?: unknown;
+}
+
+export type Result<T> =
+  | { ok: true; data: T }
+  | { ok: false; error: AppError };
+
+export function createError(
+  code: string,
+  message: string,
+  status?: number,
+  details?: unknown
+): AppError {
+  return { code, message, status, details };
+}
+
+export function success<T>(data: T): Result<T> {
+  return { ok: true, data };
+}
+
+export function failure<T>(error: AppError): Result<T> {
+  return { ok: false, error };
 }
 
 export class ApiClient {
@@ -271,10 +299,114 @@ export class ApiClient {
       body: data ? JSON.stringify(data) : undefined,
     });
   }
+
+  /**
+   * Safe request that returns Result<T> instead of throwing
+   */
+  async safeRequest<T = unknown>(
+    url: string,
+    config: RequestConfig = {}
+  ): Promise<Result<T>> {
+    try {
+      const data = await this.request<T>(url, config);
+      return success(data);
+    } catch (error) {
+      if (error instanceof ApiError) {
+        return failure({
+          code: 'API_ERROR',
+          message: error.message,
+          status: error.status,
+          details: error.data,
+        });
+      }
+      if (error instanceof TimeoutError) {
+        return failure({
+          code: 'TIMEOUT',
+          message: error.message,
+        });
+      }
+      return failure({
+        code: 'UNKNOWN_ERROR',
+        message: error instanceof Error ? error.message : 'An unknown error occurred',
+      });
+    }
+  }
+
+  /**
+   * Safe GET request
+   */
+  async safeGet<T = unknown>(url: string, config?: RequestConfig): Promise<Result<T>> {
+    return this.safeRequest<T>(url, { ...config, method: 'GET' });
+  }
+
+  /**
+   * Safe POST request
+   */
+  async safePost<T = unknown>(
+    url: string,
+    data?: unknown,
+    config?: RequestConfig
+  ): Promise<Result<T>> {
+    return this.safeRequest<T>(url, {
+      ...config,
+      method: 'POST',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
+
+  /**
+   * Safe PUT request
+   */
+  async safePut<T = unknown>(
+    url: string,
+    data?: unknown,
+    config?: RequestConfig
+  ): Promise<Result<T>> {
+    return this.safeRequest<T>(url, {
+      ...config,
+      method: 'PUT',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
+
+  /**
+   * Safe DELETE request
+   */
+  async safeDelete<T = unknown>(url: string, config?: RequestConfig): Promise<Result<T>> {
+    return this.safeRequest<T>(url, { ...config, method: 'DELETE' });
+  }
+
+  /**
+   * Safe PATCH request
+   */
+  async safePatch<T = unknown>(
+    url: string,
+    data?: unknown,
+    config?: RequestConfig
+  ): Promise<Result<T>> {
+    return this.safeRequest<T>(url, {
+      ...config,
+      method: 'PATCH',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
+
+  /**
+   * Safe JSON parsing that never throws
+   */
+  static safeJsonParse<T = unknown>(text: string): Result<T> {
+    try {
+      const data = JSON.parse(text);
+      return success(data);
+    } catch (error) {
+      return failure({
+        code: 'JSON_PARSE_ERROR',
+        message: 'Failed to parse JSON',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+  }
 }
 
 // Create default API client instance
 export const apiClient = new ApiClient();
-
-// Export error classes
-export { ApiError, TimeoutError };

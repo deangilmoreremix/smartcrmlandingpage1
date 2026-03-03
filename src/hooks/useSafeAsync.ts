@@ -1,215 +1,212 @@
 /**
- * Safe Async Data Fetching Hook
- * Provides loading, error, retry, and empty states for async operations
+ * Safe Async Hook - Never throws, always returns loading/error/data states
+ * Makes data fetching crash-proof with automatic error handling
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Result, AppError } from '../utils/apiClient';
 import { logError, ErrorSeverity } from '../utils/errorLogger';
 
 export interface AsyncState<T> {
   data: T | null;
-  loading: boolean;
-  error: Error | null;
+  error: AppError | null;
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
   isEmpty: boolean;
-  retry: () => void;
-  refetch: () => Promise<void>;
 }
 
-export interface UseSafeAsyncOptions<T> {
-  initialData?: T;
-  onError?: (error: Error) => void;
-  onSuccess?: (data: T) => void;
-  retry?: number;
-  retryDelay?: number;
-  enabled?: boolean;
-  checkEmpty?: (data: T) => boolean;
+export interface UseSafeAsyncOptions {
+  immediate?: boolean;
+  onSuccess?: (data: any) => void;
+  onError?: (error: AppError) => void;
+  logErrors?: boolean;
+  errorSeverity?: ErrorSeverity;
 }
 
 /**
- * Hook for safe async data fetching with automatic error handling
+ * Hook for safe async operations with automatic error handling
+ *
+ * @example
+ * const { data, error, isLoading, execute, retry } = useSafeAsync(
+ *   async () => apiClient.safeGet('/api/users')
+ * );
  */
 export function useSafeAsync<T>(
-  asyncFn: () => Promise<T>,
-  deps: React.DependencyList = [],
-  options: UseSafeAsyncOptions<T> = {}
-): AsyncState<T> {
+  asyncFunction: () => Promise<Result<T>>,
+  options: UseSafeAsyncOptions = {}
+) {
   const {
-    initialData = null,
-    onError,
+    immediate = false,
     onSuccess,
-    retry: maxRetries = 0,
-    retryDelay = 1000,
-    enabled = true,
-    checkEmpty,
+    onError,
+    logErrors = true,
+    errorSeverity = ErrorSeverity.MEDIUM,
   } = options;
 
-  const [data, setData] = useState<T | null>(initialData);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error | null>(null);
-  const [retryCount, setRetryCount] = useState<number>(0);
+  const [state, setState] = useState<AsyncState<T>>({
+    data: null,
+    error: null,
+    isLoading: immediate,
+    isError: false,
+    isSuccess: false,
+    isEmpty: true,
+  });
+
   const isMountedRef = useRef(true);
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  const execute = useCallback(async () => {
-    if (!enabled) {
-      return;
-    }
-
-    // Cancel previous request if still running
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
-
-    abortControllerRef.current = new AbortController();
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result = await asyncFn();
-
-      if (isMountedRef.current) {
-        setData(result);
-        setError(null);
-        setRetryCount(0);
-
-        if (onSuccess) {
-          onSuccess(result);
-        }
-      }
-    } catch (err) {
-      const error = err instanceof Error ? err : new Error(String(err));
-
-      // Don't update state if component unmounted or request aborted
-      if (!isMountedRef.current || error.name === 'AbortError') {
-        return;
-      }
-
-      // Log error
-      logError(error, ErrorSeverity.MEDIUM, {
-        action: 'useSafeAsync',
-        metadata: { retryCount, maxRetries },
-      });
-
-      // Retry logic
-      if (retryCount < maxRetries) {
-        setTimeout(() => {
-          if (isMountedRef.current) {
-            setRetryCount(prev => prev + 1);
-          }
-        }, retryDelay * Math.pow(2, retryCount));
-      } else {
-        setError(error);
-        if (onError) {
-          onError(error);
-        }
-      }
-    } finally {
-      if (isMountedRef.current) {
-        setLoading(false);
-      }
-    }
-  }, [asyncFn, enabled, onError, onSuccess, retryCount, maxRetries, retryDelay]);
-
-  // Execute on mount and when dependencies change
   useEffect(() => {
-    execute();
-
+    isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
+      abortControllerRef.current?.abort();
     };
-  }, [...deps, execute]);
+  }, []);
 
-  // Manual retry function
+  const execute = useCallback(async () => {
+    if (!isMountedRef.current) return;
+
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = new AbortController();
+
+    setState(prev => ({
+      ...prev,
+      isLoading: true,
+      isError: false,
+      error: null,
+    }));
+
+    try {
+      const result = await asyncFunction();
+
+      if (!isMountedRef.current) return;
+
+      if (result.ok) {
+        setState({
+          data: result.data,
+          error: null,
+          isLoading: false,
+          isError: false,
+          isSuccess: true,
+          isEmpty: result.data === null || result.data === undefined,
+        });
+        onSuccess?.(result.data);
+      } else {
+        if (logErrors) {
+          logError(
+            new Error(result.error.message),
+            errorSeverity,
+            {
+              component: 'useSafeAsync',
+              action: 'execute',
+              metadata: {
+                errorCode: result.error.code,
+                errorDetails: result.error.details,
+              },
+            }
+          );
+        }
+
+        setState({
+          data: null,
+          error: result.error,
+          isLoading: false,
+          isError: true,
+          isSuccess: false,
+          isEmpty: true,
+        });
+        onError?.(result.error);
+      }
+    } catch (error) {
+      if (!isMountedRef.current) return;
+
+      const appError: AppError = {
+        code: 'UNEXPECTED_ERROR',
+        message: error instanceof Error ? error.message : 'An unexpected error occurred',
+      };
+
+      if (logErrors) {
+        logError(
+          error instanceof Error ? error : new Error(String(error)),
+          ErrorSeverity.HIGH,
+          {
+            component: 'useSafeAsync',
+            action: 'execute',
+          }
+        );
+      }
+
+      setState({
+        data: null,
+        error: appError,
+        isLoading: false,
+        isError: true,
+        isSuccess: false,
+        isEmpty: true,
+      });
+      onError?.(appError);
+    }
+  }, [asyncFunction, onSuccess, onError, logErrors, errorSeverity]);
+
   const retry = useCallback(() => {
-    setRetryCount(0);
-    setError(null);
     execute();
   }, [execute]);
 
-  // Refetch function (alias for retry with promise return)
-  const refetch = useCallback(async () => {
-    setRetryCount(0);
-    setError(null);
-    await execute();
-  }, [execute]);
+  const reset = useCallback(() => {
+    setState({
+      data: null,
+      error: null,
+      isLoading: false,
+      isError: false,
+      isSuccess: false,
+      isEmpty: true,
+    });
+  }, []);
 
-  // Check if data is empty
-  const isEmpty = data === null ||
-    (Array.isArray(data) && data.length === 0) ||
-    (checkEmpty && data && checkEmpty(data));
+  useEffect(() => {
+    if (immediate) {
+      execute();
+    }
+  }, [immediate, execute]);
 
   return {
-    data,
-    loading,
-    error,
-    isEmpty,
+    ...state,
+    execute,
     retry,
-    refetch,
+    reset,
   };
 }
 
 /**
- * Hook for safe async operations (mutations)
+ * Hook for fetching data on mount with automatic retry
  */
-export function useSafeMutation<TData, TVariables = void>(
-  mutationFn: (variables: TVariables) => Promise<TData>,
-  options: UseSafeAsyncOptions<TData> = {}
+export function useSafeFetch<T>(
+  asyncFunction: () => Promise<Result<T>>,
+  options: UseSafeAsyncOptions = {}
 ) {
-  const { onError, onSuccess } = options;
+  return useSafeAsync(asyncFunction, { ...options, immediate: true });
+}
 
-  const [data, setData] = useState<TData | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error | null>(null);
+/**
+ * Hook for polling data at intervals
+ */
+export function useSafePoll<T>(
+  asyncFunction: () => Promise<Result<T>>,
+  intervalMs: number = 5000,
+  options: UseSafeAsyncOptions = {}
+) {
+  const result = useSafeAsync(asyncFunction, { ...options, immediate: true });
 
-  const mutate = useCallback(
-    async (variables: TVariables) => {
-      setLoading(true);
-      setError(null);
+  useEffect(() => {
+    if (intervalMs <= 0) return;
 
-      try {
-        const result = await mutationFn(variables);
-        setData(result);
+    const interval = setInterval(() => {
+      result.execute();
+    }, intervalMs);
 
-        if (onSuccess) {
-          onSuccess(result);
-        }
+    return () => clearInterval(interval);
+  }, [intervalMs, result.execute]);
 
-        return result;
-      } catch (err) {
-        const error = err instanceof Error ? err : new Error(String(err));
-
-        logError(error, ErrorSeverity.MEDIUM, {
-          action: 'useSafeMutation',
-        });
-
-        setError(error);
-
-        if (onError) {
-          onError(error);
-        }
-
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    },
-    [mutationFn, onError, onSuccess]
-  );
-
-  const reset = useCallback(() => {
-    setData(null);
-    setError(null);
-    setLoading(false);
-  }, []);
-
-  return {
-    mutate,
-    data,
-    loading,
-    error,
-    reset,
-  };
+  return result;
 }

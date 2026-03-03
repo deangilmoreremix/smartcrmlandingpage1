@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, AlertCircle, RefreshCw, Video, Mail, Database } from 'lucide-react';
+import { env } from '../config/env';
+import { ApiClient } from '../utils/apiClient';
+import { logError, ErrorSeverity } from '../utils/errorLogger';
 
 interface TestResult {
   success: boolean;
   message: string;
   details?: any;
 }
+
+const apiClient = new ApiClient();
 
 const GoToWebinarTester: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,14 +25,12 @@ const GoToWebinarTester: React.FC = () => {
     setTestResult(null);
 
     try {
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-      if (!supabaseUrl || !supabaseAnonKey) {
+      if (!env.supabase.url || !env.supabase.anonKey) {
         setTestResult({
           success: false,
           message: 'Supabase credentials not configured. Check your .env file.',
         });
+        setIsLoading(false);
         return;
       }
 
@@ -39,33 +42,42 @@ const GoToWebinarTester: React.FC = () => {
         source: 'GoToWebinar Test',
       };
 
-      const registrationUrl = `${supabaseUrl}/functions/v1/webinar-registration`;
+      const registrationUrl = `${env.supabase.url}/functions/v1/webinar-registration`;
 
-      const response = await fetch(registrationUrl, {
-        method: 'POST',
+      const result = await apiClient.safePost<any>(registrationUrl, testData, {
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabaseAnonKey}`,
+          'Authorization': `Bearer ${env.supabase.anonKey}`,
         },
-        body: JSON.stringify(testData),
+        timeout: 30000,
       });
 
-      const result = await response.json();
+      if (!result.ok) {
+        logError(
+          new Error(result.error.message),
+          ErrorSeverity.MEDIUM,
+          {
+            component: 'GoToWebinarTester',
+            action: 'runTest',
+            metadata: result.error.details,
+          }
+        );
 
-      if (!response.ok && response.status !== 207) {
         setTestResult({
           success: false,
-          message: result.error || `Test failed with status: ${response.status}`,
-          details: result,
+          message: result.error.message || 'Test failed',
+          details: result.error.details,
         });
+        setIsLoading(false);
         return;
       }
 
+      const data = result.data;
+
       const integrationStatus = {
-        gotowebinar: result.gotowebinar?.registered || false,
-        zoom: result.zoom?.registered || false,
-        mailerlite: result.mailerlite?.registered || false,
-        database: result.success || false,
+        gotowebinar: data.gotowebinar?.registered || false,
+        zoom: data.zoom?.registered || false,
+        mailerlite: data.mailerlite?.registered || false,
+        database: data.success || false,
       };
 
       const successCount = Object.values(integrationStatus).filter(Boolean).length;
@@ -77,18 +89,27 @@ const GoToWebinarTester: React.FC = () => {
           ? 'All integrations working perfectly!'
           : `${successCount}/${totalIntegrations} integrations successful`,
         details: {
-          status: result.status,
+          status: data.status,
           integrations: integrationStatus,
-          registrationId: result.registrationId,
-          gotowebinarJoinUrl: result.gotowebinar?.join_url,
-          zoomJoinUrl: result.zoom?.join_url,
-          errors: result.errors,
+          registrationId: data.registrationId,
+          gotowebinarJoinUrl: data.gotowebinar?.join_url,
+          zoomJoinUrl: data.zoom?.join_url,
+          errors: data.errors,
         },
       });
     } catch (error: any) {
+      logError(
+        error instanceof Error ? error : new Error(String(error)),
+        ErrorSeverity.MEDIUM,
+        {
+          component: 'GoToWebinarTester',
+          action: 'runTest',
+        }
+      );
+
       setTestResult({
         success: false,
-        message: `Test failed: ${error.message}`,
+        message: `Test failed: ${error.message || 'Unknown error'}`,
       });
     } finally {
       setIsLoading(false);

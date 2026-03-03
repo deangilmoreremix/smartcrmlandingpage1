@@ -6,6 +6,11 @@ import jsPDF from 'jspdf';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { getInstructorImageUrl } from '../utils/supabaseClient';
+import { env } from '../config/env';
+import { ApiClient } from '../utils/apiClient';
+import { logError, ErrorSeverity } from '../utils/errorLogger';
+
+const apiClient = new ApiClient();
 
 interface WebinarDay {
   day: number;
@@ -93,21 +98,25 @@ const WebinarRecapPage: React.FC = () => {
 
   useEffect(() => {
     try {
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-      if (!supabaseUrl || !supabaseAnonKey) {
+      if (!env.supabase.url || !env.supabase.anonKey) {
         console.warn("Supabase credentials are not available. Some features will be disabled.");
         return;
       }
 
-      const client = createClient(supabaseUrl, supabaseAnonKey);
+      const client = createClient(env.supabase.url, env.supabase.anonKey);
       setSupabase(client);
 
       fetchInstructorImage();
       fetchUploadedVideos(client);
     } catch (err) {
-      console.error("Error initializing Supabase client:", err);
+      logError(
+        err instanceof Error ? err : new Error('Failed to initialize Supabase client'),
+        ErrorSeverity.HIGH,
+        {
+          component: 'WebinarRecapPage',
+          action: 'initialization',
+        }
+      );
       setError("Failed to initialize database connection. Some features may be unavailable.");
     }
   }, []);
@@ -346,28 +355,20 @@ ${webinarDay.chapters.map(chapter => `• ${chapter.title} (${chapter.startTime}
         throw new Error("Supabase client not initialized");
       }
 
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const apiEndpoint = `${supabaseUrl}/functions/v1/webinar-api/generate-summary`;
+      const apiEndpoint = `${env.supabase.url}/functions/v1/webinar-api/generate-summary`;
 
-      try {
-        const response = await fetch(apiEndpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify({
-            day,
-            videoUrl: webinarDay.videoUrl
-          })
-        });
+      const result = await apiClient.safePost<any>(apiEndpoint, {
+        day,
+        videoUrl: webinarDay.videoUrl
+      }, {
+        headers: {
+          'Authorization': `Bearer ${env.supabase.anonKey}`
+        },
+        timeout: 60000,
+      });
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(`API error: ${errorData.error || response.statusText}`);
-        }
-
-        const data = await response.json();
+      if (result.ok) {
+        const data = result.data;
 
         setWebinarDays(prev =>
           prev.map(webinarDay =>
@@ -385,11 +386,27 @@ ${webinarDay.chapters.map(chapter => `• ${chapter.title} (${chapter.startTime}
         );
 
         setMessage("AI summary generated successfully!");
-      } catch (apiError) {
+      } else {
+        logError(
+          new Error(result.error.message),
+          ErrorSeverity.MEDIUM,
+          {
+            component: 'WebinarRecapPage',
+            action: 'generateAISummary',
+            metadata: result.error.details,
+          }
+        );
         simulateAISummary(day, webinarDay);
       }
     } catch (err) {
-      console.error("AI summary error:", err);
+      logError(
+        err instanceof Error ? err : new Error(String(err)),
+        ErrorSeverity.MEDIUM,
+        {
+          component: 'WebinarRecapPage',
+          action: 'generateAISummary',
+        }
+      );
       setError(`Failed to generate AI summary: ${(err as Error).message}`);
     } finally {
       setIsGeneratingSummary(false);
@@ -439,29 +456,21 @@ ${webinarDay.chapters.map(chapter => `• ${chapter.title} (${chapter.startTime}
         throw new Error("Supabase client not initialized");
       }
 
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const apiEndpoint = `${supabaseUrl}/functions/v1/generate-chapters`;
+      const apiEndpoint = `${env.supabase.url}/functions/v1/generate-chapters`;
 
-      try {
-        const response = await fetch(apiEndpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify({
-            webinarDay: day,
-            videoUrl: webinarDay.videoUrl,
-            transcript: webinarDay.summaryText
-          })
-        });
+      const result = await apiClient.safePost<any>(apiEndpoint, {
+        webinarDay: day,
+        videoUrl: webinarDay.videoUrl,
+        transcript: webinarDay.summaryText
+      }, {
+        headers: {
+          'Authorization': `Bearer ${env.supabase.anonKey}`
+        },
+        timeout: 60000,
+      });
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(`API error: ${errorData.error || response.statusText}`);
-        }
-
-        const data = await response.json();
+      if (result.ok) {
+        const data = result.data;
 
         if (data.chapters && data.chapters.length > 0) {
           setWebinarDays(prev =>
@@ -477,11 +486,27 @@ ${webinarDay.chapters.map(chapter => `• ${chapter.title} (${chapter.startTime}
         } else {
           throw new Error("No chapters were generated");
         }
-      } catch (apiError) {
+      } else {
+        logError(
+          new Error(result.error.message),
+          ErrorSeverity.MEDIUM,
+          {
+            component: 'WebinarRecapPage',
+            action: 'generateAIChapters',
+            metadata: result.error.details,
+          }
+        );
         simulateAIChapters(day, webinarDay);
       }
     } catch (err) {
-      console.error("AI chapters error:", err);
+      logError(
+        err instanceof Error ? err : new Error(String(err)),
+        ErrorSeverity.MEDIUM,
+        {
+          component: 'WebinarRecapPage',
+          action: 'generateAIChapters',
+        }
+      );
       setError(`Failed to generate AI chapters: ${(err as Error).message}`);
     } finally {
       setIsGeneratingChapters(false);
