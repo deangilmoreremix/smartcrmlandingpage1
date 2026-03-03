@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { BrainCircuit, Zap, Shield, Users, Mail, BarChart, Calendar, Sparkles, Star, Lightbulb, Cpu, MessageSquare } from 'lucide-react';
+import { BrainCircuit, Zap, Shield, Users, Mail, ChartBar as BarChart, Calendar, Sparkles, Star, Lightbulb, Cpu, MessageSquare } from 'lucide-react';
 import AnimatedFloatingIcon, { AnimatedFloatingIconProps } from './AnimatedFloatingIcon';
 import { useAnimationPreference } from '../hooks/useAnimationPreference';
 
@@ -18,15 +18,7 @@ const AnimatedIconsGroup: React.FC<AnimatedIconsGroupProps> = ({
   animations = ['bounce', 'pulse', 'rotate'],
   containerClassName = ''
 }) => {
-  // Get animation preference
   const { animationsEnabled } = useAnimationPreference();
-
-  // If animations are disabled, don't render anything
-  if (!animationsEnabled) {
-    return null;
-  }
-
-  // Get icons based on section
   const getSectionIcons = () => {
     switch (section) {
       case 'hero':
@@ -142,7 +134,11 @@ const AnimatedIconsGroup: React.FC<AnimatedIconsGroupProps> = ({
 
     return iconProps;
   }, [iconCount, section, density, JSON.stringify(animations)]);
-  
+
+  if (!animationsEnabled) {
+    return null;
+  }
+
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${containerClassName}`}>
       {icons.map((props, index) => (
