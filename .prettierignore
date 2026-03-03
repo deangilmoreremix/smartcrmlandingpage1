@@ -1,0 +1,11 @@
+dist
+node_modules
+.bolt
+*.log
+coverage
+build
+.env
+.env.local
+package-lock.json
+pnpm-lock.yaml
+yarn.lock

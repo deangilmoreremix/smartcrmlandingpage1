@@ -1,27 +1,56 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { env } from '../config/env';
+import { logError, logWarning, ErrorSeverity } from './errorLogger';
 
 let supabaseClient: SupabaseClient | null = null;
 
+/**
+ * Gets or creates a Supabase client instance
+ * Uses validated environment configuration
+ */
 export const getSupabaseClient = (): SupabaseClient | null => {
   if (supabaseClient) {
     return supabaseClient;
   }
 
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  try {
+    const { url, anonKey } = env.supabase;
 
-  if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn('Supabase credentials not configured');
+    supabaseClient = createClient(url, anonKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+      },
+      global: {
+        headers: {
+          'X-Client-Info': 'smart-crm-web',
+        },
+      },
+    });
+
+    return supabaseClient;
+  } catch (error) {
+    logError(
+      error instanceof Error ? error : new Error('Failed to initialize Supabase client'),
+      ErrorSeverity.CRITICAL,
+      {
+        component: 'supabaseClient',
+        action: 'initialization',
+      }
+    );
     return null;
   }
-
-  supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-  return supabaseClient;
 };
 
 export const getInstructorImageUrl = async (): Promise<string | null> => {
   const supabase = getSupabaseClient();
-  if (!supabase) return null;
+  if (!supabase) {
+    logWarning('Supabase client not available for fetching instructor image', {
+      component: 'supabaseClient',
+      action: 'getInstructorImageUrl',
+    });
+    return null;
+  }
 
   try {
     // List all files in the avatar bucket to find instructor images
@@ -32,7 +61,15 @@ export const getInstructorImageUrl = async (): Promise<string | null> => {
       });
 
     if (listError) {
-      console.error('Error listing files:', listError);
+      logError(
+        new Error(`Error listing avatar files: ${listError.message}`),
+        ErrorSeverity.MEDIUM,
+        {
+          component: 'supabaseClient',
+          action: 'getInstructorImageUrl',
+          metadata: { error: listError },
+        }
+      );
       return null;
     }
 
@@ -42,6 +79,10 @@ export const getInstructorImageUrl = async (): Promise<string | null> => {
     );
 
     if (!instructorFile) {
+      logWarning('No instructor image found in avatar bucket', {
+        component: 'supabaseClient',
+        action: 'getInstructorImageUrl',
+      });
       return null;
     }
 
@@ -52,7 +93,14 @@ export const getInstructorImageUrl = async (): Promise<string | null> => {
 
     return data?.publicUrl || null;
   } catch (error) {
-    console.error('Error fetching instructor image:', error);
+    logError(
+      error instanceof Error ? error : new Error('Unexpected error fetching instructor image'),
+      ErrorSeverity.MEDIUM,
+      {
+        component: 'supabaseClient',
+        action: 'getInstructorImageUrl',
+      }
+    );
     return null;
   }
 };
