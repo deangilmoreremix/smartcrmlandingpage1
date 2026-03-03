@@ -1,50 +1,103 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
+import { errorLogger, ErrorSeverity } from '../utils/errorLogger';
 
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  resetKeys?: unknown[];
+  componentName?: string;
 }
 
 interface State {
   hasError: boolean;
   error?: Error;
   errorInfo?: ErrorInfo;
+  errorCount: number;
 }
 
 class ErrorBoundary extends Component<Props, State> {
+  private resetTimeout: number | null = null;
+
   constructor(props: Props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = {
+      hasError: false,
+      errorCount: 0,
+    };
   }
 
-  static getDerivedStateFromError(error: Error): State {
+  static getDerivedStateFromError(error: Error): Partial<State> {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+  componentDidUpdate(prevProps: Props) {
+    // Reset error boundary when resetKeys change
+    if (this.state.hasError && this.props.resetKeys) {
+      const hasKeysChanged = this.props.resetKeys.some(
+        (key, index) => key !== prevProps.resetKeys?.[index]
+      );
+      if (hasKeysChanged) {
+        this.resetErrorBoundary();
+      }
+    }
+  }
 
-    this.setState({
+  componentWillUnmount() {
+    if (this.resetTimeout) {
+      clearTimeout(this.resetTimeout);
+    }
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // Log error using centralized logger
+    errorLogger.logError(
+      error,
+      ErrorSeverity.HIGH,
+      {
+        component: this.props.componentName || 'ErrorBoundary',
+        action: 'componentRender',
+        metadata: {
+          componentStack: errorInfo.componentStack,
+          errorCount: this.state.errorCount + 1,
+        },
+      }
+    );
+
+    this.setState(prevState => ({
       error,
       errorInfo,
-    });
+      errorCount: prevState.errorCount + 1,
+    }));
 
     // Call optional error handler
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
     }
 
-    // In production, you might want to send this to an error reporting service
-    if (process.env.NODE_ENV === 'production') {
-      // Example: Send to error reporting service
-      // reportError(error, errorInfo);
+    // Auto-retry after 5 seconds if first error
+    if (this.state.errorCount === 0) {
+      this.resetTimeout = window.setTimeout(() => {
+        this.resetErrorBoundary();
+      }, 5000);
     }
   }
 
+  resetErrorBoundary = () => {
+    if (this.resetTimeout) {
+      clearTimeout(this.resetTimeout);
+      this.resetTimeout = null;
+    }
+    this.setState({
+      hasError: false,
+      error: undefined,
+      errorInfo: undefined,
+    });
+  };
+
   handleRetry = () => {
-    this.setState({ hasError: false, error: undefined, errorInfo: undefined });
+    this.resetErrorBoundary();
   };
 
   handleGoHome = () => {
@@ -67,9 +120,19 @@ class ErrorBoundary extends Component<Props, State> {
                 <AlertTriangle className="text-red-400" size={32} />
               </div>
               <h2 className="text-2xl font-bold text-white mb-2">Something went wrong</h2>
-              <p className="text-white/70 text-sm">
+              <p className="text-white/70 text-sm mb-2">
                 We encountered an unexpected error. Our team has been notified and is working to fix this issue.
               </p>
+              {this.state.errorCount === 1 && (
+                <p className="text-blue-400 text-xs">
+                  Attempting automatic recovery in 5 seconds...
+                </p>
+              )}
+              {this.state.errorCount > 1 && (
+                <p className="text-yellow-400 text-xs">
+                  Error persists. Please try refreshing the page.
+                </p>
+              )}
             </div>
 
             <div className="space-y-3">
