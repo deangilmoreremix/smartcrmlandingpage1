@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Upload, Image, X, Check, AlertTriangle, Loader2 } from 'lucide-react';
+import { Upload, Image, X, Check, TriangleAlert as AlertTriangle, Loader as Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getSupabaseClient } from '../utils/supabaseClient';
 
