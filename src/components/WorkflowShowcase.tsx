@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Users, Building, Clock, Zap, Mail, Calendar, BarChart, Check, ChevronRight, MessageSquare, ArrowRight } from 'lucide-react';
+import { User, Users, Building, Clock, Zap, Mail, Calendar, ChartBar as BarChart, Check, ChevronRight, MessageSquare, ArrowRight } from 'lucide-react';
 import AnimatedElement from './AnimatedElement';
 import AnimatedIconsGroup from './AnimatedIconsGroup';
 import JVZooBuyButton from './JVZooBuyButton';
