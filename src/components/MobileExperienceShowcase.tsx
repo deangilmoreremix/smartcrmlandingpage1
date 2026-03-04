@@ -109,7 +109,7 @@ const mobileFeatures: MobileFeature[] = [
     title: 'Work Offline, Sync Later',
     description: 'Continue working without internet connection. All changes automatically sync when you\'re back online.',
     icon: <WifiOff size={24} className="text-blue-400" />,
-    screenshot: 'https://images.pexels.com/photos/6633867/pexels-photo-6633867.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    screenshot: '/mobile-offline-sync.webp',
     benefits: [
       'Update records during client visits without cell coverage',
       'Add notes while on flights or in remote areas',
@@ -122,7 +122,7 @@ const mobileFeatures: MobileFeature[] = [
     title: 'Voice Commands & Dictation',
     description: 'Add notes, create tasks, and navigate your CRM hands-free with voice commands and dictation.',
     icon: <Volume2 size={24} className="text-purple-400" />,
-    screenshot: 'https://images.pexels.com/photos/7709020/pexels-photo-7709020.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    screenshot: '/mobile-voice-commands.webp',
     benefits: [
       'Dictate meeting notes while driving between appointments',
       'Create follow-up tasks using natural language commands',
@@ -135,7 +135,7 @@ const mobileFeatures: MobileFeature[] = [
     title: 'Location Intelligence',
     description: 'Get proximity alerts for nearby customers and optimize your route for sales visits.',
     icon: <Globe size={24} className="text-green-400" />,
-    screenshot: 'https://images.pexels.com/photos/7713177/pexels-photo-7713177.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    screenshot: '/mobile-location-intelligence.webp',
     benefits: [
       'Notifications when near customer locations',
       'Route optimization for multiple client visits',
@@ -148,7 +148,7 @@ const mobileFeatures: MobileFeature[] = [
     title: 'Business Card Scanner',
     description: 'Instantly capture and create contacts from business cards with our AI-powered scanner.',
     icon: <Camera size={24} className="text-amber-400" />,
-    screenshot: 'https://images.pexels.com/photos/669619/pexels-photo-669619.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    screenshot: '/mobile-card-scanner.webp',
     benefits: [
       'OCR technology extracts all card details automatically',
       'Creates new contact record with zero typing',
@@ -161,7 +161,7 @@ const mobileFeatures: MobileFeature[] = [
     title: 'Mobile-Optimized Dashboards',
     description: 'View your key metrics and performance indicators with dashboards designed specifically for mobile.',
     icon: <BarChart2 size={24} className="text-red-400" />,
-    screenshot: 'https://images.pexels.com/photos/6802042/pexels-photo-6802042.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    screenshot: '/mobile-dashboard.webp',
     benefits: [
       'At-a-glance performance metrics',
       'Simplified visualizations for small screens',
@@ -174,7 +174,7 @@ const mobileFeatures: MobileFeature[] = [
     title: 'Quick Actions & Shortcuts',
     description: 'Perform common tasks with a single tap using customizable quick actions and widgets.',
     icon: <Zap size={24} className="text-blue-400" />,
-    screenshot: 'https://images.pexels.com/photos/6481991/pexels-photo-6481991.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    screenshot: '/mobile-quick-actions.webp',
     benefits: [
       'One-tap actions for common workflows',
       'Customizable action buttons',
@@ -187,7 +187,7 @@ const mobileFeatures: MobileFeature[] = [
     title: 'Document Capture & Annotation',
     description: 'Scan documents, annotate PDFs, and attach files directly to your CRM records.',
     icon: <FileText size={24} className="text-yellow-400" />,
-    screenshot: 'https://images.pexels.com/photos/6476808/pexels-photo-6476808.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    screenshot: '/mobile-document-capture.webp',
     benefits: [
       'Scan and OCR paper documents',
       'Digital signature capture',
@@ -200,7 +200,7 @@ const mobileFeatures: MobileFeature[] = [
     title: 'Smart Notifications',
     description: 'Get intelligent alerts about important updates, tasks, and opportunities that need attention.',
     icon: <Bell size={24} className="text-purple-400" />,
-    screenshot: 'https://images.pexels.com/photos/6802049/pexels-photo-6802049.jpeg?auto=compress&cs=tinysrgb&w=1600',
+    screenshot: '/mobile-smart-notifications.webp',
     benefits: [
       'AI-prioritized notifications based on importance',
       'Deal update alerts',

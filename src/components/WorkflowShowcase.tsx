@@ -42,7 +42,7 @@ const roles: Role[] = [
         timeSaved: "15 minutes saved daily",
         automatedLabel: "AI-prioritized daily agenda",
         features: ["Smart Task Prioritization", "Deal Health Scoring", "Follow-up Reminders"],
-        imageSrc: "https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-morning-dashboard.webp"
       },
       {
         id: "email-triage",
@@ -52,7 +52,7 @@ const roles: Role[] = [
         timeSaved: "45 minutes saved daily",
         automatedLabel: "Auto-categorized emails",
         features: ["Email Intelligence", "Smart Templates", "Sentiment Analysis"],
-        imageSrc: "https://images.pexels.com/photos/6893933/pexels-photo-6893933.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-email-communication.webp"
       },
       {
         id: "customer-calls",
@@ -62,7 +62,7 @@ const roles: Role[] = [
         timeSaved: "30 minutes saved per call",
         automatedLabel: "AI call coaching",
         features: ["Call Scripting", "Real-time Coaching", "Automated Note Taking"],
-        imageSrc: "https://images.pexels.com/photos/7709020/pexels-photo-7709020.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-customer-calls.webp"
       },
       {
         id: "opportunity-management",
@@ -72,7 +72,7 @@ const roles: Role[] = [
         timeSaved: "1 hour saved daily",
         automatedLabel: "Pipeline automation",
         features: ["Voice Commands", "Mobile Updates", "Activity Capture"],
-        imageSrc: "https://images.pexels.com/photos/8867431/pexels-photo-8867431.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-opportunity-management.webp"
       },
       {
         id: "proposal-generation",
@@ -82,7 +82,7 @@ const roles: Role[] = [
         timeSaved: "2 hours saved per proposal",
         automatedLabel: "AI-generated content",
         features: ["Smart Proposal Generator", "Template Library", "Electronic Signatures"],
-        imageSrc: "https://images.pexels.com/photos/5387282/pexels-photo-5387282.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-proposal-generation.webp"
       }
     ]
   },
@@ -101,7 +101,7 @@ const roles: Role[] = [
         timeSaved: "45 minutes saved daily",
         automatedLabel: "Automated performance metrics",
         features: ["Performance Dashboards", "Coaching Insights", "Forecast Analytics"],
-        imageSrc: "https://images.pexels.com/photos/7688376/pexels-photo-7688376.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-team-performance.webp"
       },
       {
         id: "pipeline-review",
@@ -111,7 +111,7 @@ const roles: Role[] = [
         timeSaved: "1 hour saved weekly",
         automatedLabel: "AI forecasting",
         features: ["Pipeline Visualization", "Bottleneck Detection", "Resource Optimization"],
-        imageSrc: "https://images.pexels.com/photos/6476254/pexels-photo-6476254.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-pipeline-review.webp"
       },
       {
         id: "team-meetings",
@@ -121,7 +121,7 @@ const roles: Role[] = [
         timeSaved: "30 minutes per meeting",
         automatedLabel: "Meeting intelligence",
         features: ["Meeting Agenda Generator", "Action Item Tracking", "Performance Updates"],
-        imageSrc: "https://images.pexels.com/photos/6457524/pexels-photo-6457524.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-team-meetings.webp"
       },
       {
         id: "coaching-sessions",
@@ -131,7 +131,7 @@ const roles: Role[] = [
         timeSaved: "1 hour per coaching session",
         automatedLabel: "AI-powered coaching insights",
         features: ["Call Analytics", "Sentiment Tracking", "Improvement Recommendations"],
-        imageSrc: "https://images.pexels.com/photos/3810756/pexels-photo-3810756.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-coaching-sessions.webp"
       },
       {
         id: "forecast-reporting",
@@ -141,7 +141,7 @@ const roles: Role[] = [
         timeSaved: "3 hours saved weekly",
         automatedLabel: "Automated reporting",
         features: ["Predictive Forecasting", "Custom Report Builder", "Automated Delivery"],
-        imageSrc: "https://images.pexels.com/photos/7688426/pexels-photo-7688426.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-forecasting.webp"
       }
     ]
   },
@@ -160,7 +160,7 @@ const roles: Role[] = [
         timeSaved: "30 minutes saved daily",
         automatedLabel: "Automated monitoring",
         features: ["Adoption Analytics", "Data Quality Scoring", "System Health Dashboards"],
-        imageSrc: "https://images.pexels.com/photos/5473298/pexels-photo-5473298.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-system-monitoring.webp"
       },
       {
         id: "process-optimization",
@@ -170,7 +170,7 @@ const roles: Role[] = [
         timeSaved: "2 hours saved weekly",
         automatedLabel: "AI process recommendations",
         features: ["Conversion Analytics", "Process Mapping", "Bottleneck Identification"],
-        imageSrc: "https://images.pexels.com/photos/6956892/pexels-photo-6956892.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-process-optimization.webp"
       },
       {
         id: "automation-workflow",
@@ -180,7 +180,7 @@ const roles: Role[] = [
         timeSaved: "3 hours saved per workflow",
         automatedLabel: "Visual workflow builder",
         features: ["No-Code Automation", "Trigger Configuration", "A/B Testing"],
-        imageSrc: "https://images.pexels.com/photos/6963098/pexels-photo-6963098.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-automation-builder.webp"
       },
       {
         id: "data-management",
@@ -190,7 +190,7 @@ const roles: Role[] = [
         timeSaved: "5+ hours saved weekly",
         automatedLabel: "Automated data cleansing",
         features: ["Duplicate Detection", "Data Enrichment", "Field Standardization"],
-        imageSrc: "https://images.pexels.com/photos/4342098/pexels-photo-4342098.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-data-management.webp"
       },
       {
         id: "cross-system-integration",
@@ -200,7 +200,7 @@ const roles: Role[] = [
         timeSaved: "10+ hours saved weekly",
         automatedLabel: "Self-monitoring integrations",
         features: ["API Management", "Error Handling", "Data Transformation"],
-        imageSrc: "https://images.pexels.com/photos/5473955/pexels-photo-5473955.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        imageSrc: "/workflow-cross-system-integration.webp"
       }
     ]
   }

@@ -326,7 +326,7 @@ const DisclaimerPage: React.FC = () => {
                     <strong>Email:</strong> support@smartcrm.vip<br />
                     <strong>Support Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM EST<br />
                     <strong>Payment Processor:</strong> JVZoo (support@jvzoo.com)<br />
-                    <strong>Refund Policy:</strong> <Link to="/refund-policy" className=\"text-blue-400 hover:underline">30-Day Money-Back Guarantee</Link>
+                    <strong>Refund Policy:</strong> <Link to="/refund-policy" className="text-blue-400 hover:underline">30-Day Money-Back Guarantee</Link>
                   </p>
                 </div>
               </section>
